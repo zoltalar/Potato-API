@@ -33,6 +33,8 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     Route::group(['prefix' => 'admins'], function() {
         Route::get('index', [ApiAdminController::class, 'index'])->name('api.admin.admins.index');
         Route::post('store', [ApiAdminController::class, 'store'])->name('api.admin.admins.store');
+        Route::match(['PUT', 'PATCH'], 'update/{admin}', [ApiAdminController::class, 'update'])->name('api.admin.admins.update');
+        Route::delete('{admin}', [ApiAdminController::class, 'destroy'])->name('api.admin.admins.destroy');
         Route::get('current', [ApiAdminController::class, 'current'])->name('api.admin.admins.current');
     });
 

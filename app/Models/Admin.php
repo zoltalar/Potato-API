@@ -53,4 +53,9 @@ final class Admin extends Base implements
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function setPhoneAttribute($value): void
+    {
+        $this->attributes['phone'] = Str::stripNonDigits($value);
+    }
 }

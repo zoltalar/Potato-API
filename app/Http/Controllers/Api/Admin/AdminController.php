@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminStoreRequest;
+use App\Http\Requests\Admin\AdminUpdateRequest;
 use App\Http\Resources\AdminResource;
 use App\Models\Admin;
+use Exception;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -42,6 +44,35 @@ class AdminController extends Controller
         $admin->save();
 
         return new AdminResource($admin);
+    }
+
+    public function update(AdminUpdateRequest $request, Admin $admin)
+    {
+        $data = $request->only($admin->getFillable());
+
+        if (empty($request->password)) {
+            unset($data['password']);
+        }
+
+        $admin->fill($data);
+        $admin->update();
+
+        return new AdminResource($admin);
+    }
+
+    public function destroy(Admin $admin)
+    {
+        $status = 403;
+
+        if (auth()->id() != $admin->id) {
+            try {
+                if ($admin->delete(true)) {
+                    $status = 204;
+                }
+            } catch (Exception $e) {}
+        }
+
+        return response()->json(null, $status);
     }
 
     public function current()
