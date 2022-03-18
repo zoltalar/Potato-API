@@ -6,6 +6,7 @@
 
 use App\Http\Controllers\Api\Admin\AdminController as ApiAdminController;
 use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthenticationController;
+use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,14 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::match(['PUT', 'PATCH'], 'update/{admin}', [ApiAdminController::class, 'update'])->name('api.admin.admins.update');
         Route::delete('{admin}', [ApiAdminController::class, 'destroy'])->name('api.admin.admins.destroy');
         Route::get('current', [ApiAdminController::class, 'current'])->name('api.admin.admins.current');
+    });
+
+    // Languages
+    Route::group(['prefix' => 'languages'], function() {
+        Route::get('index', [ApiAdminLanguageController::class, 'index'])->name('api.admin.languages.index');
+        Route::post('store', [ApiAdminLanguageController::class, 'store'])->name('api.admin.languages.store');
+        Route::match(['PUT', 'PATCH'], 'update/{language}', [ApiAdminLanguageController::class, 'update'])->name('api.admin.languages.update');
+        Route::delete('{language}', [ApiAdminLanguageController::class, 'destroy'])->name('api.admin.languages.destroy');
     });
 
 });
