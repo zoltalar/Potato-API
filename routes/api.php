@@ -4,6 +4,7 @@
 // Admin
 // --------------------------------------------------
 
+use App\Http\Controllers\Api\Admin\AdminController as ApiAdminController;
 use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthenticationController;
 
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,13 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('login', [ApiAdminAuthenticationController::class, 'login'])->name('api.admin.authentication.login');
         Route::post('logout', [ApiAdminAuthenticationController::class, 'logout'])->name('api.admin.authentication.logout');
+    });
+
+    // Admins
+    Route::group(['prefix' => 'admins'], function() {
+        Route::get('index', [ApiAdminController::class, 'index'])->name('api.admin.admins.index');
+        Route::post('store', [ApiAdminController::class, 'store'])->name('api.admin.admins.store');
+        Route::get('current', [ApiAdminController::class, 'current'])->name('api.admin.admins.current');
     });
 
 });
