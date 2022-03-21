@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Country extends Base
 {
@@ -31,6 +32,11 @@ final class Country extends Base
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function states(): HasMany
+    {
+        return $this->hasMany(State::class);
+    }
 
     public function units(): BelongsToMany
     {

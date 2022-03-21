@@ -26,4 +26,15 @@ class AdminStoreRequest extends FormRequest
             'password' => ['required', 'string', 'min:7']
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'first_name' => mb_strtolower(__('phrases.first_name')),
+            'last_name' => mb_strtolower(__('phrases.last_name')),
+            'email' => mb_strtolower(__('phrases.email')),
+            'phone' => mb_strtolower(__('phrases.phone')),
+            'password' => mb_strtolower(__('phrases.password'))
+        ];
+    }
 }

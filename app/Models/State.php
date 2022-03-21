@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class State extends Base
 {
@@ -17,6 +20,11 @@ final class State extends Base
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function cities(): HasMany
+    {
+        return $this->hasMany(City::class);
+    }
 
     public function country(): BelongsTo
     {

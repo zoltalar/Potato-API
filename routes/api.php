@@ -6,6 +6,8 @@
 
 use App\Http\Controllers\Api\Admin\AdminController as ApiAdminController;
 use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthenticationController;
+use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
+use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,18 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::match(['PUT', 'PATCH'], 'update/{admin}', [ApiAdminController::class, 'update'])->name('api.admin.admins.update');
         Route::delete('{admin}', [ApiAdminController::class, 'destroy'])->name('api.admin.admins.destroy');
         Route::get('current', [ApiAdminController::class, 'current'])->name('api.admin.admins.current');
+    });
+
+    // Cities
+    Route::group(['prefix' => 'cities'], function() {
+        Route::get('index', [ApiAdminCityController::class, 'index'])->name('api.admin.cities.index');
+        Route::post('store', [ApiAdminCityController::class, 'store'])->name('api.admin.cities.store');
+        Route::get('meta', [ApiAdminCityController::class, 'meta'])->name('api.admin.cities.meta');
+    });
+
+    // Countries
+    Route::group(['prefix' => 'countries'], function() {
+        Route::get('index', [ApiAdminCountryController::class, 'index'])->name('api.admin.countries.index');
     });
 
     // Languages

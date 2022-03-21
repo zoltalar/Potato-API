@@ -24,6 +24,10 @@ class LanguageStoreRequest extends FormRequest
 
     public function attributes(): array
     {
-        return ['native' => mb_strtolower(__('phrases.name_in_native_language'))];
+        return [
+            'name' => mb_strtolower(__('phrases.name')),
+            'native' => mb_strtolower(__('phrases.name_in_native_language')),
+            'code' => mb_strtolower(__('phrases.code'))
+        ];
     }
 }
