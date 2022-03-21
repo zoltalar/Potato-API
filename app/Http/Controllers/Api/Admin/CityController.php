@@ -24,7 +24,10 @@ class CityController extends Controller
         $limit = $request->get('limit', 10);
 
         $query = City::query()
-            ->with(['state'])
+            ->with([
+                'state',
+                'state.country'
+            ])
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
                     $query->search(['name', 'name_ascii']);
