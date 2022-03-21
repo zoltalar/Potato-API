@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 final class Unit extends Base
 {
     const ABBREVIATION_KILOMETER = 'km';
@@ -21,7 +23,28 @@ final class Unit extends Base
     const SYSTEM_METRIC = 1;
     const SYSTEM_IMPERIAL = 2;
 
+    protected $fillable = [
+        'abbreviation',
+        'name',
+        'type',
+        'system'
+    ];
+
+    protected $casts = [
+        'type' => 'integer',
+        'system' => 'integer'
+    ];
+
     public $timestamps = false;
+
+    // --------------------------------------------------
+    // Relationships
+    // --------------------------------------------------
+
+    public function countries(): BelongsToMany
+    {
+        return $this->belongsToMany(Country::class);
+    }
 
     // --------------------------------------------------
     // Other
