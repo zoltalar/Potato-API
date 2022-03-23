@@ -27,7 +27,7 @@ class LanguageController extends Controller
         $query = Language::query()
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
-                    $query->search(['name', 'native', 'code']);
+                    $query->search(['name', 'native', 'code'], $search);
                 });
             })
             ->orders('id', 'desc');

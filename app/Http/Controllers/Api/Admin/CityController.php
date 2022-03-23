@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CityStoreRequest;
+use App\Http\Requests\Admin\CityUpdateRequest;
 use App\Http\Resources\CityResource;
 use App\Models\City;
 use Exception;
@@ -30,7 +31,11 @@ class CityController extends Controller
             ])
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
-                    $query->search(['name', 'name_ascii']);
+                    $query
+                        ->search(['name', 'name_ascii'], $search)
+                        ->orWhereHas('state', function($query) use ($search) {
+                            $query->search(['name'], $search);
+                        });
                 });
             })
             ->orders('name', 'asc');
@@ -45,6 +50,14 @@ class CityController extends Controller
         $city = new City();
         $city->fill($request->only($city->getFillable()));
         $city->save();
+
+        return new CityResource($city);
+    }
+
+    public function update(CityUpdateRequest $request, City $city)
+    {
+        $city->fill($request->only($city->getFillable()));
+        $city->update();
 
         return new CityResource($city);
     }

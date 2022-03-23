@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthentic
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
+use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,7 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     Route::group(['prefix' => 'cities'], function() {
         Route::get('index', [ApiAdminCityController::class, 'index'])->name('api.admin.cities.index');
         Route::post('store', [ApiAdminCityController::class, 'store'])->name('api.admin.cities.store');
+        Route::match(['PUT', 'PATCH'], 'update/{city}', [ApiAdminCityController::class, 'update'])->name('api.admin.cities.update');
         Route::get('meta', [ApiAdminCityController::class, 'meta'])->name('api.admin.cities.meta');
     });
 
@@ -59,6 +61,13 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::post('store', [ApiAdminLanguageController::class, 'store'])->name('api.admin.languages.store');
         Route::match(['PUT', 'PATCH'], 'update/{language}', [ApiAdminLanguageController::class, 'update'])->name('api.admin.languages.update');
         Route::delete('{language}', [ApiAdminLanguageController::class, 'destroy'])->name('api.admin.languages.destroy');
+    });
+
+    // Users
+    Route::group(['prefix' => 'users'], function() {
+        Route::get('index', [ApiAdminUserController::class, 'index'])->name('api.admin.users.index');
+        Route::post('store', [ApiAdminUserController::class, 'store'])->name('api.admin.users.store');
+        Route::match(['PUT', 'PATCH'], 'update/{user}', [ApiAdminUserController::class, 'update'])->name('api.admin.users.update');
     });
 
 });

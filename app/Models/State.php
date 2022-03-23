@@ -15,6 +15,8 @@ final class State extends Base
         'country_id'
     ];
 
+    protected $constraints = ['cities'];
+
     public $timestamps = false;
 
     // --------------------------------------------------

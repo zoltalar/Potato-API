@@ -25,7 +25,7 @@ class CountryController extends Controller
             ->with(['states'])
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
-                    $query->search(['name', 'native', 'code']);
+                    $query->search(['name', 'native', 'code'], $search);
                 });
             })
             ->orders('name', 'asc');

@@ -27,12 +27,12 @@ class AdminController extends Controller
         $query = Admin::query()
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
-                    $query->search(['first_name', 'last_name', 'email', 'phone']);
+                    $query->search(['first_name', 'last_name', 'email', 'phone'], $search);
                 });
             })
             ->orders('id', 'desc');
 
-        $admins = ($request->all ? $query->get() : $query->paginate($limit));
+        $admins = $query->paginate($limit);
 
         return AdminResource::collection($admins);
     }

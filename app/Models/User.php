@@ -11,6 +11,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\RoutesNotifications;
 use Laravel\Passport\HasApiTokens;
@@ -32,10 +33,12 @@ final class User extends Base implements
     protected $fillable = [
         'first_name',
         'last_name',
+        'language_id',
+        'country_id',
         'email',
+        'email_verified_at',
         'phone',
         'password',
-        'system',
         'active'
     ];
 
@@ -44,10 +47,7 @@ final class User extends Base implements
         'remember_token',
     ];
 
-    protected $casts = [
-        'system' => 'integer',
-        'active' => 'integer'
-    ];
+    protected $casts = ['active' => 'integer'];
 
     // --------------------------------------------------
     // Accessors and Mutators
@@ -56,5 +56,24 @@ final class User extends Base implements
     public function setPasswordAttribute($value): void
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function setPhoneAttribute($value): void
+    {
+        $this->attributes['phone'] = Str::stripNonDigits($value);
+    }
+
+    // --------------------------------------------------
+    // Relationships
+    // --------------------------------------------------
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 }
