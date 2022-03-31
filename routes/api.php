@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryControl
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
+use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
 use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 
 use Illuminate\Support\Facades\Route;
@@ -71,6 +72,11 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::post('store', [ApiAdminLanguageController::class, 'store'])->name('api.admin.languages.store');
         Route::match(['PUT', 'PATCH'], 'update/{language}', [ApiAdminLanguageController::class, 'update'])->name('api.admin.languages.update');
         Route::delete('{language}', [ApiAdminLanguageController::class, 'destroy'])->name('api.admin.languages.destroy');
+    });
+
+    // Translations
+    Route::group(['prefix' => 'translations'], function() {
+        Route::get('index', [ApiAdminTranslationController::class, 'index'])->name('api.admin.translations.index');
     });
 
     // Users
