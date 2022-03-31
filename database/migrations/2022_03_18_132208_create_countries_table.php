@@ -19,6 +19,8 @@ class CreateCountriesTable extends Migration
             $table->string('time_format', 10)->nullable();
             $table->boolean('system')->nullable();
             $table->boolean('active')->nullable();
+
+            $table->index(['name', 'native', 'code']);
         });
     }
 

@@ -6,6 +6,7 @@
 
 use App\Http\Controllers\Api\Admin\AdminController as ApiAdminController;
 use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthenticationController;
+use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryController;
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
@@ -40,6 +41,15 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::match(['PUT', 'PATCH'], 'update/{admin}', [ApiAdminController::class, 'update'])->name('api.admin.admins.update');
         Route::delete('{admin}', [ApiAdminController::class, 'destroy'])->name('api.admin.admins.destroy');
         Route::get('current', [ApiAdminController::class, 'current'])->name('api.admin.admins.current');
+    });
+
+    // Categories
+    Route::group(['prefix' => 'categories'], function() {
+        Route::get('index', [ApiAdminCategoryController::class, 'index'])->name('api.admin.categories.index');
+        Route::post('store', [ApiAdminCategoryController::class, 'store'])->name('api.admin.categories.store');
+        Route::match(['PUT', 'PATCH'], 'update/{category}', [ApiAdminCategoryController::class, 'update'])->name('api.admin.categories.update');
+        Route::delete('{category}', [ApiAdminCategoryController::class, 'destroy'])->name('api.admin.categories.destroy');
+        Route::get('meta', [ApiAdminCategoryController::class, 'meta'])->name('api.admin.categories.meta');
     });
 
     // Cities

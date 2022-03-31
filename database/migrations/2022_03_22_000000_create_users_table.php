@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            $table->index(['first_name', 'last_name', 'email', 'phone']);
+
             $table->foreign('language_id')
                 ->references('id')
                 ->on('languages')

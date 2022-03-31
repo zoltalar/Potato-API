@@ -24,6 +24,8 @@ class CreateAdminsTable extends Migration
             $table->boolean('active')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->index(['first_name', 'last_name', 'email', 'phone']);
         });
     }
 

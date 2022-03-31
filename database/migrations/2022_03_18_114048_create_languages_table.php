@@ -17,6 +17,8 @@ class CreateLanguagesTable extends Migration
             $table->char('code', 2)->unique();
             $table->boolean('system')->nullable();
             $table->boolean('active')->nullable();
+
+            $table->index(['name', 'native']);
         });
     }
 

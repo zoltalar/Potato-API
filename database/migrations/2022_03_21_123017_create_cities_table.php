@@ -21,6 +21,7 @@ class CreateCitiesTable extends Migration
             $table->integer('state_id')->unsigned();
 
             $table->unique(['name', 'state_id']);
+            $table->index(['name', 'name_ascii']);
 
             $table->foreign('state_id')
                 ->references('id')

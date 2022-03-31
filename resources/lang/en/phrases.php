@@ -2,10 +2,12 @@
 
 return [
     'area' => 'Area',
+    'category' => 'Category',
     'code' => 'Code',
     'email' => 'Email',
     'first_name' => 'First Name',
     'imperial' => 'Imperial',
+    'inventory' => 'Inventory',
     'last_name' => 'Last Name',
     'latitude' => 'Latitude',
     'length' => 'Length',
@@ -16,6 +18,7 @@ return [
     'password' => 'Password',
     'phone' => 'Phone',
     'state' => 'State',
+    'type' => 'Type',
     'volume' => 'Volume',
     'weight' => 'Weight'
 ];
