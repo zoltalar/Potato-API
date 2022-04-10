@@ -8,6 +8,7 @@ return [
     'first_name' => 'First Name',
     'imperial' => 'Imperial',
     'inventory' => 'Inventory',
+    'language' => 'Language',
     'last_name' => 'Last Name',
     'latitude' => 'Latitude',
     'length' => 'Length',

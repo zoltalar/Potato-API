@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
+use App\Http\Requests\Admin\TranslationStoreRequest;
 use App\Http\Resources\TranslationResource;
 use App\Models\Translation;
 use Illuminate\Http\Request;
@@ -34,5 +34,15 @@ class TranslationController extends Controller
         $translations = $query->paginate($limit);
 
         return TranslationResource::collection($translations);
+    }
+
+    public function store(TranslationStoreRequest $request)
+    {
+
+    }
+
+    public function meta()
+    {
+        return response()->json(['types' => Translation::types()]);
     }
 }

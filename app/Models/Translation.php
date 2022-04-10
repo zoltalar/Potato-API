@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 final class Translation extends Base
 {
+    const TYPE_CATEGORY = 'c';
+
     protected $fillable = [
         'name',
         'language_id'
@@ -28,5 +30,14 @@ final class Translation extends Base
     public function translatable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public static function types(): array
+    {
+        return [self::TYPE_CATEGORY => __('phrases.category')];
     }
 }

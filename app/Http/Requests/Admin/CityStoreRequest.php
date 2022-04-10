@@ -20,7 +20,7 @@ class CityStoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:60'],
             'latitude' => ['required'],
             'longitude' => ['required'],
-            'state_id' => ['required']
+            'state_id' => ['required', 'exists:states,id']
         ];
 
         $name = $this->name;
