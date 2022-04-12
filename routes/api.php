@@ -78,6 +78,8 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     Route::group(['prefix' => 'translations'], function() {
         Route::get('index', [ApiAdminTranslationController::class, 'index'])->name('api.admin.translations.index');
         Route::post('store', [ApiAdminTranslationController::class, 'store'])->name('api.admin.translations.store');
+        Route::match(['PUT', 'PATCH'], 'update/{translation}', [ApiAdminTranslationController::class, 'update'])->name('api.admin.translations.update');
+        Route::delete('{translation}', [ApiAdminTranslationController::class, 'destroy'])->name('api.admin.translations.destroy');
         Route::get('meta', [ApiAdminTranslationController::class, 'meta'])->name('api.admin.translations.meta');
     });
 

@@ -6,6 +6,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Models\Base;
 use App\Models\Translation;
+use App\Rules\UniqueTranslation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TranslationStoreRequest extends FormRequest
@@ -20,7 +21,7 @@ class TranslationStoreRequest extends FormRequest
         $length = Base::DEFAULT_STRING_LENGTH;
 
         return [
-            'name' => ['required', 'string', "max:$length"],
+            'name' => ['required', 'string', "max:$length", new UniqueTranslation($this->all())],
             'language_id' => ['required', 'exists:languages,id'],
             'translatable_type' => ['required', 'in:' . implode(',', array_keys(Translation::types()))],
             'translatable_id' => ['required']

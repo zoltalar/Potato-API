@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Mixins\StrMixin;
 use App\Models\Base;
+use App\Models\Category;
 use App\Models\City;
+use App\Observers\CategoryObserver;
 use App\Observers\CityObserver;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Str::mixin(new StrMixin());
 
         // Observers
+        Category::observe(CategoryObserver::class);
         City::observe(CityObserver::class);
     }
 }

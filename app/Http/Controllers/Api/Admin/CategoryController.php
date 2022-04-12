@@ -25,6 +25,7 @@ class CategoryController extends Controller
         $limit = $request->get('limit', 10);
 
         $query = Category::query()
+            ->withCount('translations')
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
                     $query->search(['name'], $search);
