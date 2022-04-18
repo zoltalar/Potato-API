@@ -9,9 +9,17 @@ use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthentic
 use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryController;
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
+use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
 use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
+
+// --------------------------------------------------
+// Potato
+// --------------------------------------------------
+
+use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
+use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +74,13 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::get('index', [ApiAdminCountryController::class, 'index'])->name('api.admin.countries.index');
     });
 
+    // Inventory
+    Route::group(['prefix' => 'inventory'], function() {
+        Route::get('index', [ApiAdminInventoryController::class, 'index'])->name('api.admin.inventory.index');
+        Route::post('store', [ApiAdminInventoryController::class, 'store'])->name('api.admin.inventory.store');
+        Route::delete('{inventory}', [ApiAdminInventoryController::class, 'destroy'])->name('api.admin.inventory.destroy');
+    });
+
     // Languages
     Route::group(['prefix' => 'languages'], function() {
         Route::get('index', [ApiAdminLanguageController::class, 'index'])->name('api.admin.languages.index');
@@ -88,6 +103,21 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::get('index', [ApiAdminUserController::class, 'index'])->name('api.admin.users.index');
         Route::post('store', [ApiAdminUserController::class, 'store'])->name('api.admin.users.store');
         Route::match(['PUT', 'PATCH'], 'update/{user}', [ApiAdminUserController::class, 'update'])->name('api.admin.users.update');
+    });
+
+});
+
+// Potato routes
+Route::group(['prefix' => 'potato'], function() {
+
+    // Countries
+    Route::group(['prefix' => 'countries'], function() {
+        Route::get('index', [ApiPotatoCountryController::class, 'index'])->name('api.potato.countries.index');
+    });
+
+    // Languages
+    Route::group(['prefix' => 'languages'], function() {
+        Route::get('index', [ApiPotatoLanguageController::class, 'index'])->name('api.potato.languages.index');
     });
 
 });
