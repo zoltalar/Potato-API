@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\TranslationStoreRequest;
 use App\Http\Requests\Admin\TranslationUpdateRequest;
 use App\Http\Resources\TranslationResource;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Models\Language;
 use App\Models\Translation;
 use Exception;
@@ -30,7 +31,7 @@ class TranslationController extends Controller
             ->with([
                 'language',
                 'translatable' => function($morphTo) {
-                    $morphTo->morphWith([Category::class]);
+                    $morphTo->morphWith([Category::class, Inventory::class]);
                 }
             ])
             ->when($search, function($query) use ($search) {
@@ -56,10 +57,16 @@ class TranslationController extends Controller
 
         if ($type == Translation::TYPE_CATEGORY) {
             $translatable = Category::find($id);
+        } elseif ($type == Translation::TYPE_INVENTORY) {
+            $translatable = Inventory::find($id);
         }
 
         if ($language !== null && $translatable !== null) {
-            $attributes = ['name' => $name, 'language_id' => $language->id];
+            $attributes = [
+                'name' => $name,
+                'language_id' => $language->id
+            ];
+
             $translation = $translatable->translations()->save(new Translation($attributes));
         }
 

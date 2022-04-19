@@ -24,6 +24,8 @@ final class Inventory extends Base
 
     protected $casts = ['system' => 'integer'];
 
+    protected $appends = ['photo_url'];
+
     public $timestamps = false;
 
     // --------------------------------------------------
@@ -52,6 +54,17 @@ final class Inventory extends Base
         }
 
         $this->attributes['photo'] = $value;
+    }
+
+    public function getPhotoUrlAttribute($value): ?string
+    {
+        $photo = $this->attributes['photo'] ?? null;
+
+        if ( ! empty($photo)) {
+            return asset("storage/inventory/{$photo}");
+        }
+
+        return null;
     }
 
     // --------------------------------------------------
@@ -84,6 +97,22 @@ final class Inventory extends Base
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public function deletePhoto(): void
+    {
+        $oldPhoto = $this->photo;
+
+        // Remove old photo
+        if ( ! empty($oldPhoto)) {
+            $path = "inventory/{$oldPhoto}";
+
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        }
+
+        $this->photo = null;
+    }
 
     public static function randomFileName(): string
     {

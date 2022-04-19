@@ -10,6 +10,7 @@ class InventoryObserver
 {
     public function deleted(Inventory $inventory)
     {
+        $inventory->deletePhoto();
         $inventory->translations()->delete();
     }
 }

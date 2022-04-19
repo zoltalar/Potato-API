@@ -78,6 +78,7 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     Route::group(['prefix' => 'inventory'], function() {
         Route::get('index', [ApiAdminInventoryController::class, 'index'])->name('api.admin.inventory.index');
         Route::post('store', [ApiAdminInventoryController::class, 'store'])->name('api.admin.inventory.store');
+        Route::match(['PUT', 'PATCH'], 'update/{inventory}', [ApiAdminInventoryController::class, 'update'])->name('api.admin.inventory.update');
         Route::delete('{inventory}', [ApiAdminInventoryController::class, 'destroy'])->name('api.admin.inventory.destroy');
     });
 

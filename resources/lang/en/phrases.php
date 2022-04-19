@@ -18,6 +18,7 @@ return [
     'name_in_native_language' => 'Name in Native Language',
     'password' => 'Password',
     'phone' => 'Phone',
+    'photo' => 'Photo',
     'state' => 'State',
     'type' => 'Type',
     'volume' => 'Volume',

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InventoryStoreRequest;
+use App\Http\Requests\Admin\InventoryUpdateRequest;
 use App\Http\Resources\InventoryResource;
 use App\Models\Inventory;
 use Exception;
@@ -24,7 +25,7 @@ class InventoryController extends Controller
         $limit = $request->get('limit', 10);
 
         $query = Inventory::query()
-            ->with(['category'])
+            ->with(['category', 'countries'])
             ->withCount('translations')
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
@@ -44,7 +45,37 @@ class InventoryController extends Controller
 
     public function store(InventoryStoreRequest $request)
     {
+        $inventory = new Inventory();
+        $inventory->fill($request->only($inventory->getFillable()));
 
+        if ($inventory->save()) {
+            $countries = $request->countries ?? [];
+
+            if (is_array($countries)) {
+                $inventory->countries()->sync($countries);
+            }
+        }
+
+        return new InventoryResource($inventory);
+    }
+
+    public function update(InventoryUpdateRequest $request, Inventory $inventory)
+    {
+        $inventory->fill($request->only($inventory->getFillable()));
+
+        if ( ! empty($request->delete_photo)) {
+            $inventory->deletePhoto();
+        }
+
+        if ($inventory->update()) {
+            $countries = $request->countries ?? [];
+
+            if (is_array($countries)) {
+                $inventory->countries()->sync($countries);
+            }
+        }
+
+        return new InventoryResource($inventory);
     }
 
     public function destroy(Inventory $inventory)

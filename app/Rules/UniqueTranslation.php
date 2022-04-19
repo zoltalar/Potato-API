@@ -6,6 +6,7 @@ namespace App\Rules;
 
 use App\Models\Base;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Models\Language;
 use App\Models\Translation;
 use Arr;
@@ -32,11 +33,14 @@ class UniqueTranslation implements Rule
     {
         $data = $this->data;
         $type = Arr::get($data, 'translatable_type');
+        $id = Arr::get($data, 'translatable_id');
 
         $this->language = Language::find(Arr::get($data, 'language_id'));
 
         if ($type == Translation::TYPE_CATEGORY) {
-            $this->translatable = Category::find(Arr::get($data, 'translatable_id'));
+            $this->translatable = Category::find($id);
+        } elseif ($type == Translation::TYPE_INVENTORY) {
+            $this->translatable = Inventory::find($id);
         }
     }
 

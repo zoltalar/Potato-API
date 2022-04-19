@@ -8,7 +8,7 @@ use App\Models\Base;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class InventoryStoreRequest extends FormRequest
+class InventoryUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -18,6 +18,8 @@ class InventoryStoreRequest extends FormRequest
     public function rules(): array
     {
         $length = Base::DEFAULT_STRING_LENGTH;
+        $inventory = $this->route('inventory');
+        $id = $inventory->id ?? null;
         $name = $this->name;
         $categoryId = $this->category_id;
 
@@ -33,7 +35,8 @@ class InventoryStoreRequest extends FormRequest
                     return $query
                         ->where('name', $name)
                         ->where('category_id', $categoryId);
-                });
+                })
+                ->ignore($id);
             $rules['name'][] = $unique;
         }
 

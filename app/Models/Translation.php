@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 final class Translation extends Base
 {
     const TYPE_CATEGORY = 'c';
+    const TYPE_INVENTORY = 'i';
 
     protected $fillable = [
         'name',
@@ -38,6 +39,9 @@ final class Translation extends Base
 
     public static function types(): array
     {
-        return [self::TYPE_CATEGORY => __('phrases.category')];
+        return [
+            self::TYPE_CATEGORY => __('phrases.category'),
+            self::TYPE_INVENTORY => __('phrases.inventory')
+        ];
     }
 }
