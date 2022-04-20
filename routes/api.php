@@ -18,7 +18,9 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 // Potato
 // --------------------------------------------------
 
+use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
+use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 
 use Illuminate\Support\Facades\Route;
@@ -111,9 +113,19 @@ Route::group(['prefix' => '7pyn5wd'], function() {
 // Potato routes
 Route::group(['prefix' => 'potato'], function() {
 
+    // Cities
+    Route::group(['prefix' => 'cities'], function() {
+        Route::get('index', [ApiPotatoCityController::class, 'index'])->name('api.potato.cities.index');
+    });
+
     // Countries
     Route::group(['prefix' => 'countries'], function() {
         Route::get('index', [ApiPotatoCountryController::class, 'index'])->name('api.potato.countries.index');
+    });
+
+    // Inventory
+    Route::group(['prefix' => 'inventory'], function() {
+        Route::get('index', [ApiPotatoInventoryController::class, 'index'])->name('api.potato.inventory.index');
     });
 
     // Languages
