@@ -19,6 +19,7 @@ class InventoryController extends Controller
         $search = $request->search;
         $limit = $request->get('limit', 10);
         $language = $request->get('language');
+        $country = $request->get('country');
 
         $inventory = Inventory::query()
             ->with(['translations' => function($query) use ($language) {
@@ -33,6 +34,11 @@ class InventoryController extends Controller
                         ->orWhereHas('translations', function($query) use ($search) {
                             $query->search(['name'], $search);
                         });
+                });
+            })
+            ->when($country, function($query) use ($country) {
+                return $query->whereHas('countries', function($query) use ($country) {
+                    $query->where('code', $country);
                 });
             })
             ->orders('name', 'asc')
