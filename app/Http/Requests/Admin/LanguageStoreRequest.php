@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class LanguageStoreRequest extends FormRequest
+class LanguageStoreRequest extends BaseRequest
 {
     public function authorize(): bool
     {

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\BaseRequest;
 use App\Models\Base;
-use Illuminate\Foundation\Http\FormRequest;
 
-class AdminStoreRequest extends FormRequest
+class AdminStoreRequest extends BaseRequest
 {
     public function authorize(): bool
     {

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\BaseRequest;
 use App\Models\Base;
 use App\Models\Category;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryUpdateRequest extends FormRequest
+class CategoryUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
     {

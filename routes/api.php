@@ -18,10 +18,12 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 // Potato
 // --------------------------------------------------
 
+use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
+use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -113,6 +115,12 @@ Route::group(['prefix' => '7pyn5wd'], function() {
 // Potato routes
 Route::group(['prefix' => 'potato'], function() {
 
+    // Authentication
+    Route::group(['prefix' => 'authentication'], function () {
+        Route::post('login', [ApiPotatoAuthenticationController::class, 'login'])->name('api.potato.authentication.login');
+        Route::post('logout', [ApiPotatoAuthenticationController::class, 'logout'])->name('api.potato.authentication.logout');
+    });
+
     // Cities
     Route::group(['prefix' => 'cities'], function() {
         Route::get('index', [ApiPotatoCityController::class, 'index'])->name('api.potato.cities.index');
@@ -131,6 +139,13 @@ Route::group(['prefix' => 'potato'], function() {
     // Languages
     Route::group(['prefix' => 'languages'], function() {
         Route::get('index', [ApiPotatoLanguageController::class, 'index'])->name('api.potato.languages.index');
+    });
+
+    // Users
+    Route::group(['prefix' => 'users'], function() {
+        Route::get('current', [ApiPotatoUserController::class, 'current'])->name('api.potato.users.current');
+        Route::post('update-country', [ApiPotatoUserController::class, 'updateCountry'])->name('api.potato.users.update-country');
+        Route::post('update-language', [ApiPotatoUserController::class, 'updateLanguage'])->name('api.potato.users.update-language');
     });
 
 });

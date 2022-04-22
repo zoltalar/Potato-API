@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class CityStoreRequest extends FormRequest
+class CityStoreRequest extends BaseRequest
 {
     public function authorize(): bool
     {

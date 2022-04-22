@@ -19,9 +19,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::tokensCan([
             'admin' => 'Access Admin',
-            'grocery' => 'Access Grocery'
+            'potato' => 'Access Potato'
         ]);
 
-        Passport::setDefaultScope(['grocery']);
+        Passport::setDefaultScope(['potato']);
     }
 }

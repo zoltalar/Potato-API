@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\BaseRequest;
 use App\Models\Base;
 use App\Models\Translation;
 use App\Rules\UniqueTranslation;
-use Illuminate\Foundation\Http\FormRequest;
 
-class TranslationStoreRequest extends FormRequest
+class TranslationStoreRequest extends BaseRequest
 {
     public function authorize(): bool
     {
