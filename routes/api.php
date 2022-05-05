@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
+use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
 
 use Illuminate\Support\Facades\Route;
@@ -140,6 +141,9 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'languages'], function() {
         Route::get('index', [ApiPotatoLanguageController::class, 'index'])->name('api.potato.languages.index');
     });
+
+    // Registration
+    Route::post('register', [ApiPotatoRegisterController::class, 'register'])->name('api.potato.register');
 
     // Users
     Route::group(['prefix' => 'users'], function() {
