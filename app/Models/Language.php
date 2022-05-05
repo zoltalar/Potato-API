@@ -23,4 +23,13 @@ final class Language extends Base
     ];
 
     public $timestamps = false;
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public static function codes(): array
+    {
+        return ['en', 'pl'];
+    }
 }
