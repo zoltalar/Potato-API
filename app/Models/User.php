@@ -8,11 +8,13 @@ use App\Contracts\Namable as NamableContract;
 use App\Traits\Namable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
@@ -24,6 +26,7 @@ final class User extends Base implements
     AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract,
+    HasLocalePreference,
     MustVerifyEmailContract,
     NamableContract
 {
@@ -81,5 +84,41 @@ final class User extends Base implements
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);
+    }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public function preferredLocale(): ?string
+    {
+        return $this->country->code ?? null;
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $url = $this->verificationUrl();
+
+        $notification = new VerifyEmail();
+        $notification->createUrlUsing(function() use ($url) {
+            return $url;
+        });
+
+        $this->notify($notification);
+    }
+
+    public function verificationUrl(): string
+    {
+        $url = $this->potatoAppBaseUrl();
+        $locale = $this->preferredLocale();
+        $id = $this->getKey();
+        $email = encrypt($this->getEmailForVerification());
+
+        return sprintf('%s/%s/email/verify/%d/%s', $url, $locale, $id, $email);
+    }
+
+    public function potatoAppBaseUrl(): string
+    {
+        return config('app.nuxt_app_url');
     }
 }

@@ -15,7 +15,7 @@ class CityController extends Controller
     {
         $search = $request->search;
         $limit = $request->get('limit', 10);
-        $country = $request->get('country');
+        $country = $request->header('X-country');
 
         $query = City::query()
             ->with(['state'])

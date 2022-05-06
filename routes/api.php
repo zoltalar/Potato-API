@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryCon
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
+use App\Http\Controllers\Api\Potato\VerificationController as ApiPotatoVerificationController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -130,6 +131,12 @@ Route::group(['prefix' => 'potato'], function() {
     // Countries
     Route::group(['prefix' => 'countries'], function() {
         Route::get('index', [ApiPotatoCountryController::class, 'index'])->name('api.potato.countries.index');
+    });
+
+    // Email Verification
+    Route::group(['prefix' => 'email'], function() {
+        Route::get('verify/{id}/{hash}', [ApiPotatoVerificationController::class, 'verify'])->name('verification.verify');
+        Route::post('resend', [ApiPotatoVerificationController::class, 'resend'])->name('verification.resend');
     });
 
     // Inventory

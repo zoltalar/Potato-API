@@ -4,9 +4,29 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\Base;
+use App\Models\Country;
+use App\Models\Language;
 
 class RegisterRequest extends BaseRequest
 {
+    public function validationData(): array
+    {
+        $language = Language::query()
+            ->where('code', $this->header('X-language'))
+            ->first();
+
+        $country = Country::query()
+            ->where('code', $this->header('X-country'))
+            ->first();
+
+        $extra = [
+            'language_id' => $language->id ?? null,
+            'country_id' => $country->id ?? null
+        ];
+
+        return $this->merge($extra)->toArray();
+    }
+
     public function authorize(): bool
     {
         return true;

@@ -18,8 +18,8 @@ class InventoryController extends Controller
     {
         $search = $request->search;
         $limit = $request->get('limit', 10);
-        $language = $request->get('language');
-        $country = $request->get('country');
+        $language = $request->header('X-language');
+        $country = $request->header('X-country');
 
         $inventory = Inventory::query()
             ->with(['translations' => function($query) use ($language) {

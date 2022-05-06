@@ -52,7 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL'),
+    'vue_admin_url' => env('VUE_ADMIN_URL'),
+    'nuxt_app_url' => env('NUXT_APP_URL'),
 
     'asset_url' => env('ASSET_URL', null),
 
