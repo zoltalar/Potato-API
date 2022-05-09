@@ -135,7 +135,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Email Verification
     Route::group(['prefix' => 'email'], function() {
-        Route::get('verify/{id}/{hash}', [ApiPotatoVerificationController::class, 'verify'])->name('verification.verify');
+        Route::match(['PUT', 'PATCH'], 'verify/{id}/{email}', [ApiPotatoVerificationController::class, 'verify'])->name('verification.verify');
         Route::post('resend', [ApiPotatoVerificationController::class, 'resend'])->name('verification.resend');
     });
 
