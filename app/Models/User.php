@@ -5,10 +5,10 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Contracts\Namable as NamableContract;
+use App\Notifications\VerifyEmail;
 use App\Traits\Namable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -92,29 +92,37 @@ final class User extends Base implements
 
     public function preferredLocale(): ?string
     {
-        return $this->country->code ?? null;
+        return $this->language->code ?? null;
+    }
+
+    public function emailVerificationSlug(): ?string
+    {
+        $slug = null;
+
+        switch($this->preferredLocale()) {
+            case 'en':
+                $slug = 'verify';
+                break;
+            case 'pl':
+                $slug = 'weryfikuj';
+                break;
+        }
+
+        return $slug;
     }
 
     public function sendEmailVerificationNotification(): void
     {
-        $url = $this->verificationUrl();
-
-        $notification = new VerifyEmail();
-        $notification->createUrlUsing(function() use ($url) {
-            return $url;
-        });
-
-        $this->notify($notification);
+        $this->notify(new VerifyEmail());
     }
 
     public function verificationUrl(): string
     {
         $url = $this->potatoAppBaseUrl();
-        $locale = $this->preferredLocale();
         $id = $this->getKey();
         $email = encrypt($this->getEmailForVerification());
 
-        return sprintf('%s/%s/email/verify/%d/%s', $url, $locale, $id, $email);
+        return sprintf('%s/email/verify/%d/%s', $url, $id, $email);
     }
 
     public function potatoAppBaseUrl(): string

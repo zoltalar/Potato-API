@@ -1,11 +1,13 @@
 <?php
 
 return [
+    'all_rights_reserved' => 'All Rights Reserved',
     'area' => 'Area',
     'category' => 'Category',
     'code' => 'Code',
     'email' => 'Email',
     'first_name' => 'First Name',
+    'hello' => 'Hello',
     'imperial' => 'Imperial',
     'inventory' => 'Inventory',
     'language' => 'Language',
@@ -19,8 +21,11 @@ return [
     'password' => 'Password',
     'phone' => 'Phone',
     'photo' => 'Photo',
+    'regards' => 'Regards',
     'state' => 'State',
+    'thanks' => 'Thanks',
     'type' => 'Type',
+    'verify_email_address' => 'Verify Email Address',
     'volume' => 'Volume',
     'weight' => 'Weight'
 ];

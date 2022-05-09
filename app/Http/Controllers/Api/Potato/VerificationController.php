@@ -12,6 +12,7 @@ class VerificationController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:user', 'scope:potato']);
+        $this->middleware(['throttle:8,1']);
     }
 
     public function verify(Request $request)

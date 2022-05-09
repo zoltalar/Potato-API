@@ -1,11 +1,13 @@
 <?php
 
 return [
-    'area' => 'Area',
+    'all_rights_reserved' => 'Wszystkie Prawa Zastrzeżone',
+    'area' => 'Pole',
     'category' => 'Kategoria',
-    'code' => 'Code',
+    'code' => 'Kod',
     'email' => 'Email',
     'first_name' => 'Imię',
+    'hello' => 'Witam',
     'imperial' => 'Imperial',
     'inventory' => 'Inventory',
     'language' => 'Language',
@@ -14,13 +16,16 @@ return [
     'length' => 'Length',
     'longitude' => 'Longitude',
     'metric' => 'Metric',
-    'name' => 'Name',
-    'name_in_native_language' => 'Name in Native Language',
+    'name' => 'Nazwa',
+    'name_in_native_language' => 'Nazwa w Języku Natywnym',
     'password' => 'Hasło',
-    'phone' => 'Phone',
-    'photo' => 'Photo',
-    'state' => 'State',
-    'type' => 'Type',
-    'volume' => 'Volume',
-    'weight' => 'Weight'
+    'phone' => 'Telefon',
+    'photo' => 'Zdjęcie',
+    'regards' => 'Pozdrowienia',
+    'state' => 'Stan',
+    'thanks' => 'Dzięki',
+    'type' => 'Typ',
+    'verify_email_address' => 'Zweryfikuj Swój Email',
+    'volume' => 'Pojemność',
+    'weight' => 'Waga'
 ];
