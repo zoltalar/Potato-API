@@ -16,6 +16,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\RoutesNotifications;
@@ -58,6 +59,8 @@ final class User extends Base implements
 
     protected $casts = ['active' => 'integer'];
 
+    protected $constraints = ['farms'];
+
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
@@ -81,6 +84,11 @@ final class User extends Base implements
         return $this->belongsTo(Country::class);
     }
 
+    public function farms(): HasMany
+    {
+        return $this->hasMany(Farm::class);
+    }
+
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);
@@ -93,22 +101,6 @@ final class User extends Base implements
     public function preferredLocale(): ?string
     {
         return $this->language->code ?? null;
-    }
-
-    public function emailVerificationSlug(): ?string
-    {
-        $slug = null;
-
-        switch($this->preferredLocale()) {
-            case 'en':
-                $slug = 'verify';
-                break;
-            case 'pl':
-                $slug = 'weryfikuj';
-                break;
-        }
-
-        return $slug;
     }
 
     public function sendEmailVerificationNotification(): void
