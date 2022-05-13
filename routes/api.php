@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
+use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
@@ -138,6 +139,11 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'email'], function() {
         Route::match(['PUT', 'PATCH'], 'verify/{id}/{email}', [ApiPotatoVerificationController::class, 'verify'])->name('verification.verify');
         Route::post('resend', [ApiPotatoVerificationController::class, 'resend'])->name('verification.resend');
+    });
+
+    // Farms
+    Route::group(['prefix' => 'farms'], function() {
+        Route::post('store', [ApiPotatoFarmController::class, 'store'])->name('api.potato.farms.store');
     });
 
     // Inventory
