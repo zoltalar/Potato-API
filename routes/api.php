@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 // Potato
 // --------------------------------------------------
 
+use App\Http\Controllers\Api\Potato\AccountController as ApiPotatoAccountController;
 use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
@@ -119,8 +120,13 @@ Route::group(['prefix' => '7pyn5wd'], function() {
 // Potato routes
 Route::group(['prefix' => 'potato'], function() {
 
+    // Account
+    Route::group(['prefix' => 'account'], function() {
+        Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
+    });
+
     // Authentication
-    Route::group(['prefix' => 'authentication'], function () {
+    Route::group(['prefix' => 'authentication'], function() {
         Route::post('login', [ApiPotatoAuthenticationController::class, 'login'])->name('api.potato.authentication.login');
         Route::post('logout', [ApiPotatoAuthenticationController::class, 'logout'])->name('api.potato.authentication.logout');
     });

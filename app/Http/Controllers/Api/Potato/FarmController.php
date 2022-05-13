@@ -24,6 +24,7 @@ class FarmController extends Controller
     {
         $farm = new Farm();
         $farm->fill($request->only($farm->getFillable()));
+        $farm->active = 1;
 
         auth()
             ->user()
