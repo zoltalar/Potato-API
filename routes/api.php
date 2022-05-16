@@ -123,6 +123,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Account
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
+        Route::post('update-contact-information', [ApiPotatoAccountController::class, 'updateContactInformation'])->name('api.potato.account.update-contact-information');
     });
 
     // Authentication
