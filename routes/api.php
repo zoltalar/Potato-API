@@ -151,6 +151,8 @@ Route::group(['prefix' => 'potato'], function() {
     // Farms
     Route::group(['prefix' => 'farms'], function() {
         Route::post('store', [ApiPotatoFarmController::class, 'store'])->name('api.potato.farms.store');
+        Route::get('show/{id}', [ApiPotatoFarmController::class, 'show'])->name('api.potato.farms.show');
+        Route::match(['PUT', 'PATCH'], 'update-contact-information/{id}', [ApiPotatoFarmController::class, 'updateContactInformation'])->name('api.potato.farms.update-contact-information');
     });
 
     // Inventory

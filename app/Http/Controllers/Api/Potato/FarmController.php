@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;
 use App\Models\Farm;
@@ -30,6 +31,29 @@ class FarmController extends Controller
             ->user()
             ->farms()
             ->save($farm);
+
+        return new FarmResource($farm);
+    }
+
+    public function show(int $id)
+    {
+        $farm = Farm::query()
+            ->where('user_id', auth()->id())
+            ->find($id);
+
+        return new FarmResource($farm);
+    }
+
+    public function updateContactInformation(FarmContactInformationUpdateRequest $request, int $id)
+    {
+        $farm = Farm::query()
+            ->where('user_id', auth()->id())
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->fill($request->only($farm->getFillable()));
+            $farm->update();
+        }
 
         return new FarmResource($farm);
     }

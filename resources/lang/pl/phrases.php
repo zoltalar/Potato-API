@@ -7,6 +7,7 @@ return [
     'code' => 'Kod',
     'email' => 'Email',
     'farm_name' => 'Nazwa Gospodarstwa Rolnego',
+    'fax' => 'Faks',
     'first_name' => 'Imię',
     'hello' => 'Witam',
     'imperial' => 'Imperial',
@@ -29,5 +30,6 @@ return [
     'type' => 'Typ',
     'verify_email_address' => 'Zweryfikuj Swój Email',
     'volume' => 'Pojemność',
+    'website_url' => 'Adres Strony',
     'weight' => 'Waga'
 ];

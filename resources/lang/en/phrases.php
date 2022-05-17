@@ -7,6 +7,7 @@ return [
     'code' => 'Code',
     'email' => 'Email',
     'farm_name' => 'Farm Name',
+    'fax' => 'Fax',
     'first_name' => 'First Name',
     'hello' => 'Hello',
     'imperial' => 'Imperial',
@@ -29,5 +30,6 @@ return [
     'type' => 'Type',
     'verify_email_address' => 'Verify Email Address',
     'volume' => 'Volume',
+    'website_url' => 'Website URL',
     'weight' => 'Weight'
 ];
