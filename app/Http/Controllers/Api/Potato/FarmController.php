@@ -57,4 +57,17 @@ class FarmController extends Controller
 
         return new FarmResource($farm);
     }
+
+    public function updateDescription(Request $request, int $id)
+    {
+        $farm = Farm::query()
+            ->where('user_id', auth()->id())
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->update(['description' => $request->description]);
+        }
+
+        return new FarmResource($farm);
+    }
 }

@@ -6,9 +6,11 @@ use App\Mixins\StrMixin;
 use App\Models\Base;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Farm;
 use App\Models\Inventory;
 use App\Observers\CategoryObserver;
 use App\Observers\CityObserver;
+use App\Observers\FarmObserver;
 use App\Observers\InventoryObserver;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         // Observers
         Category::observe(CategoryObserver::class);
         City::observe(CityObserver::class);
+        Farm::observe(FarmObserver::class);
         Inventory::observe(InventoryObserver::class);
     }
 }
