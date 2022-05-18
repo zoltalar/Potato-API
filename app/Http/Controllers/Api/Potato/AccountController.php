@@ -32,9 +32,6 @@ class AccountController extends Controller
 
     public function updateContactInformation(ContactInformationUpdateRequest $request)
     {
-        $user = auth()->user();
-        $user->update($request->only($user->getFillable()));
 
-        return new UserResource($user);
     }
 }

@@ -123,7 +123,6 @@ Route::group(['prefix' => 'potato'], function() {
     // Account
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
-        Route::post('update-contact-information', [ApiPotatoAccountController::class, 'updateContactInformation'])->name('api.potato.account.update-contact-information');
     });
 
     // Authentication
@@ -174,8 +173,10 @@ Route::group(['prefix' => 'potato'], function() {
     // Users
     Route::group(['prefix' => 'users'], function() {
         Route::get('current', [ApiPotatoUserController::class, 'current'])->name('api.potato.users.current');
-        Route::post('update-country', [ApiPotatoUserController::class, 'updateCountry'])->name('api.potato.users.update-country');
-        Route::post('update-language', [ApiPotatoUserController::class, 'updateLanguage'])->name('api.potato.users.update-language');
+        Route::match(['PUT', 'PATCH'], 'update-contact-information', [ApiPotatoUserController::class, 'updateContactInformation'])->name('api.potato.users.update-contact-information');
+        Route::match(['PUT', 'PATCH'], 'update-country', [ApiPotatoUserController::class, 'updateCountry'])->name('api.potato.users.update-country');
+        Route::match(['PUT', 'PATCH'],'update-language', [ApiPotatoUserController::class, 'updateLanguage'])->name('api.potato.users.update-language');
+        Route::match(['PUT', 'PATCH'], 'update-password', [ApiPotatoUserController::class, 'updatePassword'])->name('api.potato.users.update-password');
     });
 
 });

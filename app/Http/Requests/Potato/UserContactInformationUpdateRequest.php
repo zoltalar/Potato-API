@@ -7,7 +7,7 @@ use App\Models\Base;
 use App\Models\Country;
 use App\Models\Language;
 
-class ContactInformationUpdateRequest extends BaseRequest
+class UserContactInformationUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
     {
