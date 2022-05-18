@@ -83,4 +83,18 @@ class FarmController extends Controller
 
         return new FarmResource($farm);
     }
+
+    public function updateSocialMedia(Request $request, int $id)
+    {
+        $farm = Farm::query()
+            ->where('user_id', auth()->id())
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->fill($request->only($farm->getFillable()));
+            $farm->update();
+        }
+
+        return new FarmResource($farm);
+    }
 }
