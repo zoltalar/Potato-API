@@ -70,4 +70,17 @@ class FarmController extends Controller
 
         return new FarmResource($farm);
     }
+
+    public function updateOperatingHours(Request $request, int $id)
+    {
+        $farm = Farm::query()
+            ->where('user_id', auth()->id())
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->update(['operating_hours' => $request->operating_hours]);
+        }
+
+        return new FarmResource($farm);
+    }
 }
