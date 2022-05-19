@@ -10,13 +10,6 @@ use Str;
 
 trait Addressable
 {
-    /**
-     * Retrieve formatted address line.
-     *
-     * @param   string $glue
-     * @param   array $elements
-     * @return  string
-     */
     public function addressLine(string $glue = ',', array $elements = []): string
     {
         if ($glue == ',') {
@@ -71,11 +64,6 @@ trait Addressable
         return $address;
     }
 
-    /**
-     * Get related state model.
-     *
-     * @return  BelongsTo
-     */
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);

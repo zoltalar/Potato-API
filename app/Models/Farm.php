@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Contracts\Namable as NamableContract;
 use App\Traits\Namable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Str;
 
 final class Farm extends Base implements NamableContract
@@ -95,6 +96,11 @@ final class Farm extends Base implements NamableContract
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function addresses(): MorphMany
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
 
     public function user(): BelongsTo
     {

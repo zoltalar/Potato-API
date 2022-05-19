@@ -7,5 +7,6 @@ return [
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta to nie są wymagane żadne dalsze działania.',
     'hi_name' => 'Cześć :name',
+    'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
     'unique_translation_error' => 'Tłumaczenie już istnieje'
 ];

@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'google' => [
+        'key' => env('GOOGLE_GEOCODING_API_KEY'),
+        'address_coordinates' => env('GOOGLE_ADDRESS_COORDINATES'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

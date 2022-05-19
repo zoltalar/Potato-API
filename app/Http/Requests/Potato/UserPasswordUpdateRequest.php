@@ -6,6 +6,7 @@ use App\Http\Requests\BaseRequest;
 use App\Models\Base;
 use App\Models\Country;
 use App\Models\Language;
+use App\Rules\MatchOldUserPassword;
 
 class UserPasswordUpdateRequest extends BaseRequest
 {
@@ -17,7 +18,7 @@ class UserPasswordUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'password_current' => ['required'],
+            'password_current' => ['required', new MatchOldUserPassword()],
             'password' => ['required', 'min:7', 'confirmed']
         ];
     }
