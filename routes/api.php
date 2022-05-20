@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 // --------------------------------------------------
 
 use App\Http\Controllers\Api\Potato\AccountController as ApiPotatoAccountController;
+use App\Http\Controllers\Api\Potato\AddressController as ApiPotatoAddressController;
 use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
@@ -123,6 +124,12 @@ Route::group(['prefix' => 'potato'], function() {
     // Account
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
+    });
+
+    // Addresses
+    Route::group(['prefix' => 'addresses'], function() {
+        Route::post('save/{type}/{id}', [ApiPotatoAddressController::class, 'save'])->name('api.potato.addresses.save');
+        Route::get('meta', [ApiPotatoAddressController::class, 'meta'])->name('api.potato.addresses.meta');
     });
 
     // Authentication

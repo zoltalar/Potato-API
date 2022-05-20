@@ -15,6 +15,8 @@ final class Address extends Base implements AddressableContract
     const TYPE_LOCATION = 1;
     const TYPE_MAILING = 2;
 
+    const TYPE_ADDRESSABLE_FARM = 'farm';
+
     protected $fillable = [
         'address',
         'address_2',
@@ -27,6 +29,19 @@ final class Address extends Base implements AddressableContract
         'directions',
         'type'
     ];
+
+    // --------------------------------------------------
+    // Accessors and Mutators
+    // --------------------------------------------------
+
+    public function setDirectionsAttribute($value): void
+    {
+        if ( ! empty($value)) {
+            $value = strip_tags($value);
+        }
+
+        $this->attributes['directions'] = $value;
+    }
 
     // --------------------------------------------------
     // Relationships
@@ -44,5 +59,20 @@ final class Address extends Base implements AddressableContract
     public function doAddressCoordinates(): bool
     {
         return (bool) config('services.google.address_coordinates');
+    }
+
+    public static function addressableTypes(): array
+    {
+        return [
+            self::TYPE_ADDRESSABLE_FARM
+        ];
+    }
+
+    public static function types(): array
+    {
+        return [
+            self::TYPE_LOCATION => __('phrases.location'),
+            self::TYPE_MAILING => __('phrases.mailing')
+        ];
     }
 }
