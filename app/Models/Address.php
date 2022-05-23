@@ -71,8 +71,8 @@ final class Address extends Base implements AddressableContract
     public static function types(): array
     {
         return [
-            self::TYPE_LOCATION => __('phrases.location'),
-            self::TYPE_MAILING => __('phrases.mailing')
+            self::TYPE_LOCATION => 'location',
+            self::TYPE_MAILING => 'mailing'
         ];
     }
 }

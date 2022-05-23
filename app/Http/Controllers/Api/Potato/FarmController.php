@@ -38,6 +38,10 @@ class FarmController extends Controller
     public function show(int $id)
     {
         $farm = Farm::query()
+            ->with([
+                'addresses',
+                'addresses.state'
+            ])
             ->where('user_id', auth()->id())
             ->find($id);
 
