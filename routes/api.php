@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthent
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
+use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
@@ -162,6 +163,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoFarmController::class, 'updateDescription'])->name('api.potato.farms.update-description');
         Route::match(['PUT', 'PATCH'], 'update-operating-hours/{id}', [ApiPotatoFarmController::class, 'updateOperatingHours'])->name('api.potato.farms.update-operating-hours');
         Route::match(['PUT', 'PATCH'], 'update-social-media/{id}', [ApiPotatoFarmController::class, 'updateSocialMedia'])->name('api.potato.farms.update-social-media');
+    });
+
+    // Images
+    Route::group(['prefix' => 'images'], function() {
+        Route::post('store/{type}/{id}', [ApiPotatoImageController::class, 'store'])->name('api.potato.images.store');
     });
 
     // Inventory

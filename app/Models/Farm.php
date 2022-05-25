@@ -102,6 +102,11 @@ final class Farm extends Base implements NamableContract
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

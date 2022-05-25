@@ -40,7 +40,12 @@ class FarmController extends Controller
         $farm = Farm::query()
             ->with([
                 'addresses',
-                'addresses.state'
+                'addresses.state',
+                'images' => function($query) {
+                    $query
+                        ->orderBy('primary', 'desc')
+                        ->orderBy('cover', 'desc');
+                }
             ])
             ->where('user_id', auth()->id())
             ->find($id);

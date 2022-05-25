@@ -36,6 +36,7 @@ return [
     'state' => 'Stan',
     'thanks' => 'Dzięki',
     'this_field_is_required' => 'To pole jest wymagane.',
+    'title' => 'Tytuł',
     'town' => 'Miejscowość',
     'type' => 'Typ',
     'verify_email_address' => 'Zweryfikuj Swój Email',

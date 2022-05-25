@@ -36,6 +36,7 @@ return [
     'state' => 'State',
     'thanks' => 'Thanks',
     'this_field_is_required' => 'This field is required',
+    'title' => 'Title',
     'town' => 'Town',
     'type' => 'Type',
     'verify_email_address' => 'Verify Email Address',
