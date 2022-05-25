@@ -56,9 +56,9 @@ final class Address extends Base implements AddressableContract
     // Other
     // --------------------------------------------------
 
-    public function doAddressCoordinates(): bool
+    public function resolveAddressCoordinates(): bool
     {
-        return (bool) config('services.google.address_coordinates');
+        return (bool) config('services.google.resolve_address_coordinates');
     }
 
     public static function addressableTypes(): array

@@ -16,7 +16,7 @@ return [
 
     'google' => [
         'key' => env('GOOGLE_GEOCODING_API_KEY'),
-        'address_coordinates' => env('GOOGLE_ADDRESS_COORDINATES'),
+        'resolve_address_coordinates' => env('GOOGLE_RESOLVE_ADDRESS_COORDINATES'),
     ],
 
     'mailgun' => [

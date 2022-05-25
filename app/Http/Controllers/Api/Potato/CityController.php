@@ -16,6 +16,12 @@ class CityController extends Controller
         $search = $request->search;
         $limit = $request->get('limit', 10);
         $country = $request->header('X-country');
+        $countryId = $request->country_id;
+        $stateId = $request->state_id;
+
+        if ( ! empty($countryId)) {
+            $country = null;
+        }
 
         $query = City::query()
             ->with(['state'])
@@ -28,6 +34,14 @@ class CityController extends Controller
                 return $query->whereHas('state.country', function($query) use ($country) {
                     $query->where('code', $country);
                 });
+            })
+            ->when($countryId, function($query) use ($countryId) {
+                return $query->whereHas('state', function($query) use ($countryId) {
+                    $query->where('country_id', $countryId);
+                });
+            })
+            ->when($stateId, function($query) use ($stateId) {
+                $query->where('state_id', $stateId);
             })
             ->orders('name', 'asc')
             ->take($limit);
