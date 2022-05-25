@@ -27,6 +27,7 @@ return [
     'name' => 'Nazwa',
     'name_in_native_language' => 'Nazwa w Języku Natywnym',
     'new_password' => 'Nowe Hasło',
+    'no_title' => 'Bez Tytułu',
     'password' => 'Hasło',
     'phone' => 'Telefon',
     'photo' => 'Zdjęcie',

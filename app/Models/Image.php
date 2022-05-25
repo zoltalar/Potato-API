@@ -28,9 +28,31 @@ final class Image extends Base
         'cover' => 'integer'
     ];
 
+    protected $appends = ['file_url'];
+
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
+
+    public function getFileUrlAttribute($value): ?string
+    {
+        $file = $this->attributes['file'] ?? null;
+
+        if ( ! empty($file)) {
+            return asset("storage/farms/{$file}");
+        }
+
+        return null;
+    }
+
+    public function getTitleAttribute($value): ?string
+    {
+        if (empty($value)) {
+            $value = sprintf('(%s)', mb_strtolower(__('phrases.no_title')));
+        }
+
+        return $value;
+    }
 
     public function setTitleAttribute($value): void
     {

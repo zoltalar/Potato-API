@@ -27,6 +27,7 @@ return [
     'name' => 'Name',
     'name_in_native_language' => 'Name in Native Language',
     'new_password' => 'New Password',
+    'no_title' => 'No Title',
     'password' => 'Password',
     'phone' => 'Phone',
     'photo' => 'Photo',
