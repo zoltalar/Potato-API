@@ -168,6 +168,8 @@ Route::group(['prefix' => 'potato'], function() {
     // Images
     Route::group(['prefix' => 'images'], function() {
         Route::post('store/{type}/{id}', [ApiPotatoImageController::class, 'store'])->name('api.potato.images.store');
+        Route::match(['PUT', 'PATCH'], 'update/{id}/{type}/{imageableId}', [ApiPotatoImageController::class, 'update'])->name('api.potato.images.update');
+        Route::delete('{id}/{type}/{imageableId}', [ApiPotatoImageController::class, 'destroy'])->name('api.potato.images.destroy');
     });
 
     // Inventory
