@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthentic
 use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryController;
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
+use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
@@ -82,6 +83,11 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Countries
     Route::group(['prefix' => 'countries'], function() {
         Route::get('index', [ApiAdminCountryController::class, 'index'])->name('api.admin.countries.index');
+    });
+
+    // Farms
+    Route::group(['prefix' => 'farms'], function() {
+       Route::get('index', [ApiAdminFarmController::class, 'index'])->name('api.admin.farms.index');
     });
 
     // Inventory

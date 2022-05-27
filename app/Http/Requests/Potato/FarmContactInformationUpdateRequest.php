@@ -24,6 +24,7 @@ class FarmContactInformationUpdateRequest extends BaseRequest
             'last_name' => ['nullable', 'string', 'max:100'],
             'phone' => ['nullable', 'max:20'],
             'fax' => ['nullable', 'max:20'],
+            'email' => ['required', 'email', "max:{$length}"],
             'website' => ['nullable', "max:{$length}"]
         ];
     }
@@ -36,6 +37,7 @@ class FarmContactInformationUpdateRequest extends BaseRequest
             'last_name' => mb_strtolower(__('phrases.last_name')),
             'phone' => mb_strtolower(__('phrases.phone')),
             'fax' => mb_strtolower(__('phrases.fax')),
+            'email' => mb_strtolower(__('phrases.email')),
             'website' => mb_strtolower(__('phrases.website_url'))
         ];
     }
