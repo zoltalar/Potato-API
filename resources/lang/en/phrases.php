@@ -9,6 +9,7 @@ return [
     'code' => 'Code',
     'confirm_new_password' => 'Confirm New Password',
     'current_password' => 'Current Password',
+    'deactivation_reason' => 'Deactivation Reason',
     'email' => 'Email',
     'farm_name' => 'Farm Name',
     'fax' => 'Fax',

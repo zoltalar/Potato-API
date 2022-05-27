@@ -37,9 +37,13 @@ final class Image extends Base
     public function getFileUrlAttribute($value): ?string
     {
         $file = $this->attributes['file'] ?? null;
+        $class = $this->imageable()->getRelated()->getMorphClass();
 
         if ( ! empty($file)) {
-            return asset("storage/farms/{$file}");
+
+            if ($class === Farm::class) {
+                return asset("storage/farms/{$file}");
+            }
         }
 
         return null;
@@ -61,6 +65,28 @@ final class Image extends Base
         }
 
         $this->attributes['title'] = $value;
+    }
+
+    public function getVariationsAttribute($value): array
+    {
+        if ( ! empty($value)) {
+            $value = json_decode($value, true);
+
+            if (is_array($value)) {
+                $class = $this->imageable()->getRelated()->getMorphClass();
+
+                foreach ($value as $crop => & $data) {
+
+                    if ($class === Farm::class) {
+                        $data['file_url'] = asset("storage/farms/{$data['file']}");
+                    } else {
+                        $data['file_url'] = null;
+                    }
+                }
+            }
+        }
+
+        return $value;
     }
 
     public function setVariationsAttribute($value): void

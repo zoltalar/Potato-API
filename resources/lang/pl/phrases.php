@@ -9,6 +9,7 @@ return [
     'code' => 'Kod',
     'confirm_new_password' => 'Potwierdź Nowe Hasło',
     'current_password' => 'Obecne Hasło',
+    'deactivation_reason' => 'Powód do Dezaktywacji',
     'email' => 'Email',
     'farm_name' => 'Nazwa Gospodarstwa Rolnego',
     'fax' => 'Faks',

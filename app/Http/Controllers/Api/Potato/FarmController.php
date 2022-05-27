@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
+use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;
 use App\Models\Farm;
@@ -47,7 +48,6 @@ class FarmController extends Controller
                         ->orderBy('cover', 'desc');
                 }
             ])
-            ->where('user_id', auth()->id())
             ->find($id);
 
         return new FarmResource($farm);
@@ -55,8 +55,9 @@ class FarmController extends Controller
 
     public function updateContactInformation(FarmContactInformationUpdateRequest $request, int $id)
     {
-        $farm = Farm::query()
-            ->where('user_id', auth()->id())
+        $farm = auth()
+            ->user()
+            ->farms()
             ->find($id);
 
         if ($farm !== null) {
@@ -69,8 +70,9 @@ class FarmController extends Controller
 
     public function updateDescription(Request $request, int $id)
     {
-        $farm = Farm::query()
-            ->where('user_id', auth()->id())
+        $farm = auth()
+            ->user()
+            ->farms()
             ->find($id);
 
         if ($farm !== null) {
@@ -82,8 +84,9 @@ class FarmController extends Controller
 
     public function updateOperatingHours(Request $request, int $id)
     {
-        $farm = Farm::query()
-            ->where('user_id', auth()->id())
+        $farm = auth()
+            ->user()
+            ->farms()
             ->find($id);
 
         if ($farm !== null) {
@@ -95,12 +98,31 @@ class FarmController extends Controller
 
     public function updateSocialMedia(Request $request, int $id)
     {
-        $farm = Farm::query()
-            ->where('user_id', auth()->id())
+        $farm = auth()
+            ->user()
+            ->farms()
             ->find($id);
 
         if ($farm !== null) {
             $farm->fill($request->only($farm->getFillable()));
+            $farm->update();
+        }
+
+        return new FarmResource($farm);
+    }
+
+    public function deactivate(FarmDeactivateRequest $request, int $id)
+    {
+        $farm = auth()
+            ->user()
+            ->farms()
+            ->active()
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->fill($request->only($farm->getFillable()));
+            $farm->active = 0;
+            $farm->deactivated_at = $farm->freshTimestamp();
             $farm->update();
         }
 

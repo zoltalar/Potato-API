@@ -163,6 +163,7 @@ Route::group(['prefix' => 'potato'], function() {
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoFarmController::class, 'updateDescription'])->name('api.potato.farms.update-description');
         Route::match(['PUT', 'PATCH'], 'update-operating-hours/{id}', [ApiPotatoFarmController::class, 'updateOperatingHours'])->name('api.potato.farms.update-operating-hours');
         Route::match(['PUT', 'PATCH'], 'update-social-media/{id}', [ApiPotatoFarmController::class, 'updateSocialMedia'])->name('api.potato.farms.update-social-media');
+        Route::match(['PUT', 'PATCH'], 'deactivate/{id}', [ApiPotatoFarmController::class, 'deactivate'])->name('api.potato.farms.deactivate');
     });
 
     // Images

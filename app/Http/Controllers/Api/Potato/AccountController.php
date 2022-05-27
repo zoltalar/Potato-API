@@ -24,6 +24,7 @@ class AccountController extends Controller
         $farms = auth()
             ->user()
             ->farms()
+            ->with(['images'])
             ->orderBy('name', 'asc')
             ->get();
 
