@@ -88,6 +88,8 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Farms
     Route::group(['prefix' => 'farms'], function() {
        Route::get('index', [ApiAdminFarmController::class, 'index'])->name('api.admin.farms.index');
+        Route::match(['PUT', 'PATCH'], 'update/{farm}', [ApiAdminFarmController::class, 'update'])->name('api.admin.farms.update');
+       Route::match(['PUT', 'PATCH'], 'activate/{farm}', [ApiAdminFarmController::class, 'activate'])->name('api.admin.farms.activate');
     });
 
     // Inventory

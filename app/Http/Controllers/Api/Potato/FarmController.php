@@ -7,12 +7,12 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmDeactivateRequest;
+use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
+use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
+use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;
 use App\Models\Farm;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 
 class FarmController extends Controller
@@ -68,7 +68,7 @@ class FarmController extends Controller
         return new FarmResource($farm);
     }
 
-    public function updateDescription(Request $request, int $id)
+    public function updateDescription(FarmDescriptionUpdateRequest $request, int $id)
     {
         $farm = auth()
             ->user()
@@ -82,7 +82,7 @@ class FarmController extends Controller
         return new FarmResource($farm);
     }
 
-    public function updateOperatingHours(Request $request, int $id)
+    public function updateOperatingHours(FarmOperatingHoursUpdateRequest $request, int $id)
     {
         $farm = auth()
             ->user()
@@ -96,7 +96,7 @@ class FarmController extends Controller
         return new FarmResource($farm);
     }
 
-    public function updateSocialMedia(Request $request, int $id)
+    public function updateSocialMedia(FarmSocialMediaUpdateRequest $request, int $id)
     {
         $farm = auth()
             ->user()

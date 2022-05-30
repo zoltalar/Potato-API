@@ -19,7 +19,7 @@ class FarmStoreRequest extends BaseRequest
         $length = Base::DEFAULT_STRING_LENGTH;
 
         return [
-            'name' => ['required', 'string', "max:{$length}"],
+            'name' => ['required', "max:{$length}"],
             'promote' => ['required']
         ];
     }
