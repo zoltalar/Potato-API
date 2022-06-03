@@ -13,7 +13,6 @@ use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;
 use App\Models\Farm;
-use Illuminate\Http\Request;
 
 class FarmController extends Controller
 {
@@ -42,10 +41,12 @@ class FarmController extends Controller
             ->with([
                 'addresses',
                 'addresses.state',
+                'addresses.state.country',
                 'images' => function($query) {
                     $query
                         ->orderBy('primary', 'desc')
-                        ->orderBy('cover', 'desc');
+                        ->orderBy('cover', 'desc')
+                        ->orderBy('id', 'asc');
                 }
             ])
             ->find($id);

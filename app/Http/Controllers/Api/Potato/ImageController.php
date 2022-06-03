@@ -26,8 +26,9 @@ class ImageController extends Controller
         $imageable = null;
 
         if ($type === Image::TYPE_IMAGEABLE_FARM) {
-            $imageable = Farm::query()
-                ->where('user_id', auth()->id())
+            $imageable = auth()
+                ->user()
+                ->farms()
                 ->find($id);
         }
 
@@ -56,9 +57,10 @@ class ImageController extends Controller
         $imageable = null;
 
         if ($type === Image::TYPE_IMAGEABLE_FARM) {
-            $imageable = Farm::query()
+            $imageable = auth()
+                ->user()
+                ->farms()
                 ->with(['images'])
-                ->where('user_id', auth()->id())
                 ->find($imageableId);
         }
 
@@ -82,15 +84,96 @@ class ImageController extends Controller
         return new ImageResource($image);
     }
 
+    public function updateCover(int $id, string $type, int $imageableId)
+    {
+        $image = null;
+        $imageable = null;
+
+        if ($type === Image::TYPE_IMAGEABLE_FARM) {
+            $imageable = auth()
+                ->user()
+                ->farms()
+                ->with(['images'])
+                ->find($imageableId);
+        }
+
+        if ($imageable !== null) {
+
+            if ($imageable->images->contains('id', $id)) {
+                $image = $imageable
+                    ->images
+                    ->filter(function($image) use ($id) {
+                        return $image->getKey() === $id;
+                    })
+                    ->first();
+
+                if ($image !== null) {
+                    $image->primary = 0;
+                    $image->cover = 1;
+
+                    if ($image->update()) {
+                        $imageable
+                            ->images()
+                            ->where('id', '!=', $image->id)
+                            ->update(['cover' => 0]);
+                    }
+                }
+            }
+        }
+
+        return new ImageResource($image);
+    }
+
+    public function updatePrimary(int $id, string $type, int $imageableId)
+    {
+        $image = null;
+        $imageable = null;
+
+        if ($type === Image::TYPE_IMAGEABLE_FARM) {
+            $imageable = auth()
+                ->user()
+                ->farms()
+                ->with(['images'])
+                ->find($imageableId);
+        }
+
+        if ($imageable !== null) {
+
+            if ($imageable->images->contains('id', $id)) {
+                $image = $imageable
+                    ->images
+                    ->filter(function($image) use ($id) {
+                        return $image->getKey() === $id;
+                    })
+                    ->first();
+
+                if ($image !== null) {
+                    $image->primary = 1;
+                    $image->cover = 0;
+
+                    if ($image->update()) {
+                        $imageable
+                            ->images()
+                            ->where('id', '!=', $image->id)
+                            ->update(['primary' => 0]);
+                    }
+                }
+            }
+        }
+
+        return new ImageResource($image);
+    }
+
     public function destroy(int $id, string $type, int $imageableId)
     {
         $status = 403;
         $imageable = null;
 
         if ($type === Image::TYPE_IMAGEABLE_FARM) {
-            $imageable = Farm::query()
+            $imageable = auth()
+                ->user()
+                ->farms()
                 ->with(['images'])
-                ->where('user_id', auth()->id())
                 ->find($imageableId);
         }
 
