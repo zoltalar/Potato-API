@@ -18,7 +18,7 @@ class FarmController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['show']);
     }
 
     public function store(FarmStoreRequest $request)
