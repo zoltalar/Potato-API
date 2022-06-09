@@ -150,6 +150,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Cities
     Route::group(['prefix' => 'cities'], function() {
         Route::get('index', [ApiPotatoCityController::class, 'index'])->name('api.potato.cities.index');
+        Route::get('locate/{latitude}/{longitude}', [ApiPotatoCityController::class, 'locate'])->name('api.potato.cities.locate');
     });
 
     // Countries

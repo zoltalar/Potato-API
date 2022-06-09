@@ -5,12 +5,17 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Contracts\Addressable as AddressableContract;
+use App\Contracts\Coordinable as CoordinableContract;
 use App\Traits\Addressable;
+use App\Traits\Coordinable;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-final class Address extends Base implements AddressableContract
+final class Address extends Base implements
+    AddressableContract,
+    CoordinableContract
 {
-    use Addressable;
+    use Addressable,
+        Coordinable;
 
     const TYPE_LOCATION = 1;
     const TYPE_MAILING = 2;

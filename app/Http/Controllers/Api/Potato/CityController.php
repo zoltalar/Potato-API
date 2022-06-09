@@ -50,4 +50,21 @@ class CityController extends Controller
 
         return CityResource::collection($cities);
     }
+
+    public function locate(Request $request, float $latitude, float $longitude)
+    {
+        $city = City::query()
+            ->select([
+                'id',
+                'name',
+                'latitude',
+                'longitude'
+            ])
+            ->haversine($latitude, $longitude)
+            ->havingRaw('distance < ?', [20])
+            ->orderBy('distance', 'asc')
+            ->first();
+
+        return response()->json(['city' => $city]);
+    }
 }
