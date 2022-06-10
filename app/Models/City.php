@@ -13,6 +13,9 @@ final class City extends Base implements CoordinableContract
 {
     use Coordinable;
 
+    const DEFAULT_RADIUS_KM = 30;
+    const DEFAULT_RADIUS_MI = 20;
+
     protected $fillable = [
         'name',
         'name_ascii',
@@ -42,6 +45,17 @@ final class City extends Base implements CoordinableContract
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public static function radius(string $unit): int
+    {
+        switch($unit) {
+            default:
+            case Unit::ABBREVIATION_KILOMETER:
+                return self::DEFAULT_RADIUS_KM;
+            case Unit::ABBREVIATION_MILE:
+                return self::DEFAULT_RADIUS_MI;
+        }
+    }
 
     public static function timezones(): array
     {

@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
 use App\Models\City;
+use App\Models\Country;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -53,18 +55,39 @@ class CityController extends Controller
 
     public function locate(Request $request, float $latitude, float $longitude)
     {
-        $city = City::query()
+        $abbreviation = Unit::ABBREVIATION_KILOMETER;
+        $limit = $request->get('limit', 10);
+
+        $country = Country::query()
+            ->with(['units'])
+            ->where('code', $request->header('X-country'))
+            ->first();
+
+        if ($country !== null) {
+            $unit = $country
+                ->units
+                ->filter(function($unit) {
+                    return $unit->type === Unit::TYPE_LENGTH;
+                })
+                ->first();
+
+            if ($unit !== null) {
+                $abbreviation = $unit->abbreviation;
+            }
+        }
+
+        $query = City::query()
             ->select([
                 'id',
                 'name',
                 'latitude',
                 'longitude'
             ])
-            ->haversine($latitude, $longitude)
-            ->havingRaw('distance < ?', [20])
+            ->haversine($latitude, $longitude, $abbreviation)
+            ->havingRaw('distance < ?', [City::radius($abbreviation)])
             ->orderBy('distance', 'asc')
-            ->first();
+            ->take($limit);
 
-        return response()->json(['city' => $city]);
+        return CityResource::collection($query->get());
     }
 }

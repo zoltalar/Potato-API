@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
 use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
+use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
 use App\Http\Controllers\Api\Potato\VerificationController as ApiPotatoVerificationController;
@@ -192,6 +193,11 @@ Route::group(['prefix' => 'potato'], function() {
     // Languages
     Route::group(['prefix' => 'languages'], function() {
         Route::get('index', [ApiPotatoLanguageController::class, 'index'])->name('api.potato.languages.index');
+    });
+
+    // Messages
+    Route::group(['prefix' => 'messages'], function() {
+        Route::post('store/{type}/{id}', [ApiPotatoMessageController::class, 'store'])->name('api.potato.messages.store');
     });
 
     // Registration

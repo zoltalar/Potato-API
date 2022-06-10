@@ -9,5 +9,6 @@ return [
     'farm_deactivated_error' => 'This farm is already deactivated.',
     'hi_name' => 'Hi :name',
     'match_old_user_password_error' => 'The :attribute does not match user password.',
+    'message_to_self_error' => 'You cannot send messages to yourself.',
     'unique_translation_error' => 'Translation already exists'
 ];
