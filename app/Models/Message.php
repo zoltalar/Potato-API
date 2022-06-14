@@ -15,6 +15,7 @@ final class Message extends Base
         'content',
         'sender_id',
         'recipient_id',
+        'reply_id',
         'read_at'
     ];
 
@@ -30,6 +31,11 @@ final class Message extends Base
     public function recipient(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reply(): BelongsTo
+    {
+        return $this->belongsTo(Message::class);
     }
 
     public function sender(): BelongsTo

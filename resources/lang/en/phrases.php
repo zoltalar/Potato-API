@@ -28,6 +28,7 @@ return [
     'longitude' => 'Longitude',
     'mailing' => 'Mailing',
     'message' => 'Message',
+    'message_reply' => 'Message Reply',
     'metric' => 'Metric',
     'name' => 'Name',
     'name_in_native_language' => 'Name in Native Language',

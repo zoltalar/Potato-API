@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Potato\MessageReplyRequest;
 use App\Http\Requests\Potato\MessageStoreRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Farm;
@@ -32,6 +33,18 @@ class MessageController extends Controller
             $message->recipient_id = $messageable->user_id;
             $message->save();
         }
+
+        return new MessageResource($message);
+    }
+
+    public function reply(MessageReplyRequest $request, Message $reply)
+    {
+        $message = new Message();
+        $message->fill($request->only($message->getFillable()));
+        $message->subject = 'Re: ' . $reply->subject;
+        $message->reply_id = $reply->id;
+        $message->recipient_id = $reply->sender_id;
+        $message->save();
 
         return new MessageResource($message);
     }
