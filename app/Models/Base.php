@@ -37,6 +37,18 @@ abstract class Base extends Model
     }
 
     /**
+     * Select model's specific columns by exclusion.
+     *
+     * @param   Builder $query
+     * @param   array $except
+     * @return  Builder
+     */
+    public function scopeExcept(Builder $query, array $except = []): Builder
+    {
+        return $query->select(array_diff(Schema::getColumnListing($this->getTable()), $except));
+    }
+
+    /**
      * Dynamic scope for performing query string aware orderBy statements.
      *
      * @param   Builder $query

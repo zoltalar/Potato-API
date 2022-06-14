@@ -32,6 +32,7 @@ return [
     'name' => 'Nazwa',
     'name_in_native_language' => 'Nazwa w Języku Natywnym',
     'new_password' => 'Nowe Hasło',
+    'no_subject' => 'Brak Tematu',
     'no_title' => 'Bez Tytułu',
     'operating_hours' => 'Godziny Otwarcia',
     'password' => 'Hasło',

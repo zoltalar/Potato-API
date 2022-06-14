@@ -32,6 +32,7 @@ return [
     'name' => 'Name',
     'name_in_native_language' => 'Name in Native Language',
     'new_password' => 'New Password',
+    'no_subject' => 'No Subject',
     'no_title' => 'No Title',
     'operating_hours' => 'Operating Hours',
     'password' => 'Password',

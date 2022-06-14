@@ -6,14 +6,10 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\MessageStoreRequest;
-use App\Http\Resources\CityResource;
 use App\Http\Resources\MessageResource;
-use App\Models\City;
-use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Message;
-use App\Models\Unit;
-use Illuminate\Http\Request;
+use Exception;
 
 class MessageController extends Controller
 {
@@ -38,5 +34,52 @@ class MessageController extends Controller
         }
 
         return new MessageResource($message);
+    }
+
+    public function show(int $id)
+    {
+        $message = auth()
+            ->user()
+            ->receivedMessages()
+            ->with([
+                'sender' => function($query) {
+                    $query->select([
+                        'id',
+                        'first_name',
+                        'last_name'
+                    ]);
+                }
+            ])
+            ->find($id);
+
+        if ($message !== null) {
+
+            if (empty($message->read_at)) {
+                $message->update(['read_at' => $message->freshTimestamp()]);
+            }
+        }
+
+        return new MessageResource($message);
+    }
+
+    public function destroy(int $id)
+    {
+        $status = 403;
+
+        $message = auth()
+            ->user()
+            ->receivedMessages()
+            ->find($id);
+
+        if ($message !== null) {
+
+            try {
+                if ($message->delete()) {
+                    $status = 204;
+                }
+            } catch (Exception $e) {}
+        }
+
+        return response()->json(null, $status);
     }
 }

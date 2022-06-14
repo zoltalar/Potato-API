@@ -24,7 +24,7 @@ class MessageStoreRequest extends BaseRequest
 
         return [
             'subject' => ['nullable', "max:{$length}", new MessageToSelf($type, $id)],
-            'content' => ['required', 'max:500']
+            'content' => ['required', 'max:1000']
         ];
     }
 

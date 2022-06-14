@@ -19,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->text('content');
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('recipient_id')->unsigned();
+            $table->bigInteger('reply_id')->unsigned()->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
@@ -32,6 +33,12 @@ class CreateMessagesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('reply_id')
+                ->references('id')
+                ->on('messages')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
         });
     }

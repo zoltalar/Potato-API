@@ -134,6 +134,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Account
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
+        Route::get('messages', [ApiPotatoAccountController::class, 'messages'])->name('api.potato.account.messages');
     });
 
     // Addresses
@@ -198,6 +199,8 @@ Route::group(['prefix' => 'potato'], function() {
     // Messages
     Route::group(['prefix' => 'messages'], function() {
         Route::post('store/{type}/{id}', [ApiPotatoMessageController::class, 'store'])->name('api.potato.messages.store');
+        Route::get('show/{id}', [ApiPotatoMessageController::class, 'show'])->name('api.potato.messages.show');
+        Route::delete('{id}', [ApiPotatoMessageController::class, 'destroy'])->name('api.potato.messages.destroy');
     });
 
     // Registration

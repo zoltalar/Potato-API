@@ -14,7 +14,8 @@ final class Message extends Base
         'subject',
         'content',
         'sender_id',
-        'recipient_id'
+        'recipient_id',
+        'read_at'
     ];
 
     protected $casts = [
@@ -34,5 +35,18 @@ final class Message extends Base
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    // --------------------------------------------------
+    // Accessors and Mutators
+    // --------------------------------------------------
+
+    public function getSubjectAttribute($value): ?string
+    {
+        if (empty($value)) {
+            $value = sprintf('(%s)', mb_strtolower(__('phrases.no_subject')));
+        }
+
+        return $value;
     }
 }

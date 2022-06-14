@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FarmResource;
+use App\Http\Resources\MessageResource;
 
 class AccountController extends Controller
 {
@@ -31,5 +32,25 @@ class AccountController extends Controller
             ->get();
 
         return FarmResource::collection($farms);
+    }
+
+    public function messages()
+    {
+        $messages = auth()
+            ->user()
+            ->receivedMessages()
+            ->with([
+                'sender' => function($query) {
+                    $query->select([
+                        'id',
+                        'first_name',
+                        'last_name'
+                    ]);
+                }
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return MessageResource::collection($messages);
     }
 }
