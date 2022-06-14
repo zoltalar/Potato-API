@@ -67,7 +67,7 @@ final class Image extends Base
         $this->attributes['title'] = $value;
     }
 
-    public function getVariationsAttribute($value): array
+    public function getVariationsAttribute($value): ?array
     {
         if ( ! empty($value)) {
             $value = json_decode($value, true);
