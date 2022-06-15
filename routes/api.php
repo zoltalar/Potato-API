@@ -202,6 +202,7 @@ Route::group(['prefix' => 'potato'], function() {
         Route::post('reply/{reply}', [ApiPotatoMessageController::class, 'reply'])->name('api.potato.messages.reply');
         Route::get('show/{id}', [ApiPotatoMessageController::class, 'show'])->name('api.potato.messages.show');
         Route::delete('{id}', [ApiPotatoMessageController::class, 'destroy'])->name('api.potato.messages.destroy');
+        Route::post('destroy-batch', [ApiPotatoMessageController::class, 'destroyBatch'])->name('api.potato.messages.destroy-batch');
     });
 
     // Registration

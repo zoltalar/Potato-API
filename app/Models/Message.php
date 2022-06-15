@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Str;
 
 final class Message extends Base
 {
@@ -54,5 +55,20 @@ final class Message extends Base
         }
 
         return $value;
+    }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public function replySubject(): ?string
+    {
+        $subject = $this->subject;
+
+        if ( ! Str::startsWith($subject, 'Re:')) {
+            $prefix = 'Re: ';
+        }
+
+        return $prefix ?? '' . $subject;
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Resources\MessageResource;
 use App\Models\Farm;
 use App\Models\Message;
 use Exception;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -41,7 +42,7 @@ class MessageController extends Controller
     {
         $message = new Message();
         $message->fill($request->only($message->getFillable()));
-        $message->subject = 'Re: ' . $reply->subject;
+        $message->subject = $reply->replySubject();
         $message->reply_id = $reply->id;
         $message->recipient_id = $reply->sender_id;
         $message->save();
@@ -91,6 +92,29 @@ class MessageController extends Controller
                     $status = 204;
                 }
             } catch (Exception $e) {}
+        }
+
+        return response()->json(null, $status);
+    }
+
+    public function destroyBatch(Request $request)
+    {
+        $status = 403;
+        $ids = $request->get('ids', []);
+
+        if (count($ids) > 0) {
+            $messages = auth()
+                ->user()
+                ->receivedMessages()
+                ->findMany($ids);
+
+            if (count($messages) > 0) {
+                $count = Message::destroy($messages->pluck('id')->toArray());
+
+                if ($count > 0) {
+                    $status = 204;
+                }
+            }
         }
 
         return response()->json(null, $status);
