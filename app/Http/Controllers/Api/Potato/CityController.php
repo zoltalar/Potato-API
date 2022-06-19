@@ -81,7 +81,8 @@ class CityController extends Controller
                 'id',
                 'name',
                 'latitude',
-                'longitude'
+                'longitude',
+                'state_id'
             ])
             ->haversine($latitude, $longitude, $abbreviation)
             ->havingRaw('distance < ?', [City::radius($abbreviation)])

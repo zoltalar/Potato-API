@@ -42,6 +42,7 @@ return [
     'pinterest' => 'Pinterest',
     'postal_code' => 'Postal Code',
     'promote_this_farm' => 'Promote this Farm',
+    'quantity' => 'Quantity',
     'regards' => 'Regards',
     'state' => 'State',
     'subject' => 'Subject',

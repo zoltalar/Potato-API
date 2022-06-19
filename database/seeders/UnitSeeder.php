@@ -40,6 +40,11 @@ class UnitSeeder extends Seeder
                 'system' => Unit::SYSTEM_METRIC
             ],
             [
+                'abbreviation' => Unit::ABBREVIATION_QUANTITY,
+                'name' => 'item',
+                'type' => Unit::TYPE_QUANTITY
+            ],
+            [
                 'abbreviation' => Unit::ABBREVIATION_POUND,
                 'name' => 'pound',
                 'type' => Unit::TYPE_WEIGHT,

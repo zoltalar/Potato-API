@@ -15,7 +15,7 @@ class CreateUnitsTable extends Migration
             $table->string('abbreviation', 5)->unique();
             $table->string('name', 50)->unique();
             $table->tinyInteger('type')->unsigned();
-            $table->tinyInteger('system')->unsigned();
+            $table->tinyInteger('system')->unsigned()->nullable();
 
             $table->index(['abbreviation', 'name']);
         });

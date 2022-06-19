@@ -17,7 +17,10 @@ class CountryController extends Controller
         $limit = $request->get('limit', 10);
 
         $query = Country::query()
-            ->with(['states'])
+            ->with([
+                'states',
+                'units'
+            ])
             ->active()
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {

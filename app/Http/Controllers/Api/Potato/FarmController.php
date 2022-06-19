@@ -47,7 +47,8 @@ class FarmController extends Controller
                         ->orderBy('primary', 'desc')
                         ->orderBy('cover', 'desc')
                         ->orderBy('id', 'asc');
-                }
+                },
+                'products'
             ])
             ->find($id);
 

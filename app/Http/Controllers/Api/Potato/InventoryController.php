@@ -20,13 +20,22 @@ class InventoryController extends Controller
         $limit = $request->get('limit', 10);
         $language = $request->header('X-language');
         $country = $request->header('X-country');
+        $categoryId = $request->category_id;
 
         $inventory = Inventory::query()
-            ->with(['translations' => function($query) use ($language) {
-                $query->whereHas('language', function($query) use ($language) {
-                    $query->where('code', $language);
-                });
-            }])
+            ->with([
+                'category',
+                'category.translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                },
+                'translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                }
+            ])
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
                     $query
@@ -40,6 +49,9 @@ class InventoryController extends Controller
                 return $query->whereHas('countries', function($query) use ($country) {
                     $query->where('code', $country);
                 });
+            })
+            ->when($categoryId, function($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
             })
             ->orders('name', 'asc')
             ->take($limit)

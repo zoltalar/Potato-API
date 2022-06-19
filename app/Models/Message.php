@@ -65,7 +65,7 @@ final class Message extends Base
     {
         $subject = $this->subject;
 
-        if ( ! Str::startsWith($subject, 'Re:')) {
+        if ( ! empty($subject) && ! Str::startsWith($subject, 'Re:')) {
             $prefix = 'Re: ';
         }
 

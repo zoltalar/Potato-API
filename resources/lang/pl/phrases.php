@@ -42,6 +42,7 @@ return [
     'pinterest' => 'Pinterest',
     'postal_code' => 'Kod Pocztowy',
     'promote_this_farm' => 'Promuj to Gospodarstwo Rolne',
+    'quantity' => 'Ilość',
     'regards' => 'Pozdrowienia',
     'state' => 'Stan',
     'subject' => 'Temat',

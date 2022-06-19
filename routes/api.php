@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 use App\Http\Controllers\Api\Potato\AccountController as ApiPotatoAccountController;
 use App\Http\Controllers\Api\Potato\AddressController as ApiPotatoAddressController;
 use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
+use App\Http\Controllers\Api\Potato\CategoryController as ApiPotatoCategoryController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryCon
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
+use App\Http\Controllers\Api\Potato\UnitController as ApiPotatoUnitController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
 use App\Http\Controllers\Api\Potato\VerificationController as ApiPotatoVerificationController;
 
@@ -149,6 +151,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::post('logout', [ApiPotatoAuthenticationController::class, 'logout'])->name('api.potato.authentication.logout');
     });
 
+    // Categories
+    Route::group(['prefix' => 'categories'], function() {
+        Route::get('index', [ApiPotatoCategoryController::class, 'index'])->name('api.potato.categories.index');
+    });
+
     // Cities
     Route::group(['prefix' => 'cities'], function() {
         Route::get('index', [ApiPotatoCityController::class, 'index'])->name('api.potato.cities.index');
@@ -207,6 +214,11 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Registration
     Route::post('register', [ApiPotatoRegisterController::class, 'register'])->name('api.potato.register');
+
+    // Units
+    Route::group(['prefix' => 'units'], function() {
+        Route::get('meta', [ApiPotatoUnitController::class, 'meta'])->name('api.potato.units.meta');
+    });
 
     // Users
     Route::group(['prefix' => 'users'], function() {
