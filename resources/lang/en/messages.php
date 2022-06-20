@@ -10,5 +10,6 @@ return [
     'hi_name' => 'Hi :name',
     'match_old_user_password_error' => 'The :attribute does not match user password.',
     'message_to_self_error' => 'You cannot send messages to yourself.',
+    'product_availability_seasons_error' => 'Please select at least one season',
     'unique_translation_error' => 'Translation already exists'
 ];

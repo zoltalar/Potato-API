@@ -10,5 +10,6 @@ return [
     'hi_name' => 'Cześć :name',
     'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
     'message_to_self_error' => 'Nie możesz wysyłać wiadomości do siebie.',
+    'product_availability_seasons_error' => 'Prosimy wybrać przynajmniej jeden sezon.',
     'unique_translation_error' => 'Tłumaczenie już istnieje'
 ];

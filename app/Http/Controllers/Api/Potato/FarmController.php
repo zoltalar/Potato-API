@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
 use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
+use App\Http\Requests\Potato\FarmProductsUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;

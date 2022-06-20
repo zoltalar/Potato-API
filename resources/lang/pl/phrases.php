@@ -3,6 +3,7 @@
 return [
     'address' => 'Adres',
     'all_rights_reserved' => 'Wszystkie Prawa Zastrzeżone',
+    'amount' => 'Ilość',
     'area' => 'Pole',
     'category' => 'Kategoria',
     'city' => 'Miasto',
@@ -52,6 +53,7 @@ return [
     'town' => 'Miejscowość',
     'twitter' => 'Twitter',
     'type' => 'Typ',
+    'unit' => 'Jednostka',
     'verify_email_address' => 'Zweryfikuj Swój Email',
     'volume' => 'Pojemność',
     'website' => 'Strona',

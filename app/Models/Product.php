@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Product extends Base
 {
+    const TYPE_PRODUCTABLE_FARM = 'farm';
+
     protected $fillable = [
         'inventory_id',
         'available_from',
@@ -20,6 +22,8 @@ class Product extends Base
         'available_to' => 'integer',
         'amount' => 'float'
     ];
+
+    public $timestamps = false;
 
     // --------------------------------------------------
     // Relationships

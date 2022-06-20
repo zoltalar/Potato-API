@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Arr;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Http\UploadedFile;
 
 final class Image extends Base
 {

@@ -3,6 +3,7 @@
 return [
     'address' => 'Address',
     'all_rights_reserved' => 'All Rights Reserved',
+    'amount' => 'Amount',
     'area' => 'Area',
     'category' => 'Category',
     'city' => 'City',
@@ -52,6 +53,7 @@ return [
     'town' => 'Town',
     'twitter' => 'Twitter',
     'type' => 'Type',
+    'unit' => 'Unit',
     'verify_email_address' => 'Verify Email Address',
     'volume' => 'Volume',
     'website' => 'Website',
