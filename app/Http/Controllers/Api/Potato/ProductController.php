@@ -24,6 +24,7 @@ class ProductController extends Controller
             $productable = auth()
                 ->user()
                 ->farms()
+                ->with(['products'])
                 ->find($id);
         }
 
@@ -33,11 +34,29 @@ class ProductController extends Controller
             if (count($products) == 0) {
                 $productable->products()->delete();
             } else {
-                foreach ($products as $product) {
-                    $product['inventory_id'] = $product['id'];
-                    unset($product['id']);
-                    $productable->products()->save(new Product($product));
+                foreach ($products as $attributes) {
+                    $product = $productable
+                        ->products
+                        ->filter(function($product) use ($attributes) {
+                            return $product->inventory_id == $attributes['inventory_id'];
+                        })
+                        ->first();
+
+                    if ($product !== null) {
+                        $product->update($attributes);
+                    } else {
+                        $productable->products()->save(new Product($attributes));
+                    }
                 }
+
+                $ids = collect($products)
+                    ->pluck('inventory_id')
+                    ->toArray();
+
+                $productable
+                    ->products()
+                    ->whereNotIn('inventory_id', $ids)
+                    ->delete();
             }
 
             return ProductResource::collection($productable->products()->get());

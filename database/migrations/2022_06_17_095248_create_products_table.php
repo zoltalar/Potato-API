@@ -22,6 +22,8 @@ class CreateProductsTable extends Migration
             $table->decimal('amount', 10, 2)->unsigned()->nullable();
             $table->string('unit', 5)->nullable();
 
+            $table->unique(['productable_id', 'productable_type', 'inventory_id']);
+
             $table->foreign('inventory_id')
                 ->references('id')
                 ->on('inventory')

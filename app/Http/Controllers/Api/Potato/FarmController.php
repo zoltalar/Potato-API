@@ -14,6 +14,7 @@ use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\FarmResource;
 use App\Models\Farm;
+use Illuminate\Http\Request;
 
 class FarmController extends Controller
 {
@@ -36,12 +37,13 @@ class FarmController extends Controller
         return new FarmResource($farm);
     }
 
-    public function show(int $id)
+    public function show(Request $request, int $id)
     {
+        $language = $request->header('X-language');
+
         $farm = Farm::query()
             ->with([
                 'addresses',
-                'addresses.state',
                 'addresses.state.country',
                 'images' => function($query) {
                     $query
@@ -49,7 +51,20 @@ class FarmController extends Controller
                         ->orderBy('cover', 'desc')
                         ->orderBy('id', 'asc');
                 },
-                'products'
+                'products.inventory.category.translations' => function($query) use ($language) {
+                    $query->when($language, function($query) use ($language) {
+                        return $query->whereHas('language', function($query) use ($language) {
+                            $query->where('code', $language);
+                        });
+                    });
+                },
+                'products.inventory.translations' => function($query) use ($language) {
+                    $query->when($language, function($query) use ($language) {
+                        return $query->whereHas('language', function($query) use ($language) {
+                            $query->where('code', $language);
+                        });
+                    });
+                }
             ])
             ->find($id);
 
