@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryControlle
 use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
+use App\Http\Controllers\Api\Admin\MessageController as ApiAdminMessageController;
 use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
 use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 
@@ -111,6 +112,11 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::post('store', [ApiAdminLanguageController::class, 'store'])->name('api.admin.languages.store');
         Route::match(['PUT', 'PATCH'], 'update/{language}', [ApiAdminLanguageController::class, 'update'])->name('api.admin.languages.update');
         Route::delete('{language}', [ApiAdminLanguageController::class, 'destroy'])->name('api.admin.languages.destroy');
+    });
+
+    // Messages
+    Route::group(['prefix' => 'messages'], function() {
+        Route::get('index', [ApiAdminMessageController::class, 'index'])->name('api.admin.messages.index');
     });
 
     // Translations
