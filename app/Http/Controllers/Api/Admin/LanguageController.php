@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LanguageStoreRequest;
 use App\Http\Requests\Admin\LanguageUpdateRequest;
-use App\Http\Resources\LanguageResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Language;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class LanguageController extends Controller
 
         $languages = ($request->all ? $query->get() : $query->paginate($limit));
 
-        return LanguageResource::collection($languages);
+        return BaseResource::collection($languages);
     }
 
     public function store(LanguageStoreRequest $request)
@@ -43,7 +43,7 @@ class LanguageController extends Controller
         $language->fill($request->only($language->getFillable()));
         $language->save();
 
-        return new LanguageResource($language);
+        return new BaseResource($language);
     }
 
     public function update(LanguageUpdateRequest $request, Language $language)
@@ -51,7 +51,7 @@ class LanguageController extends Controller
         $language->fill($request->only($language->getFillable()));
         $language->update();
 
-        return new LanguageResource($language);
+        return new BaseResource($language);
     }
 
     public function destroy(Language $language)

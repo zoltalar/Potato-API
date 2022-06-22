@@ -6,8 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ImageStoreRequest;
-use App\Http\Resources\ImageResource;
-use App\Models\Farm;
+use App\Http\Resources\BaseResource;
 use App\Models\Image;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
@@ -48,7 +47,7 @@ class ImageController extends Controller
             $imageable->images()->save($image);
         }
 
-        return new ImageResource($image);
+        return new BaseResource($image);
     }
 
     public function update(Request $request, int $id, string $type, int $imageableId)
@@ -81,7 +80,7 @@ class ImageController extends Controller
             }
         }
 
-        return new ImageResource($image);
+        return new BaseResource($image);
     }
 
     public function updateCover(int $id, string $type, int $imageableId)
@@ -121,7 +120,7 @@ class ImageController extends Controller
             }
         }
 
-        return new ImageResource($image);
+        return new BaseResource($image);
     }
 
     public function updatePrimary(int $id, string $type, int $imageableId)
@@ -161,7 +160,7 @@ class ImageController extends Controller
             }
         }
 
-        return new ImageResource($image);
+        return new BaseResource($image);
     }
 
     public function destroy(int $id, string $type, int $imageableId)

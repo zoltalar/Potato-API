@@ -9,10 +9,9 @@ use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
 use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
-use App\Http\Requests\Potato\FarmProductsUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
-use App\Http\Resources\FarmResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use Illuminate\Http\Request;
 
@@ -34,7 +33,7 @@ class FarmController extends Controller
             ->farms()
             ->save($farm);
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function show(Request $request, int $id)
@@ -68,7 +67,18 @@ class FarmController extends Controller
             ])
             ->find($id);
 
-        return new FarmResource($farm);
+        if ($farm !== null) {
+
+            if (auth()->check()) {
+                $farm->load([
+                    'favorites' => function($query) {
+                        $query->where('user_id', auth()->id());
+                    }
+                ]);
+            }
+        }
+
+        return new BaseResource($farm);
     }
 
     public function updateContactInformation(FarmContactInformationUpdateRequest $request, int $id)
@@ -83,7 +93,7 @@ class FarmController extends Controller
             $farm->update();
         }
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function updateDescription(FarmDescriptionUpdateRequest $request, int $id)
@@ -97,7 +107,7 @@ class FarmController extends Controller
             $farm->update(['description' => $request->description]);
         }
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function updateOperatingHours(FarmOperatingHoursUpdateRequest $request, int $id)
@@ -111,7 +121,7 @@ class FarmController extends Controller
             $farm->update(['operating_hours' => $request->operating_hours]);
         }
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function updateSocialMedia(FarmSocialMediaUpdateRequest $request, int $id)
@@ -126,7 +136,7 @@ class FarmController extends Controller
             $farm->update();
         }
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function deactivate(FarmDeactivateRequest $request, int $id)
@@ -144,6 +154,6 @@ class FarmController extends Controller
             $farm->update();
         }
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 }

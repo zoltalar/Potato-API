@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InventoryStoreRequest;
 use App\Http\Requests\Admin\InventoryUpdateRequest;
-use App\Http\Resources\InventoryResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Inventory;
 use Exception;
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ class InventoryController extends Controller
 
         $inventory = ($request->all ? $query->get() : $query->paginate($limit));
 
-        return InventoryResource::collection($inventory);
+        return BaseResource::collection($inventory);
     }
 
     public function store(InventoryStoreRequest $request)
@@ -56,7 +56,7 @@ class InventoryController extends Controller
             }
         }
 
-        return new InventoryResource($inventory);
+        return new BaseResource($inventory);
     }
 
     public function update(InventoryUpdateRequest $request, Inventory $inventory)
@@ -75,7 +75,7 @@ class InventoryController extends Controller
             }
         }
 
-        return new InventoryResource($inventory);
+        return new BaseResource($inventory);
     }
 
     public function destroy(Inventory $inventory)

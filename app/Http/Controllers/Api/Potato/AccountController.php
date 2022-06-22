@@ -5,8 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FarmResource;
-use App\Http\Resources\MessageResource;
+use App\Http\Resources\BaseResource;
 
 class AccountController extends Controller
 {
@@ -31,7 +30,7 @@ class AccountController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        return FarmResource::collection($farms);
+        return BaseResource::collection($farms);
     }
 
     public function messages()
@@ -51,6 +50,6 @@ class AccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return MessageResource::collection($messages);
+        return BaseResource::collection($messages);
     }
 }

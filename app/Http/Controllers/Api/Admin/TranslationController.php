@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TranslationStoreRequest;
 use App\Http\Requests\Admin\TranslationUpdateRequest;
-use App\Http\Resources\TranslationResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Language;
@@ -43,7 +43,7 @@ class TranslationController extends Controller
 
         $translations = $query->paginate($limit);
 
-        return TranslationResource::collection($translations);
+        return BaseResource::collection($translations);
     }
 
     public function store(TranslationStoreRequest $request)
@@ -70,7 +70,7 @@ class TranslationController extends Controller
             $translation = $translatable->translations()->save(new Translation($attributes));
         }
 
-        return new TranslationResource($translation);
+        return new BaseResource($translation);
     }
 
     public function update(TranslationUpdateRequest $request, Translation $translation)
@@ -78,7 +78,7 @@ class TranslationController extends Controller
         $translation->fill($request->only($translation->getFillable()));
         $translation->update();
 
-        return new TranslationResource($translation);
+        return new BaseResource($translation);
     }
 
     public function destroy(Translation $translation)

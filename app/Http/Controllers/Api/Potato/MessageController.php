@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\MessageReplyRequest;
 use App\Http\Requests\Potato\MessageStoreRequest;
-use App\Http\Resources\MessageResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\Message;
 use Exception;
@@ -35,7 +35,7 @@ class MessageController extends Controller
             $message->save();
         }
 
-        return new MessageResource($message);
+        return new BaseResource($message);
     }
 
     public function reply(MessageReplyRequest $request, Message $reply)
@@ -47,7 +47,7 @@ class MessageController extends Controller
         $message->recipient_id = $reply->sender_id;
         $message->save();
 
-        return new MessageResource($message);
+        return new BaseResource($message);
     }
 
     public function show(int $id)
@@ -73,7 +73,7 @@ class MessageController extends Controller
             }
         }
 
-        return new MessageResource($message);
+        return new BaseResource($message);
     }
 
     public function destroy(int $id)

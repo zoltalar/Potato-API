@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\Potato\CategoryController as ApiPotatoCategoryContr
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
+use App\Http\Controllers\Api\Potato\FavoriteController as ApiPotatoFavoriteController;
 use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
@@ -183,6 +184,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::match(['PUT', 'PATCH'], 'update-operating-hours/{id}', [ApiPotatoFarmController::class, 'updateOperatingHours'])->name('api.potato.farms.update-operating-hours');
         Route::match(['PUT', 'PATCH'], 'update-social-media/{id}', [ApiPotatoFarmController::class, 'updateSocialMedia'])->name('api.potato.farms.update-social-media');
         Route::match(['PUT', 'PATCH'], 'deactivate/{id}', [ApiPotatoFarmController::class, 'deactivate'])->name('api.potato.farms.deactivate');
+    });
+
+    // Favorites
+    Route::group(['prefix' => 'favorites'], function() {
+        Route::post('store/{type}/{id}', [ApiPotatoFavoriteController::class, 'store'])->name('api.potato.favorites.store');
     });
 
     // Images

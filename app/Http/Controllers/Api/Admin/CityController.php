@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CityStoreRequest;
 use App\Http\Requests\Admin\CityUpdateRequest;
-use App\Http\Resources\CityResource;
+use App\Http\Resources\BaseResource;
 use App\Models\City;
 use Exception;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class CityController extends Controller
 
         $cities = $query->paginate($limit);
 
-        return CityResource::collection($cities);
+        return BaseResource::collection($cities);
     }
 
     public function store(CityStoreRequest $request)
@@ -51,7 +51,7 @@ class CityController extends Controller
         $city->fill($request->only($city->getFillable()));
         $city->save();
 
-        return new CityResource($city);
+        return new BaseResource($city);
     }
 
     public function update(CityUpdateRequest $request, City $city)
@@ -59,7 +59,7 @@ class CityController extends Controller
         $city->fill($request->only($city->getFillable()));
         $city->update();
 
-        return new CityResource($city);
+        return new BaseResource($city);
     }
 
     public function destroy(City $city)

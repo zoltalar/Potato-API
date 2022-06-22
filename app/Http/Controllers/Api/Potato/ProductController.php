@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -59,7 +59,7 @@ class ProductController extends Controller
                     ->delete();
             }
 
-            return ProductResource::collection($productable->products()->get());
+            return BaseResource::collection($productable->products()->get());
         }
 
         return response()->json(null, 204);

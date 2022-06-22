@@ -5,11 +5,8 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\InventoryStoreRequest;
-use App\Http\Requests\Admin\InventoryUpdateRequest;
-use App\Http\Resources\InventoryResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Inventory;
-use Exception;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -58,6 +55,6 @@ class InventoryController extends Controller
             ->get()
             ->sortBy('translations.0.name');
 
-        return InventoryResource::collection($inventory);
+        return BaseResource::collection($inventory);
     }
 }

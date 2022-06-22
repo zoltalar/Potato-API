@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -39,6 +39,6 @@ class CategoryController extends Controller
 
         $categories = ($request->all ? $query->get() : $query->paginate($limit));
 
-        return CategoryResource::collection($categories);
+        return BaseResource::collection($categories);
     }
 }

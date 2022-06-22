@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\UserContactInformationUpdateRequest;
 use App\Http\Requests\Potato\UserPasswordUpdateRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\User;
@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         $user = User::find(auth()->id());
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function updateContactInformation(UserContactInformationUpdateRequest $request)
@@ -32,7 +32,7 @@ class UserController extends Controller
         $user = auth()->user();
         $user->update($request->only($user->getFillable()));
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function updateCountry(Request $request)
@@ -50,7 +50,7 @@ class UserController extends Controller
             }
         }
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function updateLanguage(Request $request)
@@ -68,7 +68,7 @@ class UserController extends Controller
             }
         }
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function updatePassword(UserPasswordUpdateRequest $request)
@@ -76,6 +76,6 @@ class UserController extends Controller
         $user = auth()->user();
         $user->update(['password' => $request->password]);
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 }

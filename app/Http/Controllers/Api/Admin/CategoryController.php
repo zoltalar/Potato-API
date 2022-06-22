@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryStoreRequest;
 use App\Http\Requests\Admin\CategoryUpdateRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class CategoryController extends Controller
 
         $categories = ($request->all ? $query->get() : $query->paginate($limit));
 
-        return CategoryResource::collection($categories);
+        return BaseResource::collection($categories);
     }
 
     public function store(CategoryStoreRequest $request)
@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->fill($request->only($category->getFillable()));
         $category->save();
 
-        return new CategoryResource($category);
+        return new BaseResource($category);
     }
 
     public function update(CategoryUpdateRequest $request, Category $category)
@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $category->fill($request->only($category->getFillable()));
         $category->update();
 
-        return new CategoryResource($category);
+        return new BaseResource($category);
     }
 
     public function destroy(Category $category)

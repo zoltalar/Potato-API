@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\BaseResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class UserController extends Controller
 
         $admins = $query->paginate($limit);
 
-        return UserResource::collection($admins);
+        return BaseResource::collection($admins);
     }
 
     public function store(UserStoreRequest $request)
@@ -47,7 +47,7 @@ class UserController extends Controller
         $user->fill($request->only($user->getFillable()));
         $user->save();
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function update(UserUpdateRequest $request, User $user)
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user->fill($data);
         $user->update();
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 
     public function destroy(User $user)

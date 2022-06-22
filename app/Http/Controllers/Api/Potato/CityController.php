@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CityResource;
+use App\Http\Resources\BaseResource;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Unit;
@@ -50,7 +50,7 @@ class CityController extends Controller
 
         $cities = $query->get();
 
-        return CityResource::collection($cities);
+        return BaseResource::collection($cities);
     }
 
     public function locate(Request $request, float $latitude, float $longitude)
@@ -89,6 +89,6 @@ class CityController extends Controller
             ->orderBy('distance', 'asc')
             ->take($limit);
 
-        return CityResource::collection($query->get());
+        return BaseResource::collection($query->get());
     }
 }

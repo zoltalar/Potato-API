@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CountryResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
@@ -32,6 +32,6 @@ class CountryController extends Controller
 
         $countries = ($request->all ? $query->get() : $query->paginate($limit));
 
-        return CountryResource::collection($countries);
+        return BaseResource::collection($countries);
     }
 }

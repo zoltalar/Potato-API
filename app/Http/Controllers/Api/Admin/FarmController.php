@@ -6,10 +6,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FarmUpdateRequest;
-use App\Http\Requests\Admin\UserStoreRequest;
-use App\Http\Requests\Admin\UserUpdateRequest;
-use App\Http\Resources\FarmResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\User;
 use Exception;
@@ -60,7 +57,7 @@ class FarmController extends Controller
 
         $farms = $query->paginate($limit);
 
-        return FarmResource::collection($farms);
+        return BaseResource::collection($farms);
     }
 
     public function update(FarmUpdateRequest $request, Farm $farm)
@@ -68,16 +65,14 @@ class FarmController extends Controller
         $farm->fill($request->only($farm->getFillable()));
         $farm->update();
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 
     public function activate(Farm $farm)
     {
         $farm->active = 1;
-        $farm->deactivation_reason = null;
-        $farm->deactivated_at = null;
         $farm->update();
 
-        return new FarmResource($farm);
+        return new BaseResource($farm);
     }
 }

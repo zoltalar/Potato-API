@@ -102,6 +102,11 @@ final class Farm extends Base implements NamableContract
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function favorites(): MorphMany
+    {
+        return $this->morphMany(Favorite::class, 'favoriteable');
+    }
+
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -115,5 +120,17 @@ final class Farm extends Base implements NamableContract
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public function favorite(User $user): ?object
+    {
+        return $this
+            ->favorites()
+            ->where('user_id', $user->id)
+            ->first();
     }
 }

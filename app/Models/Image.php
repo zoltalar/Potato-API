@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 final class Image extends Base
 {
     const TYPE_IMAGEABLE_FARM = 'farm';
+    const TYPE_IMAGEABLE_MARKET = 'market';
 
     protected $fillable = [
         'title',

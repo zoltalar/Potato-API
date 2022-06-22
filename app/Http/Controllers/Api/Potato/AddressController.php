@@ -6,11 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\AddressRequest;
-use App\Http\Requests\Potato\ContactInformationUpdateRequest;
-use App\Http\Resources\AddressResource;
-use App\Http\Resources\CityResource;
-use App\Http\Resources\FarmResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\City;
 use App\Models\Farm;
@@ -58,7 +54,7 @@ class AddressController extends Controller
             }
         }
 
-        return new AddressResource($address);
+        return new BaseResource($address);
     }
 
     public function meta()

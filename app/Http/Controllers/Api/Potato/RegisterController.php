@@ -6,14 +6,11 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\RegisterRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\BaseResource;
 use App\Jobs\SendEmailVerificationJob;
 use App\Models\User;
-use Carbon\Carbon;
 use Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -30,6 +27,6 @@ class RegisterController extends Controller
             }
         }
 
-        return new UserResource($user);
+        return new BaseResource($user);
     }
 }

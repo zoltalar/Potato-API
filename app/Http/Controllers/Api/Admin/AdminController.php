@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminStoreRequest;
 use App\Http\Requests\Admin\AdminUpdateRequest;
-use App\Http\Resources\AdminResource;
+use App\Http\Resources\BaseResource;
 use App\Models\Admin;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class AdminController extends Controller
 
         $admins = $query->paginate($limit);
 
-        return AdminResource::collection($admins);
+        return BaseResource::collection($admins);
     }
 
     public function store(AdminStoreRequest $request)
@@ -43,7 +43,7 @@ class AdminController extends Controller
         $admin->fill($request->only($admin->getFillable()));
         $admin->save();
 
-        return new AdminResource($admin);
+        return new BaseResource($admin);
     }
 
     public function update(AdminUpdateRequest $request, Admin $admin)
@@ -57,7 +57,7 @@ class AdminController extends Controller
         $admin->fill($data);
         $admin->update();
 
-        return new AdminResource($admin);
+        return new BaseResource($admin);
     }
 
     public function destroy(Admin $admin)
@@ -77,6 +77,6 @@ class AdminController extends Controller
 
     public function current()
     {
-        return new AdminResource(auth()->user());
+        return new BaseResource(auth()->user());
     }
 }
