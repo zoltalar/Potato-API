@@ -33,6 +33,17 @@ class AccountController extends Controller
         return BaseResource::collection($farms);
     }
 
+    public function favorites()
+    {
+        $favorites = auth()
+            ->user()
+            ->favorites()
+            ->with(['favoriteable', 'favoriteable.images'])
+            ->get();
+
+        return BaseResource::collection($favorites);
+    }
+
     public function messages()
     {
         $messages = auth()

@@ -37,11 +37,11 @@ final class Image extends Base
     public function getFileUrlAttribute($value): ?string
     {
         $file = $this->attributes['file'] ?? null;
-        $class = $this->imageable()->getRelated()->getMorphClass();
+        $type = $this->imageable()->getRelated()->getMorphClass();
 
         if ( ! empty($file)) {
 
-            if ($class === Farm::class) {
+            if ($type === self::TYPE_IMAGEABLE_FARM) {
                 return asset("storage/farms/{$file}");
             }
         }
@@ -73,11 +73,11 @@ final class Image extends Base
             $value = json_decode($value, true);
 
             if (is_array($value)) {
-                $class = $this->imageable()->getRelated()->getMorphClass();
+                $type = $this->imageable()->getRelated()->getMorphClass();
 
                 foreach ($value as $crop => & $data) {
 
-                    if ($class === Farm::class) {
+                    if ($type === self::TYPE_IMAGEABLE_FARM) {
                         $data['file_url'] = asset("storage/farms/{$data['file']}");
                     } else {
                         $data['file_url'] = null;

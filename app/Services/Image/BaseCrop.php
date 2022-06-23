@@ -34,10 +34,12 @@ abstract class BaseCrop
     public function path(): string
     {
         $path = '';
-        $class = $this->morphClass();
+        $type = $this->morphClass();
 
-        if ($class == Farm::class) {
+        if ($type == Image::TYPE_IMAGEABLE_FARM) {
             $path = storage_path('app/public/farms/');
+        } elseif ($type == Image::TYPE_IMAGEABLE_MARKET) {
+            $path = storage_path('app/public/markets/');
         }
 
         return $path;

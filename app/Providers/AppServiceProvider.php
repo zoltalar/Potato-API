@@ -18,6 +18,7 @@ use App\Observers\FarmObserver;
 use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
 use App\Observers\MessageObserver;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Schema;
 use Str;
@@ -35,6 +36,14 @@ class AppServiceProvider extends ServiceProvider
 
         // Mixins
         Str::mixin(new StrMixin());
+
+        // Morph Maps
+        Relation::enforceMorphMap([
+            'category' => Category::class,
+            'farm' => Farm::class,
+            'image' => Image::class,
+            'inventory' => Inventory::class
+        ]);
 
         // Observers
         Address::observe(AddressObserver::class);

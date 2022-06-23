@@ -89,6 +89,11 @@ final class User extends Base implements
         return $this->hasMany(Farm::class);
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);

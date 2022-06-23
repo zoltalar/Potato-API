@@ -151,6 +151,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Account
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
+        Route::get('favorites', [ApiPotatoAccountController::class, 'favorites'])->name('api.potato.account.favorites');
         Route::get('messages', [ApiPotatoAccountController::class, 'messages'])->name('api.potato.account.messages');
     });
 
@@ -202,6 +203,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Favorites
     Route::group(['prefix' => 'favorites'], function() {
         Route::post('store/{type}/{id}', [ApiPotatoFavoriteController::class, 'store'])->name('api.potato.favorites.store');
+        Route::delete('{favorite}', [ApiPotatoFavoriteController::class, 'destroy'])->name('api.potato.favorites.destroy');
     });
 
     // Images

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\Favorite;
+use Exception;
 
 class FavoriteController extends Controller
 {
@@ -35,5 +36,21 @@ class FavoriteController extends Controller
         }
 
         return new BaseResource($favorite);
+    }
+
+    public function destroy(Favorite $favorite)
+    {
+        $status = 403;
+
+        if ($favorite->user_id == auth()->id()) {
+
+            try {
+                if ($favorite->delete()) {
+                    $status = 204;
+                }
+            } catch (Exception $e) {}
+        }
+
+        return response()->json(null, $status);
     }
 }

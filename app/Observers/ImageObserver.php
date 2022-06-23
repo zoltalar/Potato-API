@@ -44,13 +44,15 @@ class ImageObserver
 
     public function saving(Image $image)
     {
-        $class = $image->imageable()->getRelated()->getMorphClass();
+        $type = $image->imageable()->getRelated()->getMorphClass();
 
         if ( ! empty($image->file)) {
             $path = '';
 
-            if ($class == Farm::class) {
+            if ($type == Image::TYPE_IMAGEABLE_FARM) {
                 $path = "farms/{$image->file}";
+            } elseif ($type == Image::TYPE_IMAGEABLE_MARKET) {
+                $path = "markets/{$image->file}";
             }
 
             if (Storage::disk('public')->exists($path)) {
@@ -62,13 +64,15 @@ class ImageObserver
 
     public function deleted(Image $image)
     {
-        $class = $image->imageable()->getRelated()->getMorphClass();
+        $type = $image->imageable()->getRelated()->getMorphClass();
 
         if ( ! empty($image->file)) {
             $path = '';
 
-            if ($class == Farm::class) {
+            if ($type == Image::TYPE_IMAGEABLE_FARM) {
                 $path = "farms/{$image->file}";
+            } elseif ($type == Image::TYPE_IMAGEABLE_MARKET) {
+                $path = "markets/{$image->file}";
             }
 
             if (Storage::disk('public')->exists($path)) {
@@ -82,8 +86,10 @@ class ImageObserver
             foreach ($variations as $variation) {
                 $path = '';
 
-                if ($class == Farm::class) {
+                if ($type == Image::TYPE_IMAGEABLE_FARM) {
                     $path = "farms/{$variation['file']}";
+                } elseif ($type == Image::TYPE_IMAGEABLE_MARKET) {
+                    $path = "markets/{$variation['file']}";
                 }
 
                 if (Storage::disk('public')->exists($path)) {
