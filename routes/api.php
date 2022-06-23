@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryControl
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
+use App\Http\Controllers\Api\Admin\ImageController as ApiAdminImageController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 use App\Http\Controllers\Api\Admin\MessageController as ApiAdminMessageController;
@@ -94,8 +95,14 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Farms
     Route::group(['prefix' => 'farms'], function() {
        Route::get('index', [ApiAdminFarmController::class, 'index'])->name('api.admin.farms.index');
-        Route::match(['PUT', 'PATCH'], 'update/{farm}', [ApiAdminFarmController::class, 'update'])->name('api.admin.farms.update');
+       Route::match(['PUT', 'PATCH'], 'update/{farm}', [ApiAdminFarmController::class, 'update'])->name('api.admin.farms.update');
        Route::match(['PUT', 'PATCH'], 'activate/{farm}', [ApiAdminFarmController::class, 'activate'])->name('api.admin.farms.activate');
+    });
+
+    // Images
+    Route::group(['prefix' => 'images'], function() {
+        Route::get('index', [ApiAdminImageController::class, 'index'])->name('api.admin.images.index');
+        Route::delete('{image}', [ApiAdminImageController::class, 'destroy'])->name('api.admin.images.destroy');
     });
 
     // Inventory
