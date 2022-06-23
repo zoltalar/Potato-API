@@ -11,6 +11,7 @@ use App\Models\Farm;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Message;
+use App\Models\Review;
 use App\Observers\AddressObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\CityObserver;
@@ -42,7 +43,8 @@ class AppServiceProvider extends ServiceProvider
             'category' => Category::class,
             'farm' => Farm::class,
             'image' => Image::class,
-            'inventory' => Inventory::class
+            'inventory' => Inventory::class,
+            'review' => Review::class
         ]);
 
         // Observers

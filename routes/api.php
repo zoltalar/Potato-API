@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageContr
 use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
 use App\Http\Controllers\Api\Potato\ProductController as ApiPotatoProductController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
+use App\Http\Controllers\Api\Potato\ReviewController as ApiPotatoReviewController;
 use App\Http\Controllers\Api\Potato\UnitController as ApiPotatoUnitController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
 use App\Http\Controllers\Api\Potato\VerificationController as ApiPotatoVerificationController;
@@ -241,6 +242,11 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Registration
     Route::post('register', [ApiPotatoRegisterController::class, 'register'])->name('api.potato.register');
+
+    // Reviews
+    Route::group(['prefix' => 'reviews'], function() {
+        Route::post('store/{type}/{id}', [ApiPotatoReviewController::class, 'store'])->name('api.potato.reviews.store');
+    });
 
     // Units
     Route::group(['prefix' => 'units'], function() {

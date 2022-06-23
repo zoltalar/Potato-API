@@ -117,6 +117,11 @@ final class Farm extends Base implements NamableContract
         return $this->morphMany(Product::class, 'productable');
     }
 
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'rateable');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -130,6 +135,14 @@ final class Farm extends Base implements NamableContract
     {
         return $this
             ->favorites()
+            ->where('user_id', $user->id)
+            ->first();
+    }
+
+    public function review(User $user): ?object
+    {
+        return $this
+            ->reviews()
             ->where('user_id', $user->id)
             ->first();
     }

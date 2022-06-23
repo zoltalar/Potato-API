@@ -73,6 +73,9 @@ class FarmController extends Controller
                 $farm->load([
                     'favorites' => function($query) {
                         $query->where('user_id', auth()->id());
+                    },
+                    'reviews' => function($query) {
+                        $query->where('user_id', auth()->id());
                     }
                 ]);
             }

@@ -10,6 +10,8 @@ return [
     'hi_name' => 'Hi :name',
     'match_old_user_password_error' => 'The :attribute does not match user password.',
     'message_to_self_error' => 'You cannot send messages to yourself.',
-    'product_availability_seasons_error' => 'Please select at least one season',
-    'unique_translation_error' => 'Translation already exists'
+    'product_availability_seasons_error' => 'Please select at least one season.',
+    'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',
+    'review_unique_error' => 'You already created a review for this farm or market',
+    'unique_translation_error' => 'Translation already exists.'
 ];

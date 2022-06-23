@@ -109,6 +109,11 @@ final class User extends Base implements
         return $this->hasMany(Message::class, 'sender_id');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
