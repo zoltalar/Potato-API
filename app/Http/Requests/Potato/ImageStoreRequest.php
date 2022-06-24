@@ -20,7 +20,7 @@ class ImageStoreRequest extends BaseRequest
 
         return [
             'title' => ['nullable', "max:{$length}"],
-            'file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120']
+            'file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:10240']
         ];
     }
 

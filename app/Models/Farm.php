@@ -53,9 +53,24 @@ final class Farm extends Base implements NamableContract
         'deactivated_at' => 'datetime'
     ];
 
+    protected $appends = [
+        'average_rating',
+        'reviews_count'
+    ];
+
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
+
+    public function getAverageRatingAttribute($value): float
+    {
+        return $this->averageRating();
+    }
+
+    public function getReviewsCountAttribute($value): int
+    {
+        return $this->reviewsCount();
+    }
 
     public function setDescriptionAttribute($value): void
     {
@@ -130,6 +145,22 @@ final class Farm extends Base implements NamableContract
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public function averageRating(): float
+    {
+        return (float) $this
+            ->reviews()
+            ->active()
+            ->average('rating');
+    }
+
+    public function reviewsCount(): int
+    {
+        return $this
+            ->reviews()
+            ->active()
+            ->count();
+    }
 
     public function favorite(User $user): ?object
     {

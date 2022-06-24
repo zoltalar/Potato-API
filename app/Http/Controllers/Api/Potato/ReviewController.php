@@ -26,6 +26,7 @@ class ReviewController extends Controller
             $review = new Review();
             $review->fill($request->only($review->getFillable()));
             $review->user_id = auth()->id();
+            $review->active = 1;
 
             $rateable->reviews()->save($review);
         }

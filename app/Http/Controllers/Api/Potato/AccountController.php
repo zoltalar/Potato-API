@@ -44,6 +44,25 @@ class AccountController extends Controller
         return BaseResource::collection($favorites);
     }
 
+    public function reviews()
+    {
+        $reviews = auth()
+            ->user()
+            ->reviews()
+            ->with([
+                'rateable' => function($query) {
+                    $query->select([
+                        'id',
+                        'name'
+                    ]);
+                }
+            ])
+            ->active()
+            ->get();
+
+        return BaseResource::collection($reviews);
+    }
+
     public function messages()
     {
         $messages = auth()

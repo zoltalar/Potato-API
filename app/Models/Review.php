@@ -39,4 +39,17 @@ final class Review extends Base
     {
         return $this->belongsTo(User::class);
     }
+
+    // --------------------------------------------------
+    // Accessors and Mutators
+    // --------------------------------------------------
+
+    public function getTitleAttribute($value): ?string
+    {
+        if (empty($value)) {
+            $value = sprintf('(%s)', mb_strtolower(__('phrases.no_title')));
+        }
+
+        return $value;
+    }
 }

@@ -154,6 +154,7 @@ Route::group(['prefix' => 'potato'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
         Route::get('favorites', [ApiPotatoAccountController::class, 'favorites'])->name('api.potato.account.favorites');
         Route::get('messages', [ApiPotatoAccountController::class, 'messages'])->name('api.potato.account.messages');
+        Route::get('reviews', [ApiPotatoAccountController::class, 'reviews'])->name('api.potato.account.reviews');
     });
 
     // Addresses

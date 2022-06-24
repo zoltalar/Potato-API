@@ -83,8 +83,8 @@ return [
     ],
     'mac_address' => 'The :attribute must be a valid MAC address.',
     'max' => [
-        'numeric' => 'The :attribute must not be greater than :max.',
-        'file' => 'The :attribute must not be greater than :max kilobytes.',
+        'numeric' => 'Pole :attribute nie może przekraczać :max.',
+        'file' => 'Pole :attribute nie może przekraczać :max kilobajtów.',
         'string' => 'Pole :attribute nie może przekraczać :max znaków.',
         'array' => 'The :attribute must not have more than :max items.',
     ],
