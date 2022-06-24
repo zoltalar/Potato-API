@@ -63,7 +63,13 @@ class FarmController extends Controller
                             $query->where('code', $language);
                         });
                     });
-                }
+                },
+                'reviews' => function($query) {
+                    $query
+                        ->active()
+                        ->orderBy('created_at', 'desc');
+                },
+                'reviews.user'
             ])
             ->find($id);
 
@@ -72,9 +78,6 @@ class FarmController extends Controller
             if (auth()->check()) {
                 $farm->load([
                     'favorites' => function($query) {
-                        $query->where('user_id', auth()->id());
-                    },
-                    'reviews' => function($query) {
                         $query->where('user_id', auth()->id());
                     }
                 ]);
