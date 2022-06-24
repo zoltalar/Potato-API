@@ -412,6 +412,9 @@ class InventorySeeder extends Seeder
                 'system' => 1,
                 'countries' => [
                     'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Maranta'
                 ]
             ],
             [
