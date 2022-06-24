@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\ImageController as ApiAdminImageController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
 use App\Http\Controllers\Api\Admin\MessageController as ApiAdminMessageController;
+use App\Http\Controllers\Api\Admin\ReviewController as ApiAdminReviewController;
 use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
 use App\Http\Controllers\Api\Admin\UserController as ApiAdminUserController;
 
@@ -125,6 +126,13 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Messages
     Route::group(['prefix' => 'messages'], function() {
         Route::get('index', [ApiAdminMessageController::class, 'index'])->name('api.admin.messages.index');
+    });
+
+    // Reviews
+    Route::group(['prefix' => 'reviews'], function() {
+        Route::get('index', [ApiAdminReviewController::class, 'index'])->name('api.admin.reviews.index');
+        Route::match(['PUT', 'PATCH'], 'activate/{review}', [ApiAdminReviewController::class, 'activate'])->name('api.admin.reviews.activate');
+        Route::match(['PUT', 'PATCH'], 'deactivate/{review}', [ApiAdminReviewController::class, 'deactivate'])->name('api.admin.reviews.deactivate');
     });
 
     // Translations
