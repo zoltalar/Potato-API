@@ -55,7 +55,11 @@ final class Farm extends Base implements NamableContract
 
     protected $appends = [
         'average_rating',
-        'reviews_count'
+        'reviews_count',
+        'facebook_url',
+        'twitter_url',
+        'pinterest_url',
+        'instagram_url'
     ];
 
     // --------------------------------------------------
@@ -70,6 +74,50 @@ final class Farm extends Base implements NamableContract
     public function getReviewsCountAttribute($value): int
     {
         return $this->reviewsCount();
+    }
+
+    public function getFacebookUrlAttribute($value): ?string
+    {
+        $facebook = $this->attributes['facebook'];
+
+        if ( ! empty($facebook)) {
+            return sprintf('https://facebook.com/%s', $facebook);
+        }
+
+        return null;
+    }
+
+    public function getTwitterUrlAttribute($value): ?string
+    {
+        $twitter = $this->attributes['twitter'];
+
+        if ( ! empty($twitter)) {
+            return sprintf('https://twitter.com/%s', $twitter);
+        }
+
+        return null;
+    }
+
+    public function getPinterestUrlAttribute($value): ?string
+    {
+        $pinterest = $this->attributes['pinterest'];
+
+        if ( ! empty($pinterest)) {
+            return sprintf('https://pinterest.com/%s', $pinterest);
+        }
+
+        return null;
+    }
+
+    public function getInstagramUrlAttribute($value): ?string
+    {
+        $instagram = $this->attributes['instagram'];
+
+        if ( ! empty($instagram)) {
+            return sprintf('https://instagram.com/%s', $instagram);
+        }
+
+        return null;
     }
 
     public function setDescriptionAttribute($value): void
