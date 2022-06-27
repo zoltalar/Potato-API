@@ -203,6 +203,7 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'farms'], function() {
         Route::post('store', [ApiPotatoFarmController::class, 'store'])->name('api.potato.farms.store');
         Route::get('show/{id}', [ApiPotatoFarmController::class, 'show'])->name('api.potato.farms.show');
+        Route::get('locate/{latitude}/{longitude}', [ApiPotatoFarmController::class, 'locate'])->name('api.potato.farms.locate');
         Route::match(['PUT', 'PATCH'], 'update-contact-information/{id}', [ApiPotatoFarmController::class, 'updateContactInformation'])->name('api.potato.farms.update-contact-information');
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoFarmController::class, 'updateDescription'])->name('api.potato.farms.update-description');
         Route::match(['PUT', 'PATCH'], 'update-operating-hours/{id}', [ApiPotatoFarmController::class, 'updateOperatingHours'])->name('api.potato.farms.update-operating-hours');

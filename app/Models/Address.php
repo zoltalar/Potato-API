@@ -17,6 +17,9 @@ final class Address extends Base implements
     use Addressable,
         Coordinable;
 
+    const DEFAULT_RADIUS_KM = 60;
+    const DEFAULT_RADIUS_MI = 40;
+
     const TYPE_LOCATION = 1;
     const TYPE_MAILING = 2;
 
@@ -60,6 +63,17 @@ final class Address extends Base implements
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public static function radius(string $unit): int
+    {
+        switch($unit) {
+            default:
+            case Unit::ABBREVIATION_KILOMETER:
+                return self::DEFAULT_RADIUS_KM;
+            case Unit::ABBREVIATION_MILE:
+                return self::DEFAULT_RADIUS_MI;
+        }
+    }
 
     public function resolveAddressCoordinates(): bool
     {

@@ -12,14 +12,18 @@ use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\BaseResource;
+use App\Models\Address;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Farm;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class FarmController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['show']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'locate']);
     }
 
     public function store(FarmStoreRequest $request)
@@ -85,6 +89,52 @@ class FarmController extends Controller
         }
 
         return new BaseResource($farm);
+    }
+
+    public function locate(Request $request, float $latitude, float $longitude)
+    {
+        $abbreviation = Unit::ABBREVIATION_KILOMETER;
+        $limit = $request->get('limit', 10);
+
+        $country = Country::query()
+            ->with(['units'])
+            ->where('code', $request->header('X-country'))
+            ->first();
+
+        if ($country !== null) {
+            $unit = $country
+                ->units
+                ->filter(function($unit) {
+                    return $unit->type === Unit::TYPE_LENGTH;
+                })
+                ->first();
+
+            if ($unit !== null) {
+                $abbreviation = $unit->abbreviation;
+            }
+        }
+
+        $farms = Farm::query()
+            ->with([
+                'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
+                    $query->select();
+                    $query->haversine($latitude, $longitude, $abbreviation);
+                    $query->where('type', Address::TYPE_LOCATION);
+                },
+                'images'
+            ])
+            ->whereHas('addresses', function($query) use ($latitude, $longitude, $abbreviation) {
+                $query
+                    ->haversine($latitude, $longitude, $abbreviation)
+                    ->where('type', Address::TYPE_LOCATION)
+                    ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+            })
+            ->orderBy('promote', 'desc')
+            ->take($limit)
+            ->get()
+            ->shuffle();
+
+        return BaseResource::collection($farms);
     }
 
     public function updateContactInformation(FarmContactInformationUpdateRequest $request, int $id)
