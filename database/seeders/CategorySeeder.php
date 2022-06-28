@@ -88,7 +88,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Honey',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 4,
+                'list_order' => 5,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
@@ -98,7 +98,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Meats',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 7,
+                'list_order' => 8,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
@@ -106,9 +106,19 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
+                'name' => 'Nuts and Seeds',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 4,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Orzechy i Nasiona'
+                ]
+            ],
+            [
                 'name' => 'Preserves',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 6,
+                'list_order' => 7,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
