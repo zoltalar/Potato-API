@@ -6,7 +6,10 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
+use App\Models\Address;
+use App\Models\Farm;
 use App\Models\Inventory;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -18,6 +21,27 @@ class InventoryController extends Controller
         $language = $request->header('X-language');
         $country = $request->header('X-country');
         $categoryId = $request->category_id;
+        $type = $request->type;
+        $productableId = $request->productable_id;
+
+        if ($type === Product::TYPE_PRODUCTABLE_FARM) {
+            $farm = Farm::query()
+                ->with('addresses.state.country')
+                ->find($productableId);
+
+            if ($farm !== null) {
+                $address = $farm
+                    ->addresses
+                    ->filter(function($address) {
+                        return $address->type = Address::TYPE_LOCATION;
+                    })
+                    ->first();
+
+                if ($address !== null) {
+                    $country = $address->state->country->code;
+                }
+            }
+        }
 
         $inventory = Inventory::query()
             ->with([

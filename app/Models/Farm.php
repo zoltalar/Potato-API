@@ -78,7 +78,7 @@ final class Farm extends Base implements NamableContract
 
     public function getFacebookUrlAttribute($value): ?string
     {
-        $facebook = $this->attributes['facebook'];
+        $facebook = $this->attributes['facebook'] ?? null;
 
         if ( ! empty($facebook)) {
             return sprintf('https://facebook.com/%s', $facebook);
@@ -89,7 +89,7 @@ final class Farm extends Base implements NamableContract
 
     public function getTwitterUrlAttribute($value): ?string
     {
-        $twitter = $this->attributes['twitter'];
+        $twitter = $this->attributes['twitter'] ?? null;
 
         if ( ! empty($twitter)) {
             return sprintf('https://twitter.com/%s', $twitter);
@@ -100,7 +100,7 @@ final class Farm extends Base implements NamableContract
 
     public function getPinterestUrlAttribute($value): ?string
     {
-        $pinterest = $this->attributes['pinterest'];
+        $pinterest = $this->attributes['pinterest'] ?? null;
 
         if ( ! empty($pinterest)) {
             return sprintf('https://pinterest.com/%s', $pinterest);
@@ -111,7 +111,7 @@ final class Farm extends Base implements NamableContract
 
     public function getInstagramUrlAttribute($value): ?string
     {
-        $instagram = $this->attributes['instagram'];
+        $instagram = $this->attributes['instagram'] ?? null;
 
         if ( ! empty($instagram)) {
             return sprintf('https://instagram.com/%s', $instagram);
