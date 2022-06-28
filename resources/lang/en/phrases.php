@@ -25,6 +25,7 @@ return [
     'last_name' => 'Last Name',
     'latitude' => 'Latitude',
     'length' => 'Length',
+    'list_order' => 'List Order',
     'location' => 'Location',
     'longitude' => 'Longitude',
     'mailing' => 'Mailing',

@@ -96,6 +96,16 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
+                'name' => 'Meats',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 7,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Mięsa'
+                ]
+            ],
+            [
                 'name' => 'Preserves',
                 'type' => Category::TYPE_INVENTORY,
                 'list_order' => 6,

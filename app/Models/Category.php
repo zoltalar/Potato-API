@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class Category extends Base
@@ -25,11 +26,18 @@ final class Category extends Base
         'active' => 'integer'
     ];
 
+    protected $constraints = ['inventory'];
+
     public $timestamps = false;
 
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function inventory(): HasMany
+    {
+        return $this->hasMany(Inventory::class);
+    }
 
     public function translation(Language $language)
     {

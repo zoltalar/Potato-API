@@ -22,7 +22,8 @@ class CategoryStoreRequest extends BaseRequest
 
         $rules = [
             'name' => ['required', 'string', "max:{$length}"],
-            'type' => ['required', 'in:' . implode(',', array_keys(Category::types()))]
+            'type' => ['required', 'in:' . implode(',', array_keys(Category::types()))],
+            'list_order' => ['nullable', 'numeric', 'max:9999']
         ];
 
         $name = $this->name;
@@ -45,7 +46,8 @@ class CategoryStoreRequest extends BaseRequest
     {
         return [
             'name' => mb_strtolower(__('phrases.name')),
-            'type' => mb_strtolower(__('phrases.type'))
+            'type' => mb_strtolower(__('phrases.type')),
+            'list_order' => mb_strtolower(__('phrases.list_order'))
         ];
     }
 }

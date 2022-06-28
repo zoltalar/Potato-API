@@ -57,7 +57,10 @@ class InventorySeeder extends Seeder
 
                         if (isset($this->cache['countries'][$countryName])) {
                             $country = $this->cache['countries'][$countryName];
-                            $inventory->countries()->attach($country->id);
+
+                            if ( ! $inventory->countries()->get()->contains($country->id)) {
+                                $inventory->countries()->attach($country->id);
+                            }
                         }
                     }
 
@@ -92,7 +95,8 @@ class InventorySeeder extends Seeder
         return array_merge(
             $this->fruits(),
             $this->vegetables(),
-            $this->dairyAndEggs()
+            $this->dairyAndEggs(),
+            $this->meats()
         );
     }
 
@@ -1107,6 +1111,180 @@ class InventorySeeder extends Seeder
                     'Polish' => 'Jogurt'
                 ]
             ]
+        ];
+    }
+
+    protected function meats(): array
+    {
+        return [
+            [
+                'name' => 'Beef',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Wołowina'
+                ]
+            ],
+            [
+                'name' => 'Chicken',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kurczak'
+                ]
+            ],
+            [
+                'name' => 'Duck',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kaczka'
+                ]
+            ],
+            [
+                'name' => 'Fish',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Ryby'
+                ]
+            ],
+            [
+                'name' => 'Gamebird',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Ptactwo Łowne'
+                ]
+            ],
+            [
+                'name' => 'Geese',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Gęsi'
+                ]
+            ],
+            [
+                'name' => 'Goat',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Koza'
+                ]
+            ],
+            [
+                'name' => 'Lamb',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Owca'
+                ]
+            ],
+            [
+                'name' => 'Ostrich',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Struś'
+                ]
+            ],
+            [
+                'name' => 'Pork',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Wieprzowina'
+                ]
+            ],
+            [
+                'name' => 'Rabbit',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Królik'
+                ]
+            ],
+            [
+                'name' => 'Turkey',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Indyk'
+                ]
+            ],
+            [
+                'name' => 'Veal',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Cielęcina'
+                ]
+            ],
+            [
+                'name' => 'Venison',
+                'category' => 'Meats',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Dziczyzna'
+                ]
+            ],
         ];
     }
 }
