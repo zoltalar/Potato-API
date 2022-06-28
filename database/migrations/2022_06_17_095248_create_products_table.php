@@ -20,7 +20,10 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('fall')->default(0)->nullable();
             $table->tinyInteger('winter')->default(0)->nullable();
             $table->decimal('amount', 10, 2)->unsigned()->nullable();
-            $table->string('unit', 5)->nullable();
+            $table->string('amount_unit', 5)->nullable();
+            $table->double('price', 10, 2)->unsigned()->nullable();
+            $table->smallInteger('currency_id')->unsigned()->nullable();
+            $table->string('price_unit', 5)->nullable();
 
             $table->unique(['productable_id', 'productable_type', 'inventory_id']);
 
@@ -28,6 +31,12 @@ class CreateProductsTable extends Migration
                 ->references('id')
                 ->on('inventory')
                 ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
         });
     }

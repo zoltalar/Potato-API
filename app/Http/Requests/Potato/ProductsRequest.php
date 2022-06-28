@@ -19,8 +19,10 @@ class ProductsRequest extends BaseRequest
 
         foreach ($products as $i => $product) {
             $rules["products.{$i}.seasons"] = [new ProductAvailabilitySeasons($product)];
-            $rules["products.{$i}.amount"] = ['nullable', 'numeric'];
-            $rules["products.{$i}.unit"] = ['nullable'];
+            $rules["products.{$i}.amount"] = ['nullable', 'numeric', 'max:9999999'];
+            $rules["products.{$i}.amount_unit"] = ['nullable'];
+            $rules["products.{$i}.price"] = ['nullable', 'numeric', 'max:9999999'];
+            $rules["products.{$i}.currency_id"] = ['nullable', 'exists:currencies,id'];
         }
 
         return $rules;
@@ -33,7 +35,8 @@ class ProductsRequest extends BaseRequest
 
         foreach ($products as $i => $product) {
             $attributes["products.{$i}.amount"] = mb_strtolower(__('phrases.amount'));
-            $attributes["products.{$i}.unit"] = mb_strtolower(__('phrases.unit'));
+            $attributes["products.{$i}.amount_unit"] = mb_strtolower(__('phrases.unit'));
+            $attributes["products.{$i}.price"] = mb_strtolower(__('phrases.price'));
         }
 
         return $attributes;

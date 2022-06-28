@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\Potato\CurrencyController;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -16,7 +17,9 @@ class Product extends Base
         'fall',
         'winter',
         'amount',
-        'unit'
+        'amount_unit',
+        'price',
+        'currency_id'
     ];
 
     protected $casts = [
@@ -32,6 +35,11 @@ class Product extends Base
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(Currency::class);
+    }
 
     public function inventory(): BelongsTo
     {

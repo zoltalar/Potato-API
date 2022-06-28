@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthent
 use App\Http\Controllers\Api\Potato\CategoryController as ApiPotatoCategoryController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
+use App\Http\Controllers\Api\Potato\CurrencyController as ApiPotatoCurrencyController;
 use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
 use App\Http\Controllers\Api\Potato\FavoriteController as ApiPotatoFavoriteController;
 use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
@@ -191,6 +192,11 @@ Route::group(['prefix' => 'potato'], function() {
     // Countries
     Route::group(['prefix' => 'countries'], function() {
         Route::get('index', [ApiPotatoCountryController::class, 'index'])->name('api.potato.countries.index');
+    });
+
+    // Currencies
+    Route::group(['prefix' => 'currencies'], function() {
+        Route::get('index', [ApiPotatoCurrencyController::class, 'index'])->name('api.potato.currencies.index');
     });
 
     // Email Verification
