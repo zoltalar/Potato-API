@@ -41,6 +41,8 @@ class CreateFarmsTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
 
+            $table->index(['name', 'first_name', 'last_name', 'phone', 'fax']);
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

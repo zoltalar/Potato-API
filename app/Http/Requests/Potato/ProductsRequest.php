@@ -19,10 +19,11 @@ class ProductsRequest extends BaseRequest
 
         foreach ($products as $i => $product) {
             $rules["products.{$i}.seasons"] = [new ProductAvailabilitySeasons($product)];
-            $rules["products.{$i}.amount"] = ['nullable', 'numeric', 'max:9999999'];
-            $rules["products.{$i}.amount_unit"] = ['nullable'];
-            $rules["products.{$i}.price"] = ['nullable', 'numeric', 'max:9999999'];
-            $rules["products.{$i}.currency_id"] = ['nullable', 'exists:currencies,id'];
+            $rules["products.{$i}.amount"] = ['nullable', 'numeric', 'min:0', 'max:9999999'];
+            $rules["products.{$i}.amount_unit"] = ['nullable', "required_with:products.{$i}.amount"];
+            $rules["products.{$i}.price"] = ['nullable', 'numeric', 'min:0', 'max:9999999'];
+            $rules["products.{$i}.currency_id"] = ['nullable', "required_with:products.{$i}.price", 'exists:currencies,id'];
+            $rules["products.{$i}.price_unit"] = ['nullable', "required_with:products.{$i}.price"];
         }
 
         return $rules;
@@ -37,6 +38,8 @@ class ProductsRequest extends BaseRequest
             $attributes["products.{$i}.amount"] = mb_strtolower(__('phrases.amount'));
             $attributes["products.{$i}.amount_unit"] = mb_strtolower(__('phrases.unit'));
             $attributes["products.{$i}.price"] = mb_strtolower(__('phrases.price'));
+            $attributes["products.{$i}.currency_id"] = mb_strtolower(__('phrases.currency'));
+            $attributes["products.{$i}.price_unit"] = mb_strtolower(__('phrases.unit'));
         }
 
         return $attributes;

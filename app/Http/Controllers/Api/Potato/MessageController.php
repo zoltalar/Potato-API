@@ -38,19 +38,27 @@ class MessageController extends Controller
         return new BaseResource($message);
     }
 
-    public function reply(MessageReplyRequest $request, Message $reply)
+    public function reply(MessageReplyRequest $request, string $token)
     {
-        $message = new Message();
-        $message->fill($request->only($message->getFillable()));
-        $message->subject = $reply->replySubject();
-        $message->reply_id = $reply->id;
-        $message->recipient_id = $reply->sender_id;
-        $message->save();
+        $message = null;
+
+        $reply = Message::query()
+            ->where('token', $token)
+            ->first();
+
+        if ($reply !== null) {
+            $message = new Message();
+            $message->fill($request->only($message->getFillable()));
+            $message->subject = $reply->replySubject();
+            $message->reply_id = $reply->id;
+            $message->recipient_id = $reply->sender_id;
+            $message->save();
+        }
 
         return new BaseResource($message);
     }
 
-    public function show(int $id)
+    public function show(string $token)
     {
         $message = auth()
             ->user()
@@ -64,7 +72,8 @@ class MessageController extends Controller
                     ]);
                 }
             ])
-            ->find($id);
+            ->where('token', $token)
+            ->first();
 
         if ($message !== null) {
 
@@ -76,14 +85,15 @@ class MessageController extends Controller
         return new BaseResource($message);
     }
 
-    public function destroy(int $id)
+    public function destroy(string $token)
     {
         $status = 403;
 
         $message = auth()
             ->user()
             ->receivedMessages()
-            ->find($id);
+            ->where('token', $token)
+            ->first();
 
         if ($message !== null) {
 

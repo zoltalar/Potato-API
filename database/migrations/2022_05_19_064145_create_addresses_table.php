@@ -26,6 +26,8 @@ class CreateAddressesTable extends Migration
             $table->string('addressable_type', 100)->nullable();
             $table->timestamps();
 
+            $table->index(['address', 'address_2', 'city', 'zip']);
+
             $table->unique(['type', 'addressable_id', 'addressable_type']);
 
             $table->foreign('state_id')

@@ -20,8 +20,8 @@ class CreateCitiesTable extends Migration
             $table->string('timezone', 35)->nullable();
             $table->integer('state_id')->unsigned();
 
-            $table->unique(['name', 'state_id']);
             $table->index(['name', 'name_ascii']);
+            $table->unique(['name', 'state_id']);
 
             $table->foreign('state_id')
                 ->references('id')

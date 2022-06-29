@@ -24,6 +24,8 @@ class CreateReviewsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
 
+            $table->index(['title']);
+
             $table->unique(['user_id', 'rateable_id', 'rateable_type']);
 
             $table->foreign('user_id')

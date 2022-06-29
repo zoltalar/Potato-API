@@ -20,6 +20,8 @@ class CreateInventoryTable extends Migration
             $table->string('photo', 40)->nullable();
             $table->boolean('system')->nullable();
 
+            $table->index(['name']);
+
             $table->unique(['name', 'category_id']);
 
             $table->foreign('category_id')

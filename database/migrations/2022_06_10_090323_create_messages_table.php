@@ -15,6 +15,7 @@ class CreateMessagesTable extends Migration
             $length = Base::DEFAULT_STRING_LENGTH;
 
             $table->id();
+            $table->string('token', 100)->unique();
             $table->string('subject', $length)->nullable();
             $table->text('content');
             $table->bigInteger('sender_id')->unsigned();

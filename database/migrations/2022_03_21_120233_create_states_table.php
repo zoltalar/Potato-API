@@ -16,8 +16,8 @@ class CreateStatesTable extends Migration
             $table->char('abbreviation', 5)->nullable();
             $table->smallInteger('country_id')->unsigned()->nullable();
 
-            $table->unique(['name', 'country_id']);
             $table->index(['name', 'abbreviation']);
+            $table->unique(['name', 'country_id']);
 
             $table->foreign('country_id')
                 ->references('id')

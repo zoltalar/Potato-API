@@ -245,9 +245,9 @@ Route::group(['prefix' => 'potato'], function() {
     // Messages
     Route::group(['prefix' => 'messages'], function() {
         Route::post('store/{type}/{id}', [ApiPotatoMessageController::class, 'store'])->name('api.potato.messages.store');
-        Route::post('reply/{reply}', [ApiPotatoMessageController::class, 'reply'])->name('api.potato.messages.reply');
-        Route::get('show/{id}', [ApiPotatoMessageController::class, 'show'])->name('api.potato.messages.show');
-        Route::delete('{id}', [ApiPotatoMessageController::class, 'destroy'])->name('api.potato.messages.destroy');
+        Route::post('reply/{token}', [ApiPotatoMessageController::class, 'reply'])->name('api.potato.messages.reply');
+        Route::get('show/{token}', [ApiPotatoMessageController::class, 'show'])->name('api.potato.messages.show');
+        Route::delete('{token}', [ApiPotatoMessageController::class, 'destroy'])->name('api.potato.messages.destroy');
         Route::post('destroy-batch', [ApiPotatoMessageController::class, 'destroyBatch'])->name('api.potato.messages.destroy-batch');
     });
 

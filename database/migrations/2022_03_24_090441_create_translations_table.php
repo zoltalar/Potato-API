@@ -20,8 +20,9 @@ class CreateTranslationsTable extends Migration
             $table->unsignedInteger('translatable_id')->nullable();
             $table->string('translatable_type', 100)->nullable();
 
-            $table->unique(['language_id', 'translatable_id', 'translatable_type'], 'fk_translations_language_translatable');
             $table->index(['name']);
+
+            $table->unique(['language_id', 'translatable_id', 'translatable_type'], 'fk_translations_language_translatable');
 
             $table->foreign('language_id')
                 ->references('id')

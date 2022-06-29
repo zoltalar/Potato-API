@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Api\Potato\CurrencyController;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -19,7 +18,8 @@ class Product extends Base
         'amount',
         'amount_unit',
         'price',
-        'currency_id'
+        'currency_id',
+        'price_unit'
     ];
 
     protected $casts = [
@@ -27,7 +27,8 @@ class Product extends Base
         'summer' => 'integer',
         'fall' => 'integer',
         'winter' => 'integer',
-        'amount' => 'float'
+        'amount' => 'float',
+        'price' => 'float'
     ];
 
     public $timestamps = false;

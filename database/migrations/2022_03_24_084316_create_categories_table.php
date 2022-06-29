@@ -21,8 +21,8 @@ class CreateCategoriesTable extends Migration
             $table->boolean('system')->nullable();
             $table->boolean('active')->nullable();
 
-            $table->unique(['name', 'type']);
             $table->index(['name']);
+            $table->unique(['name', 'type']);
         });
     }
 
