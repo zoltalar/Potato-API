@@ -22,7 +22,13 @@ class UserController extends Controller
 
     public function current()
     {
-        $user = User::find(auth()->id());
+        $user = User::query()
+            ->with([
+                'receivedMessages' => function($query) {
+                    $query->whereNull('read_at');
+                }
+            ])
+            ->find(auth()->id());
 
         return new BaseResource($user);
     }
