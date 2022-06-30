@@ -9,6 +9,9 @@ final class Language extends Base
     const NAME_ENGLISH = 'English';
     const NAME_POLISH = 'Polish';
 
+    const CODE_EN = 'en';
+    const CODE_PL = 'pl';
+
     protected $fillable = [
         'name',
         'native',
@@ -30,6 +33,6 @@ final class Language extends Base
 
     public static function codes(): array
     {
-        return ['en', 'pl'];
+        return [self::CODE_EN, self::CODE_PL];
     }
 }

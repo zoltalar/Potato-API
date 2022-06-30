@@ -17,13 +17,14 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Unit;
+use App\Services\Unit as UnitService;
 use Illuminate\Http\Request;
 
 class FarmController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'locate']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'locate', 'search']);
     }
 
     public function store(FarmStoreRequest $request)
@@ -93,26 +94,9 @@ class FarmController extends Controller
 
     public function locate(Request $request, float $latitude, float $longitude)
     {
-        $abbreviation = Unit::ABBREVIATION_KILOMETER;
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = UnitService::unitAbbreviation($code);
         $limit = $request->get('limit', 10);
-
-        $country = Country::query()
-            ->with(['units'])
-            ->where('code', $request->header('X-country'))
-            ->first();
-
-        if ($country !== null) {
-            $unit = $country
-                ->units
-                ->filter(function($unit) {
-                    return $unit->type === Unit::TYPE_LENGTH;
-                })
-                ->first();
-
-            if ($unit !== null) {
-                $abbreviation = $unit->abbreviation;
-            }
-        }
 
         $farms = Farm::query()
             ->with([
@@ -121,8 +105,11 @@ class FarmController extends Controller
                     $query->haversine($latitude, $longitude, $abbreviation);
                     $query->where('type', Address::TYPE_LOCATION);
                 },
-                'images'
+                'images' => function($query) {
+                    $query->primary();
+                }
             ])
+            ->active()
             ->whereHas('addresses', function($query) use ($latitude, $longitude, $abbreviation) {
                 $query
                     ->haversine($latitude, $longitude, $abbreviation)
@@ -133,6 +120,44 @@ class FarmController extends Controller
             ->take($limit)
             ->get()
             ->shuffle();
+
+        return BaseResource::collection($farms);
+    }
+
+    public function search(Request $request)
+    {
+        $id = $request->get('id', 0);
+        $city = City::find($id);
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = UnitService::unitAbbreviation($code);
+        $item = $request->item;
+
+        $farms = Farm::query()
+            ->with([
+                'addresses' => function($query) {
+                    $query->where('type', Address::TYPE_LOCATION);
+                },
+                'images' => function($query) {
+                    $query->primary();
+                },
+                'products.inventory.translations'
+            ])
+            ->active()
+            ->when($city !== null, function($query) use ($city, $abbreviation) {
+                return $query->whereHas('addresses', function($query) use ($city, $abbreviation) {
+                    $query
+                        ->haversine($city->latitude, $city->longitude, $abbreviation)
+                        ->where('type', Address::TYPE_LOCATION)
+                        ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+                });
+            })
+            ->when($item, function($query) use ($item) {
+                return $query->whereHas('products.inventory.translations', function($query) use ($item) {
+                    $query->search(['name'], $item);
+                });
+            })
+            ->orderBy('promote', 'desc')
+            ->get();
 
         return BaseResource::collection($farms);
     }

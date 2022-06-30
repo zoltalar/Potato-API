@@ -26,14 +26,14 @@ class LanguageSeeder extends Seeder
             [
                 'name' => Language::NAME_ENGLISH,
                 'native' => 'English',
-                'code' => 'en',
+                'code' => Language::CODE_EN,
                 'system' => 1,
                 'active' => 1
             ],
             [
                 'name' => Language::NAME_POLISH,
                 'native' => 'Polski',
-                'code' => 'pl',
+                'code' => Language::CODE_PL,
                 'system' => 1,
                 'active' => 1
             ],

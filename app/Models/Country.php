@@ -12,6 +12,9 @@ final class Country extends Base
     const NAME_POLAND = 'Poland';
     const NAME_UNITED_STATES = 'United States';
 
+    const CODE_PL = 'pl';
+    const CODE_US = 'us';
+
     protected $fillable = [
         'name',
         'native',

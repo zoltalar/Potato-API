@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Arr;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 final class Image extends Base
@@ -29,6 +30,20 @@ final class Image extends Base
     ];
 
     protected $appends = ['file_url'];
+
+    // --------------------------------------------------
+    // Scopes
+    // --------------------------------------------------
+
+    public function scopeCover(Builder $query): Builder
+    {
+        return $query->where('cover', 1);
+    }
+
+    public function scopePrimary(Builder $query): Builder
+    {
+        return $query->where('primary', 1);
+    }
 
     // --------------------------------------------------
     // Accessors and Mutators

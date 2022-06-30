@@ -9,6 +9,7 @@ use App\Http\Resources\BaseResource;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Unit;
+use App\Services\Unit as UnitService;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -17,7 +18,7 @@ class CityController extends Controller
     {
         $search = $request->search;
         $limit = $request->get('limit', 10);
-        $country = $request->header('X-country');
+        $country = $request->header('X-country', Country::CODE_PL);
         $countryId = $request->country_id;
         $stateId = $request->state_id;
 
@@ -55,26 +56,9 @@ class CityController extends Controller
 
     public function locate(Request $request, float $latitude, float $longitude)
     {
-        $abbreviation = Unit::ABBREVIATION_KILOMETER;
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = UnitService::unitAbbreviation($code);
         $limit = $request->get('limit', 10);
-
-        $country = Country::query()
-            ->with(['units'])
-            ->where('code', $request->header('X-country'))
-            ->first();
-
-        if ($country !== null) {
-            $unit = $country
-                ->units
-                ->filter(function($unit) {
-                    return $unit->type === Unit::TYPE_LENGTH;
-                })
-                ->first();
-
-            if ($unit !== null) {
-                $abbreviation = $unit->abbreviation;
-            }
-        }
 
         $query = City::query()
             ->select([

@@ -26,7 +26,7 @@ class CountrySeeder extends Seeder
             [
                 'name' => Country::NAME_UNITED_STATES,
                 'native' => 'United States',
-                'code' => 'us',
+                'code' => Country::CODE_US,
                 'date_format' => 'MM/DD/YYYY',
                 'time_format' => 'h:mm a',
                 'system' => 1,
@@ -35,7 +35,7 @@ class CountrySeeder extends Seeder
             [
                 'name' => Country::NAME_POLAND,
                 'native' => 'Polska',
-                'code' => 'pl',
+                'code' => Country::CODE_PL,
                 'date_format' => 'DD/MM/YYYY',
                 'time_format' => 'H:mm',
                 'system' => 1,

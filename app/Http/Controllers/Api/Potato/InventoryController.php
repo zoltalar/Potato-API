@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
+use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -19,7 +20,7 @@ class InventoryController extends Controller
         $search = $request->search;
         $limit = $request->get('limit', 10);
         $language = $request->header('X-language');
-        $country = $request->header('X-country');
+        $country = $request->header('X-country', Country::CODE_PL);
         $categoryId = $request->category_id;
         $type = $request->type;
         $productableId = $request->productable_id;
