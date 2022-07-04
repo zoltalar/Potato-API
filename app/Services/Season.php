@@ -70,7 +70,7 @@ final class Season
         $order = [];
         $seasons = self::SEASONS;
 
-        for ($i=0, $length = count($seasons); $i < $length; $i++) {
+        for ($i = 0, $length = count($seasons); $i < $length; $i++) {
             $order[$seasons[$i]] = $i;
         }
 

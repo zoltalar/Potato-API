@@ -70,4 +70,29 @@ final class Unit extends Base
             self::SYSTEM_IMPERIAL => __('phrases.imperial')
         ];
     }
+
+    public static function unitAbbreviation($code): string
+    {
+        $abbreviation = Unit::ABBREVIATION_KILOMETER;
+
+        $country = Country::query()
+            ->with(['units'])
+            ->where('code', $code)
+            ->first();
+
+        if ($country !== null) {
+            $unit = $country
+                ->units
+                ->filter(function($unit) {
+                    return $unit->type === Unit::TYPE_LENGTH;
+                })
+                ->first();
+
+            if ($unit !== null) {
+                $abbreviation = $unit->abbreviation;
+            }
+        }
+
+        return $abbreviation;
+    }
 }

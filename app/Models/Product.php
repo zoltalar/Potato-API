@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Season;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -30,6 +32,26 @@ class Product extends Base
         'amount' => 'float',
         'price' => 'float'
     ];
+
+    // --------------------------------------------------
+    // Scopes
+    // --------------------------------------------------
+
+    public function scopeSeason(Builder $query): Builder
+    {
+        $service = new Season();
+        $season = $service->season(now());
+
+        if ($season === Season::SPRING) {
+            return $query->where('spring', 1);
+        } elseif ($season === Season::SUMMER) {
+            return $query->where('summer', 1);
+        } elseif ($season === Season::FALL) {
+            return $query->where('fall', 1);
+        } elseif ($season === Season::WINTER) {
+            return $query->where('winter', 1);
+        }
+    }
 
     // --------------------------------------------------
     // Relationships
