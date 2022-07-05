@@ -22,7 +22,7 @@ final class CurrencyConverter
         $rates = Cache::get($this->cacheKey());
 
         if (empty($rates)) {
-            Cache::put($this->cacheKey(), ($rates = Http::get($this->url())->json('conversion_rates')), 60);
+            Cache::put($this->cacheKey(), ($rates = Http::get($this->url())->json('conversion_rates')), 600);
         }
 
         if (is_array($rates) && array_key_exists($code, $rates)) {
@@ -30,6 +30,11 @@ final class CurrencyConverter
         }
 
         return null;
+    }
+
+    public function baseCode(): string
+    {
+        return $this->baseCode;
     }
 
     protected function cacheKey(): string
