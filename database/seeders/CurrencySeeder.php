@@ -21,19 +21,19 @@ class CurrencySeeder extends Seeder
         return [
             [
                 'name' => Currency::NAME_US_DOLLAR,
-                'code' => 'USD',
+                'code' => Currency::CODE_USD,
                 'symbol' => '$',
                 'number' => 840
             ],
             [
-                'name' => 'Euro',
-                'code' => 'EUR',
+                'name' => Currency::NAME_EURO,
+                'code' => Currency::CODE_EUR,
                 'symbol' => '€',
                 'number' => 978
             ],
             [
                 'name' => Currency::NAME_POLISH_ZLOTY,
-                'code' => 'PLN',
+                'code' => Currency::CODE_PLN,
                 'symbol' => 'zł'
             ]
         ];

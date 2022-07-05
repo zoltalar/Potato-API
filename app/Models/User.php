@@ -84,6 +84,11 @@ final class User extends Base implements
         return $this->belongsTo(Country::class);
     }
 
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function farms(): HasMany
     {
         return $this->hasMany(Farm::class);

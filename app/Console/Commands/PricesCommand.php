@@ -14,7 +14,10 @@ class PricesCommand extends Command
 
     public function handle()
     {
-        $products = Product::all();
+        $products = Product::query()
+            ->whereNotNull('price')
+            ->get();
+
         $date = now()->format('Y-m-d');
 
         foreach ($products as $product) {

@@ -134,7 +134,7 @@ class FarmController extends Controller
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code);
 
-        // City's latitude and longitude is defined
+        // City is defined
         if ($city !== null) {
             $farms = Farm::query()
                 ->with([

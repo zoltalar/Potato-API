@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'exchange_rate' => [
+        'key' => env('EXCHANGE_RATE_API_KEY')
+    ],
+
     'google' => [
         'key' => env('GOOGLE_GEOCODING_API_KEY'),
         'resolve_address_coordinates' => env('GOOGLE_RESOLVE_ADDRESS_COORDINATES'),

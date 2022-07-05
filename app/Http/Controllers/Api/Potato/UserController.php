@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\UserContactInformationUpdateRequest;
 use App\Http\Requests\Potato\UserPasswordUpdateRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Country;
+use App\Models\Currency;
 use App\Models\Language;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,9 @@ class UserController extends Controller
     {
         $user = User::query()
             ->with([
+                'country',
+                'currency',
+                'language',
                 'receivedMessages' => function($query) {
                     $query->whereNull('read_at');
                 }
@@ -70,6 +74,24 @@ class UserController extends Controller
 
             if ($language !== null) {
                 $user->language_id = $language->id;
+                $user->save();
+            }
+        }
+
+        return new BaseResource($user);
+    }
+
+    public function updateCurrency(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($user !== null) {
+            $currency = Currency::query()
+                ->where('code', $request->code)
+                ->first();
+
+            if ($currency !== null) {
+                $user->currency_id = $currency->id;
                 $user->save();
             }
         }

@@ -84,7 +84,7 @@ abstract class Base extends Model
         if (is_numeric($phrase) || filter_var($phrase, FILTER_VALIDATE_EMAIL)) {
             $words = [$phrase];
         } else {
-            $words = str_word_count($phrase, 1, 'ąćęłńóśźż');
+            $words = str_word_count($phrase, 1, Language::diacritics());
         }
 
         foreach ($words as $word) {

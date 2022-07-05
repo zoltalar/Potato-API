@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 100);
             $table->smallInteger('language_id')->unsigned()->nullable();
             $table->smallInteger('country_id')->unsigned()->nullable();
+            $table->smallInteger('currency_id')->unsigned()->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 20)->nullable();
@@ -35,6 +36,12 @@ class CreateUsersTable extends Migration
             $table->foreign('country_id')
                 ->references('id')
                 ->on('countries')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
+
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
                 ->onDelete('set null')
                 ->onUpdate('cascade');
         });

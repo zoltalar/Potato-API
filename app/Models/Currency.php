@@ -7,7 +7,12 @@ namespace App\Models;
 final class Currency extends Base
 {
     const NAME_US_DOLLAR = 'US Dollar';
+    const NAME_EURO = 'Euro';
     const NAME_POLISH_ZLOTY = 'Polish Zloty';
+
+    const CODE_USD = 'USD';
+    const CODE_EUR = 'EUR';
+    const CODE_PLN = 'PLN';
 
     protected $fillable = [
         'name',
@@ -19,4 +24,13 @@ final class Currency extends Base
     protected $casts = ['number' => 'integer'];
 
     public $timestamps = false;
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public static function codes(): array
+    {
+        return [self::CODE_USD, self::CODE_EUR, self::CODE_PLN];
+    }
 }

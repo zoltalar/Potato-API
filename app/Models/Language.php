@@ -35,4 +35,14 @@ final class Language extends Base
     {
         return [self::CODE_EN, self::CODE_PL];
     }
+
+    public static function diacritics(): string
+    {
+        return self::polishDiacritics();
+    }
+
+    public static function polishDiacritics(): string
+    {
+        return 'ąćęłńóśźż';
+    }
 }

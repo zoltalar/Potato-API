@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
+use App\Http\Controllers\Api\Potato\PriceController as ApiPotatoPriceController;
 use App\Http\Controllers\Api\Potato\ProductController as ApiPotatoProductController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
 use App\Http\Controllers\Api\Potato\ReviewController as ApiPotatoReviewController;
@@ -252,6 +253,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::post('destroy-batch', [ApiPotatoMessageController::class, 'destroyBatch'])->name('api.potato.messages.destroy-batch');
     });
 
+    // Prices
+    Route::group(['prefix' => 'prices'], function() {
+        Route::get('analytics', [ApiPotatoPriceController::class, 'analytics'])->name('api.potato.prices.analytics');
+    });
+
     // Products
     Route::group(['prefix' => 'products'], function() {
         Route::post('save/{type}/{id}', [ApiPotatoProductController::class, 'save'])->name('api.potato.products.save');
@@ -275,6 +281,7 @@ Route::group(['prefix' => 'potato'], function() {
         Route::get('current', [ApiPotatoUserController::class, 'current'])->name('api.potato.users.current');
         Route::match(['PUT', 'PATCH'], 'update-contact-information', [ApiPotatoUserController::class, 'updateContactInformation'])->name('api.potato.users.update-contact-information');
         Route::match(['PUT', 'PATCH'], 'update-country', [ApiPotatoUserController::class, 'updateCountry'])->name('api.potato.users.update-country');
+        Route::match(['PUT', 'PATCH'], 'update-currency', [ApiPotatoUserController::class, 'updateCurrency'])->name('api.potato.users.update-currency');
         Route::match(['PUT', 'PATCH'],'update-language', [ApiPotatoUserController::class, 'updateLanguage'])->name('api.potato.users.update-language');
         Route::match(['PUT', 'PATCH'], 'update-password', [ApiPotatoUserController::class, 'updatePassword'])->name('api.potato.users.update-password');
     });
