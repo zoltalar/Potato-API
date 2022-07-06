@@ -9,7 +9,9 @@ use App\Http\Requests\Potato\AddressRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Farm;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -57,11 +59,15 @@ class AddressController extends Controller
         return new BaseResource($address);
     }
 
-    public function meta()
+    public function meta(Request $request)
     {
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($code);
+
         $meta = [
             'addressable_types' => Address::addressableTypes(),
-            'types' => Address::types()
+            'types' => Address::types(),
+            'radius' => Address::radius($abbreviation)
         ];
 
         return response()->json($meta);
