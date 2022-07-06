@@ -56,7 +56,7 @@ class CityController extends Controller
     public function locate(Request $request, float $latitude, float $longitude)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
         $limit = $request->get('limit', 10);
 
         $query = City::query()

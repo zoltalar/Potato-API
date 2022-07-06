@@ -64,14 +64,14 @@ final class Address extends Base implements
     // Other
     // --------------------------------------------------
 
-    public static function radius(string $unit): int
+    public static function radius(string $unit, int $radius = 100): int
     {
         switch($unit) {
             default:
             case Unit::ABBREVIATION_KILOMETER:
-                return self::DEFAULT_RADIUS_KM;
+                return min(self::DEFAULT_RADIUS_KM, $radius);
             case Unit::ABBREVIATION_MILE:
-                return self::DEFAULT_RADIUS_MI;
+                return min(self::DEFAULT_RADIUS_MI, $radius);
         }
     }
 

@@ -71,7 +71,7 @@ final class Unit extends Base
         ];
     }
 
-    public static function unitAbbreviation($code): string
+    public static function unitAbbreviation(string $code, int $type): string
     {
         $abbreviation = Unit::ABBREVIATION_KILOMETER;
 
@@ -83,8 +83,8 @@ final class Unit extends Base
         if ($country !== null) {
             $unit = $country
                 ->units
-                ->filter(function($unit) {
-                    return $unit->type === Unit::TYPE_LENGTH;
+                ->filter(function($unit) use ($type) {
+                    return $unit->type === $type;
                 })
                 ->first();
 

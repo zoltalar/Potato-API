@@ -62,7 +62,7 @@ class AddressController extends Controller
     public function meta(Request $request)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
 
         $meta = [
             'addressable_types' => Address::addressableTypes(),

@@ -16,6 +16,7 @@ use App\Models\Address;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Farm;
+use App\Models\Inventory;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -94,7 +95,7 @@ class FarmController extends Controller
     public function locate(Request $request, float $latitude, float $longitude)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
         $limit = $request->get('limit', 10);
 
         $farms = Farm::query()
@@ -127,14 +128,40 @@ class FarmController extends Controller
     {
         $item = $request->item;
         $inventoryId = $request->get('inventory_id', 0);
+
+        // Attempt to find the inventory item
+        if (empty($inventoryId) && ! empty($item)) {
+            $inventory = Inventory::query()
+                ->whereHas('translations', function($query) use ($item) {
+                    $query->search(['name'], $item);
+                })
+                ->first();
+
+            if ($inventory !== null) {
+                $inventoryId = $inventory->id;
+            }
+        }
+
         $location = $request->location;
+        $city = null;
         $cityId = $request->get('city_id', 0);
+        $countryCode = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
+        $radius = Address::radius($abbreviation, (int) $request->radius);
 
-        $city = City::find($cityId);
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code);
+        // Attempt to find the city
+        if (empty($cityId) && ! empty($location)) {
+            $city = City::query()
+                ->search(['name', 'name_ascii'], $location)
+                ->whereHas('state.country', function($query) use ($countryCode) {
+                    $query->where('code', $countryCode);
+                })
+                ->first();
+        } elseif ( ! empty($cityId)) {
+            $city = City::find($cityId);
+        }
 
-        // City is defined
+        // We have the city model
         if ($city !== null) {
             $farms = Farm::query()
                 ->with([
@@ -150,11 +177,18 @@ class FarmController extends Controller
                     'products.inventory.translations'
                 ])
                 ->active()
-                ->whereHas('addresses', function($query) use ($city, $abbreviation) {
-                    $query
-                        ->haversine($city->latitude, $city->longitude, $abbreviation)
-                        ->where('type', Address::TYPE_LOCATION)
-                        ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+                ->where(function($query) use ($city, $abbreviation, $radius, $location) {
+                    $query->whereHas('addresses', function($query) use ($city, $abbreviation, $radius) {
+                        $query
+                            ->haversine($city->latitude, $city->longitude, $abbreviation)
+                            ->where('type', Address::TYPE_LOCATION)
+                            ->havingRaw('distance < ?', [$radius]);
+                    })
+                    ->orWhereHas('addresses', function($query) use ($location) {
+                        $query
+                            ->search(['city'], $location)
+                            ->where('type', Address::TYPE_LOCATION);
+                    });
                 })
                 ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
                     return $query->where(function($query) use ($inventoryId) {
@@ -163,17 +197,6 @@ class FarmController extends Controller
                                 ->season()
                                 ->where('inventory_id', $inventoryId);
                         });
-                    });
-                })
-                ->when(empty($inventoryId) && ! empty($item), function($query) use ($item) {
-                    return $query->where(function($query) use ($item) {
-                        $query
-                            ->whereHas('products', function($query) {
-                                $query->season();
-                            })
-                            ->whereHas('products.inventory.translations', function($query) use ($item) {
-                                $query->search(['name'], $item);
-                            });
                     });
                 })
                 ->orderBy('promote', 'desc')
@@ -192,7 +215,9 @@ class FarmController extends Controller
                 ])
                 ->active()
                 ->whereHas('addresses', function($query) use ($location) {
-                    $query->search(['city'], $location);
+                    $query
+                        ->search(['city'], $location)
+                        ->where('type', Address::TYPE_LOCATION);;
                 })
                 ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
                     return $query->where(function($query) use ($inventoryId) {
@@ -201,17 +226,6 @@ class FarmController extends Controller
                                 ->season()
                                 ->where('inventory_id', $inventoryId);
                         });
-                    });
-                })
-                ->when(empty($inventoryId) && ! empty($item), function($query) use ($item) {
-                    return $query->where(function($query) use ($item) {
-                        $query
-                            ->whereHas('products', function($query) {
-                                $query->season();
-                            })
-                            ->whereHas('products.inventory.translations', function($query) use ($item) {
-                                $query->search(['name'], $item);
-                            });
                     });
                 })
                 ->orderBy('promote', 'desc')
