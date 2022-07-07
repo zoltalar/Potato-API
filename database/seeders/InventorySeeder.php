@@ -99,6 +99,7 @@ class InventorySeeder extends Seeder
             $this->nutsAndSeeds(),
             $this->coffeeAndTeas(),
             $this->honey(),
+            $this->grains(),
             $this->meats()
         );
     }
@@ -1388,6 +1389,137 @@ class InventorySeeder extends Seeder
                     'Polish' => 'Miód Rzepakowy'
                 ]
             ],
+        ];
+    }
+
+    protected function grains(): array
+    {
+        return [
+            [
+                'name' => 'Barley',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Jęczmień'
+                ]
+            ],
+            [
+                'name' => 'Buckwheat',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland'
+                ],
+                'translations' => [
+                    'Polish' => 'Gryka'
+                ]
+            ],
+            [
+                'name' => 'Corn',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kukurydza'
+                ]
+            ],
+            [
+                'name' => 'Millet',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland'
+                ],
+                'translations' => [
+                    'Polish' => 'Proso'
+                ]
+            ],
+            [
+                'name' => 'Oats',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Owies'
+                ]
+            ],
+            [
+                'name' => 'Popcorn',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => []
+            ],
+            [
+                'name' => 'Rice',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Ryż'
+                ]
+            ],
+            [
+                'name' => 'Rye',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Żyto'
+                ]
+            ],
+            [
+                'name' => 'Soy Beans',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Fasola Sojowa'
+                ]
+            ],
+            [
+                'name' => 'Spelt',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland'
+                ],
+                'translations' => [
+                    'Polish' => 'Orkisz'
+                ]
+            ],
+            [
+                'name' => 'Wheat',
+                'category' => 'Grains',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Pszenica'
+                ]
+            ]
         ];
     }
 

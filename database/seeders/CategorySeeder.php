@@ -116,9 +116,19 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Preserves',
+                'name' => 'Grains',
                 'type' => Category::TYPE_INVENTORY,
                 'list_order' => 7,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Ziarna'
+                ]
+            ],
+            [
+                'name' => 'Preserves',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 8,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
@@ -128,7 +138,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Meats',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 8,
+                'list_order' => 9,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
