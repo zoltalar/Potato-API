@@ -98,6 +98,7 @@ class InventorySeeder extends Seeder
             $this->dairyAndEggs(),
             $this->nutsAndSeeds(),
             $this->coffeeAndTeas(),
+            $this->honey(),
             $this->meats()
         );
     }
@@ -1310,6 +1311,83 @@ class InventorySeeder extends Seeder
                     'Polish' => 'Żółta Herbata'
                 ]
             ]
+        ];
+    }
+
+    protected function honey(): array
+    {
+        return [
+            [
+                'name' => 'Honeydew Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Spadziowy'
+                ]
+            ],
+            [
+                'name' => 'Wildflower Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Wielokwiatowy'
+                ]
+            ],
+            [
+                'name' => 'Linden Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Lipowy'
+                ]
+            ],
+            [
+                'name' => 'Acacia Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Akacjowy'
+                ]
+            ],
+            [
+                'name' => 'Buckwheat Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Gryczany'
+                ]
+            ],
+            [
+                'name' => 'Rapeseed Honey',
+                'category' => 'Honey',
+                'system' => 1,
+                'countries' => [
+                    'Poland'
+                ],
+                'translations' => [
+                    'Polish' => 'Miód Rzepakowy'
+                ]
+            ],
         ];
     }
 
