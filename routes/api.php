@@ -170,6 +170,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Addresses
     Route::group(['prefix' => 'addresses'], function() {
         Route::post('save/{type}/{id}', [ApiPotatoAddressController::class, 'save'])->name('api.potato.addresses.save');
+        Route::get('plot/{type}', [ApiPotatoAddressController::class, 'plot'])->name('api.potato.addresses.plot');
         Route::get('meta', [ApiPotatoAddressController::class, 'meta'])->name('api.potato.addresses.meta');
     });
 

@@ -18,7 +18,7 @@ class AddressController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['meta']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['plot', 'meta']);
     }
 
     public function save(AddressRequest $request, string $type, int $id)
@@ -57,6 +57,35 @@ class AddressController extends Controller
         }
 
         return new BaseResource($address);
+    }
+
+    public function plot(Request $request, string $type)
+    {
+        $code = $request->header('X-country', Country::CODE_PL);
+
+        $addresses = Address::query()
+            ->select([
+                'latitude',
+                'longitude',
+                'addressable_id',
+                'addressable_type'
+            ])
+            ->with([
+                'addressable' => function($query) {
+                    $query->select(['id', 'name']);
+                }
+            ])
+            ->where('addressable_type', $type)
+            ->where('type', Address::TYPE_LOCATION)
+            ->whereHas('addressable', function($query) {
+                $query->active();
+            })
+            ->whereHas('state.country', function($query) use ($code) {
+                $query->where('code', $code);
+            })
+            ->get();
+
+        return BaseResource::collection($addresses);
     }
 
     public function meta(Request $request)

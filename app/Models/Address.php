@@ -38,6 +38,12 @@ final class Address extends Base implements
         'type'
     ];
 
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+        'type' => 'integer'
+    ];
+
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
