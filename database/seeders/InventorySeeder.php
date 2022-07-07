@@ -97,6 +97,7 @@ class InventorySeeder extends Seeder
             $this->vegetables(),
             $this->dairyAndEggs(),
             $this->nutsAndSeeds(),
+            $this->coffeeAndTeas(),
             $this->meats()
         );
     }
@@ -1115,6 +1116,203 @@ class InventorySeeder extends Seeder
         ];
     }
 
+    protected function nutsAndSeeds(): array
+    {
+        return [
+            [
+                'name' => 'Almonds',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Migdały'
+                ]
+            ],
+            [
+                'name' => 'Cacao',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kakao'
+                ]
+            ],
+            [
+                'name' => 'Chestnuts',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kasztany'
+                ]
+            ],
+            [
+                'name' => 'Flax',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Len'
+                ]
+            ],
+            [
+                'name' => 'Hazelnuts',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Orzechy Laskowe'
+                ]
+            ],
+            [
+                'name' => 'Macadamias',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Makadamia'
+                ]
+            ],
+            [
+                'name' => 'Peanuts',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Orzeszki Ziemne'
+                ]
+            ],
+            [
+                'name' => 'Pecans',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Orzechy Pekan'
+                ]
+            ],
+            [
+                'name' => 'Pine Nuts',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Orzeszki Piniowe'
+                ]
+            ],
+            [
+                'name' => 'Pistachios',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Pistacje'
+                ]
+            ],
+            [
+                'name' => 'Sunflower Seeds',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Ziarna Słonecznika'
+                ]
+            ],
+            [
+                'name' => 'Walnuts',
+                'category' => 'Nuts and Seeds',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Orzechy Włoskie'
+                ]
+            ]
+        ];
+    }
+
+    protected function coffeeAndTeas(): array
+    {
+        return [
+            [
+                'name' => 'Coffee',
+                'category' => 'Coffee and Teas',
+                'system' => 1,
+                'countries' => [
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Kawa'
+                ]
+            ],
+            [
+                'name' => 'Black Tea',
+                'category' => 'Coffee and Teas',
+                'system' => 1,
+                'countries' => [],
+                'translations' => [
+                    'Polish' => 'Czarna Herbata'
+                ]
+            ],
+            [
+                'name' => 'Green Tea',
+                'category' => 'Coffee and Teas',
+                'system' => 1,
+                'countries' => [],
+                'translations' => [
+                    'Polish' => 'Zielona Herbata'
+                ]
+            ],
+            [
+                'name' => 'White Tea',
+                'category' => 'Coffee and Teas',
+                'system' => 1,
+                'countries' => [],
+                'translations' => [
+                    'Polish' => 'Biała Herbata'
+                ]
+            ],
+            [
+                'name' => 'Yellow Tea',
+                'category' => 'Coffee and Teas',
+                'system' => 1,
+                'countries' => [],
+                'translations' => [
+                    'Polish' => 'Żółta Herbata'
+                ]
+            ]
+        ];
+    }
+
     protected function meats(): array
     {
         return [
@@ -1284,150 +1482,6 @@ class InventorySeeder extends Seeder
                 ],
                 'translations' => [
                     'Polish' => 'Dziczyzna'
-                ]
-            ]
-        ];
-    }
-
-    protected function nutsAndSeeds(): array
-    {
-        return [
-            [
-                'name' => 'Almonds',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Migdały'
-                ]
-            ],
-            [
-                'name' => 'Cacao',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Kakao'
-                ]
-            ],
-            [
-                'name' => 'Chestnuts',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Kasztany'
-                ]
-            ],
-            [
-                'name' => 'Flax',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Len'
-                ]
-            ],
-            [
-                'name' => 'Hazelnuts',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Orzechy Laskowe'
-                ]
-            ],
-            [
-                'name' => 'Macadamias',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Makadamia'
-                ]
-            ],
-            [
-                'name' => 'Peanuts',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Orzeszki Ziemne'
-                ]
-            ],
-            [
-                'name' => 'Pecans',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Orzechy Pekan'
-                ]
-            ],
-            [
-                'name' => 'Pine Nuts',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Orzeszki Piniowe'
-                ]
-            ],
-            [
-                'name' => 'Pistachios',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Pistacje'
-                ]
-            ],
-            [
-                'name' => 'Sunflower Seeds',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Ziarna Słonecznika'
-                ]
-            ],
-            [
-                'name' => 'Walnuts',
-                'category' => 'Nuts and Seeds',
-                'system' => 1,
-                'countries' => [
-                    'Poland',
-                    'United States'
-                ],
-                'translations' => [
-                    'Polish' => 'Orzechy Włoskie'
                 ]
             ]
         ];

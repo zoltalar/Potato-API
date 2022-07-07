@@ -30,7 +30,7 @@ class CountrySeeder extends Seeder
                 'date_format' => 'MM/DD/YYYY',
                 'time_format' => 'h:mm a',
                 'system' => 1,
-                'active' => 1
+                'active' => 0
             ],
             [
                 'name' => Country::NAME_POLAND,

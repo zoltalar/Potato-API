@@ -56,13 +56,23 @@ class CategorySeeder extends Seeder
     {
         return [
             [
-                'name' => 'Coffee and Teas',
+                'name' => 'Fruits',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 5,
+                'list_order' => 1,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
-                    Language::NAME_POLISH => 'Kawa i Herbaty'
+                    Language::NAME_POLISH => 'Owoce'
+                ]
+            ],
+            [
+                'name' => 'Vegetables',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 2,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Warzywa'
                 ]
             ],
             [
@@ -76,36 +86,6 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Fruits',
-                'type' => Category::TYPE_INVENTORY,
-                'list_order' => 1,
-                'system' => 1,
-                'active' => 1,
-                'translations' => [
-                    Language::NAME_POLISH => 'Owoce'
-                ]
-            ],
-            [
-                'name' => 'Honey',
-                'type' => Category::TYPE_INVENTORY,
-                'list_order' => 5,
-                'system' => 1,
-                'active' => 1,
-                'translations' => [
-                    Language::NAME_POLISH => 'Miód'
-                ]
-            ],
-            [
-                'name' => 'Meats',
-                'type' => Category::TYPE_INVENTORY,
-                'list_order' => 8,
-                'system' => 1,
-                'active' => 1,
-                'translations' => [
-                    Language::NAME_POLISH => 'Mięsa'
-                ]
-            ],
-            [
                 'name' => 'Nuts and Seeds',
                 'type' => Category::TYPE_INVENTORY,
                 'list_order' => 4,
@@ -113,6 +93,26 @@ class CategorySeeder extends Seeder
                 'active' => 1,
                 'translations' => [
                     Language::NAME_POLISH => 'Orzechy i Nasiona'
+                ]
+            ],
+            [
+                'name' => 'Coffee and Teas',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 5,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Kawa i Herbaty'
+                ]
+            ],
+            [
+                'name' => 'Honey',
+                'type' => Category::TYPE_INVENTORY,
+                'list_order' => 6,
+                'system' => 1,
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Miód'
                 ]
             ],
             [
@@ -126,15 +126,15 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Vegetables',
+                'name' => 'Meats',
                 'type' => Category::TYPE_INVENTORY,
-                'list_order' => 2,
+                'list_order' => 8,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
-                    Language::NAME_POLISH => 'Warzywa'
+                    Language::NAME_POLISH => 'Mięsa'
                 ]
-            ]
+            ],
         ];
     }
 }

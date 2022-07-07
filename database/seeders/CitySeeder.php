@@ -70,6 +70,10 @@ class CitySeeder extends Seeder
                             'state_id' => $this->cache['states'][$stateName]
                         ];
 
+                        if ($record['country'] == Country::NAME_POLAND) {
+                            $city['timezone'] = 'Europe/Warsaw';
+                        }
+
                         City::firstOrCreate(
                             Arr::only($city, ['name', 'state_id']),
                             Arr::except($city, ['name', 'state_id'])
