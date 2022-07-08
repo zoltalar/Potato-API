@@ -6,13 +6,18 @@ namespace App\Models;
 
 use App\Contracts\Namable as NamableContract;
 use App\Traits\Namable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Notifications\Notifiable;
 use Str;
 
-final class Farm extends Base implements NamableContract
+final class Farm extends Base implements
+    NamableContract,
+    HasLocalePreference
 {
-    use Namable;
+    use Namable,
+        Notifiable;
 
     protected $fillable = [
         'name',
@@ -193,6 +198,18 @@ final class Farm extends Base implements NamableContract
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public function preferredLocale(): string
+    {
+        $this->load(['user.language']);
+        $code = $this->user->language->code;
+
+        if (empty($code) || ! in_array($code, Language::codes())) {
+            $code = Language::CODE_PL;
+        }
+
+        return $code;
+    }
 
     public function averageRating(): float
     {

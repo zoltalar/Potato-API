@@ -4,6 +4,7 @@ return [
     'codename' => 'Ziemniaczek',
     'codename_team' => 'Zespół Ziemniaczek',
     'email_action_text_subcopy' => "Jeśli zaistnieje problem z kliknięciem w przycisk \":actionText\", skopiuj i wklej poniższy link w okno przeglądarki:",
+    'email_new_message_line_1' => 'Masz nową wiadomość od :name.',
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta to nie są wymagane żadne dalsze działania.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',

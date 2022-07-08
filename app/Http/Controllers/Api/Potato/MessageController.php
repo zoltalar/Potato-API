@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\MessageReplyRequest;
 use App\Http\Requests\Potato\MessageStoreRequest;
 use App\Http\Resources\BaseResource;
+use App\Jobs\SendMessageJob;
 use App\Models\Farm;
 use App\Models\Message;
 use Exception;
@@ -25,14 +26,19 @@ class MessageController extends Controller
         $message = $messageable = null;
 
         if ($type === Message::TYPE_MESSAGEABLE_FARM) {
-            $messageable = Farm::find($id);
+            $messageable = Farm::query()
+                ->with(['user'])
+                ->find($id);
         }
 
         if ($messageable !== null) {
             $message = new Message();
             $message->fill($request->only($message->getFillable()));
             $message->recipient_id = $messageable->user_id;
-            $message->save();
+
+            if ($message->save()) {
+                $this->dispatch(new SendMessageJob(auth()->user(), $messageable->user));
+            }
         }
 
         return new BaseResource($message);
@@ -43,6 +49,7 @@ class MessageController extends Controller
         $message = null;
 
         $reply = Message::query()
+            ->with(['sender'])
             ->where('token', $token)
             ->first();
 
@@ -52,7 +59,10 @@ class MessageController extends Controller
             $message->subject = $reply->replySubject();
             $message->reply_id = $reply->id;
             $message->recipient_id = $reply->sender_id;
-            $message->save();
+
+            if ($message->save()) {
+                $this->dispatch(new SendMessageJob(auth()->user(), $reply->sender));
+            }
         }
 
         return new BaseResource($message);

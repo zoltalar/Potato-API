@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Notifications;
 
 use App\Models\Farm;
@@ -31,6 +33,7 @@ class FarmDeactivation extends Notification
 
         return (new MailMessage)
             ->subject(__('phrases.farm_deactivation'))
+            ->greeting(__('phrases.hello'))
             ->line(sprintf('%s: %s (%d)', __('phrases.name'), $farm->name, $farm->id))
             ->line($this->farm->deactivation_reason);
     }

@@ -125,7 +125,7 @@ final class User extends Base implements
 
     public function preferredLocale(): ?string
     {
-        return $this->language->code ?? null;
+        return $this->language->code ?? Language::CODE_PL;
     }
 
     public function sendEmailVerificationNotification(): void
