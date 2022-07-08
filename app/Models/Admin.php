@@ -10,6 +10,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\RoutesNotifications;
 use Laravel\Passport\HasApiTokens;
 use Str;
@@ -23,7 +24,8 @@ final class Admin extends Base implements
         Authorizable,
         RoutesNotifications,
         HasApiTokens,
-        Namable;
+        Namable,
+        Notifiable;
 
     protected $fillable = [
         'first_name',

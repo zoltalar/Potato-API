@@ -15,6 +15,7 @@ return [
     'description' => 'Opis',
     'email' => 'Email',
     'facebook' => 'Facebook',
+    'farm_deactivation' => 'Dezaktywacja Gospodarstwa Rolnego',
     'farm_name' => 'Nazwa Gospodarstwa Rolnego',
     'fax' => 'Faks',
     'first_name' => 'Imię',

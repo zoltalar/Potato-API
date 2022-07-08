@@ -12,6 +12,7 @@ use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\BaseResource;
+use App\Jobs\SendFarmDeactivationNotificationJob;
 use App\Models\Address;
 use App\Models\City;
 use App\Models\Country;
@@ -305,7 +306,10 @@ class FarmController extends Controller
             $farm->fill($request->only($farm->getFillable()));
             $farm->active = 0;
             $farm->deactivated_at = $farm->freshTimestamp();
-            $farm->update();
+
+            if ($farm->update()) {
+                $this->dispatch(new SendFarmDeactivationNotificationJob($farm));
+            }
         }
 
         return new BaseResource($farm);

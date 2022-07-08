@@ -15,6 +15,7 @@ return [
     'description' => 'Description',
     'email' => 'Email',
     'facebook' => 'Facebook',
+    'farm_deactivation' => 'Farm Deactivation',
     'farm_name' => 'Farm Name',
     'fax' => 'Fax',
     'first_name' => 'First Name',
