@@ -19,9 +19,9 @@ final class CurrencyConverter
 
     public function convert(string $code, float $amount): ?float
     {
-        $rates = Cache::get($this->cacheKey());
-
-        if (empty($rates)) {
+        if (Cache::has($this->cacheKey())) {
+            $rates = Cache::get($this->cacheKey());
+        } else {
             Cache::put($this->cacheKey(), ($rates = Http::get($this->url())->json('conversion_rates')), 600);
         }
 
