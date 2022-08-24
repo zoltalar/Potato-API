@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Notifications;
 
 use App\Models\User;
+use App\Services\Url;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -40,6 +41,6 @@ class NewMessage extends Notification
             ->subject(__('phrases.new_message'))
             ->greeting(__('messages.hi_name', ['name' => $recipient->first_name]))
             ->line(__('messages.email_new_message_line_1', ['name' => $sender->fullName()]))
-            ->action(__('phrases.read_message'), url('/'));
+            ->action(__('phrases.read_message'), Url::appBaseUrl());
     }
 }

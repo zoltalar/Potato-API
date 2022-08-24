@@ -18,6 +18,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
+use App\Models\Language;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,7 @@ class FarmController extends Controller
 
     public function show(Request $request, int $id)
     {
-        $language = $request->header('X-language');
+        $language = $request->header('X-language', Language::CODE_PL);
 
         $farm = Farm::query()
             ->with([
@@ -218,7 +219,7 @@ class FarmController extends Controller
                 ->whereHas('addresses', function($query) use ($location) {
                     $query
                         ->search(['city'], $location)
-                        ->where('type', Address::TYPE_LOCATION);;
+                        ->where('type', Address::TYPE_LOCATION);
                 })
                 ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
                     return $query->where(function($query) use ($inventoryId) {

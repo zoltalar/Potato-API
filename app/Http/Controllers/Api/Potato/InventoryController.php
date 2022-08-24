@@ -10,6 +10,7 @@ use App\Models\Address;
 use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
+use App\Models\Language;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class InventoryController extends Controller
     {
         $search = $request->search;
         $limit = $request->get('limit', 10);
-        $language = $request->header('X-language');
+        $language = $request->header('X-language', Language::CODE_PL);
         $country = $request->header('X-country', Country::CODE_PL);
         $categoryId = $request->category_id;
         $type = $request->type;

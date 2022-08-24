@@ -262,6 +262,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Products
     Route::group(['prefix' => 'products'], function() {
         Route::post('save/{type}/{id}', [ApiPotatoProductController::class, 'save'])->name('api.potato.products.save');
+        Route::get('top-growing-areas/{id}', [ApiPotatoProductController::class, 'topGrowingAreas'])->name('api.potato.products.top-growing-areas');
     });
 
     // Registration

@@ -62,12 +62,10 @@ class AddressController extends Controller
     public function plot(Request $request, string $type)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $cacheKey = sprintf('potato.addresses.plot.%s', $code);
+        $key = sprintf('potato.addresses.plot.%s', $code);
 
-        if (Cache::has($cacheKey)) {
-            $addresses = Cache::get($cacheKey);
-        } else {
-            $addresses = Address::query()
+        $addresses = cache()->remember($key, 600, function() use ($type, $code) {
+            return Address::query()
                 ->select([
                     'latitude',
                     'longitude',
@@ -88,9 +86,7 @@ class AddressController extends Controller
                     $query->where('code', $code);
                 })
                 ->get();
-
-            Cache::put($cacheKey, $addresses, 600);
-        }
+        });
 
         return BaseResource::collection($addresses);
     }
