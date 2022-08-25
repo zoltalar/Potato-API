@@ -256,7 +256,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Prices
     Route::group(['prefix' => 'prices'], function() {
-        Route::get('analytics', [ApiPotatoPriceController::class, 'analytics'])->name('api.potato.prices.analytics');
+        Route::get('analytics/{id}', [ApiPotatoPriceController::class, 'analytics'])->name('api.potato.prices.analytics');
     });
 
     // Products

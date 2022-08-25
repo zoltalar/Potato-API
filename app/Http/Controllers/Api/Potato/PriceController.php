@@ -13,9 +13,8 @@ use Illuminate\Http\Request;
 
 class PriceController extends Controller
 {
-    public function analytics(Request $request)
+    public function analytics(Request $request, int $id)
     {
-        $inventoryId = $request->get('inventory_id');
         $country = $request->header('X-Country', Country::CODE_PL);
         $currency = $request->header('X-currency', Currency::CODE_PLN);
 
@@ -36,10 +35,11 @@ class PriceController extends Controller
             ->when( ! empty($currency), function($query) use ($currency) {
                 return $query->where('currencies.code', $currency);
             })
-            ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
-                return $query->where('inventory_id', $inventoryId);
+            ->when( ! empty($id), function($query) use ($id) {
+                return $query->where('inventory_id', $id);
             })
             ->groupByRaw('inventory_id, DATE_FORMAT(date, "%m/%Y")')
+            ->orderby('month_year')
             ->get();
 
         return BaseResource::collection($prices);

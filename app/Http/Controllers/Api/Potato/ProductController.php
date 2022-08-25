@@ -72,49 +72,38 @@ class ProductController extends Controller
     public function topGrowingAreas(Request $request, int $id)
     {
         $country = $request->header('X-country', Country::CODE_PL);
-        $language = $request->header('X-language', Language::CODE_PL);
 
-        $products = Product::query()
-            ->select([
-                'id',
-                'productable_id',
-                'productable_type',
-                'inventory_id'
-            ])
-            ->with([
-                'inventory' => function($query) {
-                    $query->select([
-                        'id',
-                        'name'
-                    ]);
-                },
-                'inventory.translations' => function($query) use ($language) {
-                    $query->when($language, function($query) use ($language) {
-                        return $query->whereHas('language', function($query) use ($language) {
-                            $query->where('code', $language);
-                        });
-                    });
-                },
-                'productable' => function($query) {
-                    $query->select(['id']);
-                },
-                'productable.addresses' => function($query) {
-                    $query
-                        ->select([
-                            'id',
-                            'city',
-                            'state_id',
-                            'addressable_id',
-                            'addressable_type'
-                        ])
-                        ->where('type', Address::TYPE_LOCATION);
-                },
-                'productable.addresses.state'
-            ])
-            ->withCount('inventory')
-            ->where('inventory_id', $id)
+        $areas = Product::query()
+            ->selectRaw(
+                'COUNT(addresses.id) AS count,
+                addresses.city AS city,
+                addresses.state_id AS state_id,
+                states.name AS state_name'
+            )
+            ->join('farms', function($join) {
+                $join
+                    ->on('products.productable_id', '=', 'farms.id')
+                    ->where('products.productable_type', Product::TYPE_PRODUCTABLE_FARM);
+            })
+            ->leftJoin('addresses', function($join) {
+                $join
+                    ->on('addresses.addressable_id', '=', 'farms.id')
+                    ->where('addresses.addressable_type', Address::TYPE_ADDRESSABLE_FARM);
+            })
+            ->join('states', function($join) {
+                $join->on('states.id', '=', 'addresses.state_id');
+            })
+            ->where('products.inventory_id', $id)
+            ->where('addresses.type', Address::TYPE_LOCATION)
+            ->when($country, function($query) use ($country) {
+                return $query->whereHas('productable.addresses.state.country', function($query) use ($country) {
+                    $query->where('code', $country);
+                });
+            })
+            ->groupBy('city', 'state_id')
+            ->orderBy('count', 'desc')
             ->get();
 
-        return BaseResource::collection($products);
+        return BaseResource::collection($areas);
     }
 }
