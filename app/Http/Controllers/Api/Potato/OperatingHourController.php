@@ -14,7 +14,7 @@ class OperatingHourController extends Controller
         $this->middleware(['auth:user', 'scope:potato']);
     }
 
-    public function store(OperatingHoursRequest $request, string $type, int $id)
+    public function save(OperatingHoursRequest $request, string $type, int $id)
     {
 
     }
