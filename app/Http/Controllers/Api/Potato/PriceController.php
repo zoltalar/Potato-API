@@ -19,7 +19,11 @@ class PriceController extends Controller
         $currency = $request->header('X-currency', Currency::CODE_PLN);
 
         $prices = Price::query()
-            ->selectRaw('inventory.name AS inventory_name, DATE_FORMAT(date, "%m/%Y") AS month_year, AVG(price) AS average_price')
+            ->selectRaw(
+                'inventory.name AS inventory_name,
+                DATE_FORMAT(date, "%m/%Y") AS month_year,
+                AVG(price) AS average_price'
+            )
             ->join('inventory', function($join) {
                 $join->on('prices.inventory_id', '=', 'inventory.id');
             })

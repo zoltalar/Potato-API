@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
 use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
+use App\Http\Controllers\Api\Potato\OperatingHourController as ApiPotatoOperatingHourController;
 use App\Http\Controllers\Api\Potato\PriceController as ApiPotatoPriceController;
 use App\Http\Controllers\Api\Potato\ProductController as ApiPotatoProductController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
@@ -252,6 +253,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::get('show/{token}', [ApiPotatoMessageController::class, 'show'])->name('api.potato.messages.show');
         Route::delete('{token}', [ApiPotatoMessageController::class, 'destroy'])->name('api.potato.messages.destroy');
         Route::post('destroy-batch', [ApiPotatoMessageController::class, 'destroyBatch'])->name('api.potato.messages.destroy-batch');
+    });
+
+    // Operating Hours
+    Route::group(['prefix' => 'operating-hours'], function() {
+       Route::post('store/{type}/{id}', [ApiPotatoOperatingHourController::class, 'store'])->name('api.potato.operating-hours.store');
     });
 
     // Prices

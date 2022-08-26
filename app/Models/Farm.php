@@ -180,6 +180,11 @@ final class Farm extends Base implements
         return $this->morphMany(Image::class, 'imageable');
     }
 
+    public function operatingHours(): MorphMany
+    {
+        return $this->morphMany(OperatingHour::class, 'operatable');
+    }
+
     public function products(): MorphMany
     {
         return $this->morphMany(Product::class, 'productable');

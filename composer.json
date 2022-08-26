@@ -12,7 +12,8 @@
         "laravel/framework": "^8.75",
         "laravel/passport": "^10.3",
         "laravel/tinker": "^2.5",
-        "league/csv": "^9.8"
+        "league/csv": "^9.8",
+        "spatie/opening-hours": "^2.13"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
