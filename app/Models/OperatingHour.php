@@ -40,4 +40,21 @@ class OperatingHour extends Base
     {
         return $this->morphTo();
     }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public static function days(): array
+    {
+        return [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ];
+    }
 }

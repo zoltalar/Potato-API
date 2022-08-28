@@ -109,7 +109,7 @@ return [
     'regex' => 'The :attribute format is invalid.',
     'required' => 'Pole :attribute jest wymagane.',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
-    'required_if' => 'The :attribute field is required when :other is :value.',
+    'required_if' => 'Pole :attribute jest wymagane kiedy :other jest :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'Pole :attribute jest wymagane kiedy :values jest obecna.',
     'required_with_all' => 'The :attribute field is required when :values are present.',

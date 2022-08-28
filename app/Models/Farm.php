@@ -9,6 +9,7 @@ use App\Traits\Namable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Notifications\Notifiable;
 use Str;
 
@@ -180,9 +181,9 @@ final class Farm extends Base implements
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function operatingHours(): MorphMany
+    public function operatingHours(): MorphOne
     {
-        return $this->morphMany(OperatingHour::class, 'operatable');
+        return $this->morphOne(OperatingHour::class, 'operatable');
     }
 
     public function products(): MorphMany

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
+use App\Models\OperatingHour;
 use App\Rules\ProductAvailabilitySeasons;
 
 class OperatingHoursRequest extends BaseRequest
@@ -15,15 +16,10 @@ class OperatingHoursRequest extends BaseRequest
     public function rules(): array
     {
         $rules = [];
-        $products = $this->get('products', []);
 
-        foreach ($products as $i => $product) {
-            $rules["products.{$i}.seasons"] = [new ProductAvailabilitySeasons($product)];
-            $rules["products.{$i}.amount"] = ['nullable', 'numeric', 'min:0', 'max:9999999'];
-            $rules["products.{$i}.amount_unit"] = ['nullable', "required_with:products.{$i}.amount"];
-            $rules["products.{$i}.price"] = ['nullable', 'numeric', 'min:0', 'max:9999999'];
-            $rules["products.{$i}.currency_id"] = ['nullable', "required_with:products.{$i}.price", 'exists:currencies,id'];
-            $rules["products.{$i}.price_unit"] = ['nullable', "required_with:products.{$i}.price"];
+        foreach (OperatingHour::days() as $day) {
+            $rules[$day . '.start'] = ['required_if:' . $day . '.selected,==,true'];
+            $rules[$day . '.end'] = ['required_if:' . $day . '.selected,==,true'];
         }
 
         return $rules;
@@ -32,29 +28,25 @@ class OperatingHoursRequest extends BaseRequest
     public function attributes(): array
     {
         $attributes = [];
-        $products = $this->get('products', []);
 
-        foreach ($products as $i => $product) {
-            $attributes["products.{$i}.amount"] = mb_strtolower(__('phrases.amount'));
-            $attributes["products.{$i}.amount_unit"] = mb_strtolower(__('phrases.unit'));
-            $attributes["products.{$i}.price"] = mb_strtolower(__('phrases.price'));
-            $attributes["products.{$i}.currency_id"] = mb_strtolower(__('phrases.currency'));
-            $attributes["products.{$i}.price_unit"] = mb_strtolower(__('phrases.unit'));
+        foreach (OperatingHour::days() as $day) {
+            $attributes[$day . '.start'] = mb_strtolower(__('phrases.start_time'));
+            $attributes[$day . '.end'] = mb_strtolower(__('phrases.end_time'));
         }
 
         return $attributes;
     }
 
-    protected function prepareForValidation()
+    public function messages(): array
     {
-        if ($this->has('products')) {
-            $products = $this->get('products', []);
+        $messages = [];
+        $attributes = $this->attributes();
 
-            foreach ($products as & $product) {
-                $product['seasons'] = [];
-            }
-
-            $this->merge(['products' => $products]);
+        foreach (OperatingHour::days() as $day) {
+            $messages[$day . '.start.required_if'] = __('phrases.field_name_is_required', ['field' => $attributes[$day . '.start']]);
+            $messages[$day . '.end.required_if'] = __('phrases.field_name_is_required', ['field' => $attributes[$day . '.end']]);
         }
+
+        return $messages;
     }
 }
