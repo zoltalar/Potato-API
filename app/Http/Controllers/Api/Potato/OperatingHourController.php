@@ -34,10 +34,12 @@ class OperatingHourController extends Controller
             if ($hours === null) {
                 $hours = new OperatingHour();
                 $hours->fillFromRequest($request);
+                $hours->exceptions = $request->exceptions;
 
                 $operatable->operatingHours()->save($hours);
             } else {
                 $hours->fillFromRequest($request);
+                $hours->exceptions = $request->exceptions;
                 $hours->update();
             }
         }

@@ -57,6 +57,7 @@ class FarmController extends Controller
                         ->orderBy('cover', 'desc')
                         ->orderBy('id', 'asc');
                 },
+                'operatingHours',
                 'products.inventory.category.translations' => function($query) use ($language) {
                     $query->when($language, function($query) use ($language) {
                         return $query->whereHas('language', function($query) use ($language) {

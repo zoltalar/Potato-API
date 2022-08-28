@@ -14,5 +14,6 @@ return [
     'product_availability_seasons_error' => 'Please select at least one season.',
     'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',
     'review_unique_error' => 'You already created a review for this farm or market',
+    'time_field_after_error' => 'The :field must be a time after :time',
     'unique_translation_error' => 'Translation already exists.'
 ];

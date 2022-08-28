@@ -19,7 +19,7 @@ class CreateOperatingHoursTable extends Migration
             $table->json('friday')->nullable();
             $table->json('saturday')->nullable();
             $table->json('sunday')->nullable();
-            $table->json('exceptions')->nullable();
+            $table->text('exceptions')->nullable();
             $table->bigInteger('operatable_id')->unsigned()->nullable();
             $table->string('operatable_type', 100)->nullable();
             $table->timestamps();

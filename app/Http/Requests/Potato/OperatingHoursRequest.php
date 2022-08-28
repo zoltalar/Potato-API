@@ -18,8 +18,8 @@ class OperatingHoursRequest extends BaseRequest
         $rules = [];
 
         foreach (OperatingHour::days() as $day) {
-            $rules[$day . '.start'] = ['required_if:' . $day . '.selected,==,true'];
-            $rules[$day . '.end'] = ['required_if:' . $day . '.selected,==,true'];
+            $rules[$day . '.start'] = ['nullable', 'required_if:' . $day . '.selected,==,true'];
+            $rules[$day . '.end'] = ['nullable', 'required_if:' . $day . '.selected,==,true', 'after:' . $day . '.start'];
         }
 
         return $rules;
@@ -45,6 +45,11 @@ class OperatingHoursRequest extends BaseRequest
         foreach (OperatingHour::days() as $day) {
             $messages[$day . '.start.required_if'] = __('phrases.field_name_is_required', ['field' => $attributes[$day . '.start']]);
             $messages[$day . '.end.required_if'] = __('phrases.field_name_is_required', ['field' => $attributes[$day . '.end']]);
+
+            $messages[$day . '.end.after'] = __('messages.time_field_after_error', [
+                'field' => $attributes[$day . '.start'],
+                'time' => $attributes[$day . '.end']
+            ]);
         }
 
         return $messages;

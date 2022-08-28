@@ -14,5 +14,6 @@ return [
     'product_availability_seasons_error' => 'Prosimy wybrać przynajmniej jeden sezon.',
     'review_to_self_error' => 'Nie możesz wystawić recenzji własnym gospodarstwom rolnym lub agromarketom.',
     'review_unique_error' => 'Recenzja została już przez Ciebie utworzona.',
+    'time_field_after_error' => 'Pole :field musi być po :time.',
     'unique_translation_error' => 'Tłumaczenie już istnieje'
 ];

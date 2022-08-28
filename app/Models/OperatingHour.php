@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Foundation\Http\FormRequest;
 
 class OperatingHour extends Base
 {
@@ -28,9 +29,21 @@ class OperatingHour extends Base
         'thursday' => 'array',
         'friday' => 'array',
         'saturday' => 'array',
-        'sunday' => 'array',
-        'exceptions' => 'array'
+        'sunday' => 'array'
     ];
+
+    // --------------------------------------------------
+    // Accessors and Mutators
+    // --------------------------------------------------
+
+    public function setExceptionsAttribute($value): void
+    {
+        if ( ! empty($value)) {
+            $value = strip_tags($value);
+        }
+
+        $this->attributes['exceptions'] = $value;
+    }
 
     // --------------------------------------------------
     // Relationships
@@ -56,5 +69,28 @@ class OperatingHour extends Base
             'saturday',
             'sunday'
         ];
+    }
+
+    public function fillFromRequest(FormRequest $request): OperatingHour
+    {
+        foreach ($this->days() as $day) {
+            $data = $request->{$day} ?? [];
+            $this->{$day} = [];
+
+            if (is_array($data)) {
+                $selected = $data['selected'] ?? false;
+
+                if ($selected) {
+                    $start = $data['start'] ?? null;
+                    $end = $data['end'] ?? null;
+
+                    if ($start && $end) {
+                        $this->{$day} = [implode('-', [$start, $end])];
+                    }
+                }
+            }
+        }
+
+        return $this;
     }
 }
