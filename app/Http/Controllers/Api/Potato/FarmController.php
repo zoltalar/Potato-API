@@ -267,20 +267,6 @@ class FarmController extends Controller
         return new BaseResource($farm);
     }
 
-    public function updateOperatingHours(FarmOperatingHoursUpdateRequest $request, int $id)
-    {
-        $farm = auth()
-            ->user()
-            ->farms()
-            ->find($id);
-
-        if ($farm !== null) {
-            $farm->update(['operating_hours' => $request->operating_hours]);
-        }
-
-        return new BaseResource($farm);
-    }
-
     public function updateSocialMedia(FarmSocialMediaUpdateRequest $request, int $id)
     {
         $farm = auth()

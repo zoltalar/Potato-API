@@ -32,7 +32,6 @@ final class Farm extends Base implements
         'email',
         'website',
         'description',
-        'operating_hours',
         'facebook',
         'twitter',
         'pinterest',
@@ -142,15 +141,6 @@ final class Farm extends Base implements
         }
 
         $this->attributes['fax'] = $value;
-    }
-
-    public function setOperatingHoursAttribute($value): void
-    {
-        if ( ! empty($value)) {
-            $value = strip_tags($value);
-        }
-
-        $this->attributes['operating_hours'] = $value;
     }
 
     public function setPhoneAttribute($value): void

@@ -26,7 +26,6 @@ class CreateFarmsTable extends Migration
             $table->string('email', $length)->nullable();
             $table->string('website', $length)->nullable();
             $table->text('description')->nullable();
-            $table->text('operating_hours')->nullable();
             $table->string('facebook', 100)->nullable();
             $table->string('twitter', 100)->nullable();
             $table->string('pinterest', 100)->nullable();
