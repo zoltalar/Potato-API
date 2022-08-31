@@ -12,6 +12,7 @@ use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\BaseResource;
+use App\Http\Resources\Potato\FarmResource;
 use App\Jobs\SendFarmDeactivationNotificationJob;
 use App\Models\Address;
 use App\Models\City;
@@ -92,7 +93,7 @@ class FarmController extends Controller
             }
         }
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 
     public function locate(Request $request, float $latitude, float $longitude)

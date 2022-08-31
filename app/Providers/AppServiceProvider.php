@@ -11,6 +11,7 @@ use App\Models\Farm;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Message;
+use App\Models\OperatingHour;
 use App\Models\Review;
 use App\Observers\AddressObserver;
 use App\Observers\CategoryObserver;
@@ -44,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
             'farm' => Farm::class,
             'image' => Image::class,
             'inventory' => Inventory::class,
+            'operating_hour' => OperatingHour::class,
             'review' => Review::class
         ]);
 

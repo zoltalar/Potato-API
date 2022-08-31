@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
+use App\Http\Resources\Potato\FarmResource;
+use App\Http\Resources\Potato\FavoriteResource;
 
 class AccountController extends Controller
 {
@@ -30,7 +32,7 @@ class AccountController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        return BaseResource::collection($farms);
+        return FarmResource::collection($farms);
     }
 
     public function favorites()
@@ -41,7 +43,7 @@ class AccountController extends Controller
             ->with(['favoriteable', 'favoriteable.images'])
             ->get();
 
-        return BaseResource::collection($favorites);
+        return FavoriteResource::collection($favorites);
     }
 
     public function reviews()

@@ -12,6 +12,11 @@ class CreateOperatingHoursTable extends Migration
     {
         Schema::create('operating_hours', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('type')->unsigned()->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->tinyInteger('start_month')->unsigned()->nullable();
+            $table->tinyInteger('end_month')->unsigned()->nullable();
             $table->json('monday')->nullable();
             $table->json('tuesday')->nullable();
             $table->json('wednesday')->nullable();

@@ -215,14 +215,6 @@ final class Farm extends Base implements
             ->average('rating');
     }
 
-    public function reviewsCount(): int
-    {
-        return $this
-            ->reviews()
-            ->active()
-            ->count();
-    }
-
     public function favorite(User $user): ?object
     {
         return $this
@@ -231,11 +223,34 @@ final class Farm extends Base implements
             ->first();
     }
 
+    public function publishAddress(): bool
+    {
+        return $this->publish_address == 1;
+    }
+
+    public function publishMailingAddress(): bool
+    {
+        return $this->publish_mailing_address == 1;
+    }
+
+    public function publishPhone(): bool
+    {
+        return $this->publish_phone == 1;
+    }
+
     public function review(User $user): ?object
     {
         return $this
             ->reviews()
             ->where('user_id', $user->id)
             ->first();
+    }
+
+    public function reviewsCount(): int
+    {
+        return $this
+            ->reviews()
+            ->active()
+            ->count();
     }
 }

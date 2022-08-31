@@ -11,7 +11,15 @@ class OperatingHour extends Base
 {
     const TYPE_OPERATABLE_FARM = 'farm';
 
+    const TYPE_DATES = 1;
+    const TYPE_MONTHS = 2;
+
     protected $fillable = [
+        'type',
+        'start_date',
+        'end_date',
+        'start_month',
+        'end_month',
         'monday',
         'tuesday',
         'wednesday',
@@ -68,6 +76,14 @@ class OperatingHour extends Base
             'friday',
             'saturday',
             'sunday'
+        ];
+    }
+
+    public static function types(): array
+    {
+        return [
+            self::TYPE_DATES => __('phrases.date_based'),
+            self::TYPE_MONTHS => __('phrases.month_based')
         ];
     }
 
