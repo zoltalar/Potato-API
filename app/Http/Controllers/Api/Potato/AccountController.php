@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\FarmResource;
 use App\Http\Resources\Potato\FavoriteResource;
+use App\Http\Resources\Potato\MarketResource;
 
 class AccountController extends Controller
 {
@@ -44,6 +45,25 @@ class AccountController extends Controller
             ->get();
 
         return FavoriteResource::collection($favorites);
+    }
+
+    public function markets()
+    {
+        $markets = auth()
+            ->user()
+            ->markets()
+            ->with([
+                'images' => function($query) {
+                    $query
+                        ->orderBy('primary', 'desc')
+                        ->orderBy('cover', 'desc')
+                        ->orderBy('id', 'asc');
+                }
+            ])
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return MarketResource::collection($markets);
     }
 
     public function reviews()

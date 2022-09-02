@@ -58,6 +58,8 @@ final class Image extends Base
 
             if ($type === self::TYPE_IMAGEABLE_FARM) {
                 return asset("storage/farms/{$file}");
+            } elseif ($type === self::TYPE_IMAGEABLE_MARKET) {
+                return asset('storage/markets/{$file}');
             }
         }
 
@@ -94,6 +96,8 @@ final class Image extends Base
 
                     if ($type === self::TYPE_IMAGEABLE_FARM) {
                         $data['file_url'] = asset("storage/farms/{$data['file']}");
+                    } elseif ($type === self::TYPE_IMAGEABLE_MARKET) {
+                        $data['file_url'] = asset("storage/markets/{$data['file']}");
                     } else {
                         $data['file_url'] = null;
                     }
@@ -125,7 +129,8 @@ final class Image extends Base
     public static function imageableTypes(): array
     {
         return [
-            self::TYPE_IMAGEABLE_FARM
+            self::TYPE_IMAGEABLE_FARM,
+            self::TYPE_IMAGEABLE_MARKET
         ];
     }
 

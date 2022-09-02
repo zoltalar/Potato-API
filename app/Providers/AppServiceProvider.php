@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\Farm;
 use App\Models\Image;
 use App\Models\Inventory;
+use App\Models\Market;
 use App\Models\Message;
 use App\Models\OperatingHour;
 use App\Models\Review;
@@ -19,6 +20,7 @@ use App\Observers\CityObserver;
 use App\Observers\FarmObserver;
 use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
+use App\Observers\MarketObserver;
 use App\Observers\MessageObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             'farm' => Farm::class,
             'image' => Image::class,
             'inventory' => Inventory::class,
+            'market' => Market::class,
             'operating_hour' => OperatingHour::class,
             'review' => Review::class
         ]);
@@ -56,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         Farm::observe(FarmObserver::class);
         Image::observe(ImageObserver::class);
         Inventory::observe(InventoryObserver::class);
+        Market::observe(MarketObserver::class);
         Message::observe(MessageObserver::class);
     }
 }

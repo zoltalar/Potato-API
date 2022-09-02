@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Product extends Base
 {
     const TYPE_PRODUCTABLE_FARM = 'farm';
+    const TYPE_PRODUCTABLE_MARKET = 'market';
 
     protected $fillable = [
         'inventory_id',

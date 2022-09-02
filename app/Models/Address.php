@@ -24,6 +24,7 @@ final class Address extends Base implements
     const TYPE_MAILING = 2;
 
     const TYPE_ADDRESSABLE_FARM = 'farm';
+    const TYPE_ADDRESSABLE_MARKET = 'market';
 
     protected $fillable = [
         'address',
@@ -89,7 +90,8 @@ final class Address extends Base implements
     public static function addressableTypes(): array
     {
         return [
-            self::TYPE_ADDRESSABLE_FARM
+            self::TYPE_ADDRESSABLE_FARM,
+            self::TYPE_ADDRESSABLE_MARKET
         ];
     }
 

@@ -104,6 +104,11 @@ final class User extends Base implements
         return $this->belongsTo(Language::class);
     }
 
+    public function markets(): HasMany
+    {
+        return $this->hasMany(Market::class);
+    }
+
     public function receivedMessages(): HasMany
     {
         return $this->hasMany(Message::class, 'recipient_id');

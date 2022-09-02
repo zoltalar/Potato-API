@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\Potato\FavoriteController as ApiPotatoFavoriteContr
 use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
 use App\Http\Controllers\Api\Potato\InventoryController as ApiPotatoInventoryController;
 use App\Http\Controllers\Api\Potato\LanguageController as ApiPotatoLanguageController;
+use App\Http\Controllers\Api\Potato\MarketController as ApiPotatoMarketController;
 use App\Http\Controllers\Api\Potato\MessageController as ApiPotatoMessageController;
 use App\Http\Controllers\Api\Potato\OperatingHourController as ApiPotatoOperatingHourController;
 use App\Http\Controllers\Api\Potato\PriceController as ApiPotatoPriceController;
@@ -164,6 +165,7 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'account'], function() {
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
         Route::get('favorites', [ApiPotatoAccountController::class, 'favorites'])->name('api.potato.account.favorites');
+        Route::get('markets', [ApiPotatoAccountController::class, 'markets'])->name('api.potato.account.markets');
         Route::get('messages', [ApiPotatoAccountController::class, 'messages'])->name('api.potato.account.messages');
         Route::get('reviews', [ApiPotatoAccountController::class, 'reviews'])->name('api.potato.account.reviews');
     });
@@ -243,6 +245,11 @@ Route::group(['prefix' => 'potato'], function() {
     // Languages
     Route::group(['prefix' => 'languages'], function() {
         Route::get('index', [ApiPotatoLanguageController::class, 'index'])->name('api.potato.languages.index');
+    });
+
+    // Markets
+    Route::group(['prefix' => 'markets'], function() {
+        Route::post('store', [ApiPotatoMarketController::class, 'store'])->name('api.potato.markets.store');
     });
 
     // Messages

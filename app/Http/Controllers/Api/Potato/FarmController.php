@@ -41,7 +41,7 @@ class FarmController extends Controller
             ->farms()
             ->save($farm);
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 
     public function show(Request $request, int $id)
