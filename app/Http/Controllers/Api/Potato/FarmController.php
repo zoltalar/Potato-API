@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
-use App\Http\Requests\Potato\FarmOperatingHoursUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\BaseResource;
@@ -251,7 +250,7 @@ class FarmController extends Controller
             $farm->update();
         }
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 
     public function updateDescription(FarmDescriptionUpdateRequest $request, int $id)
@@ -265,7 +264,7 @@ class FarmController extends Controller
             $farm->update(['description' => $request->description]);
         }
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 
     public function updateSocialMedia(FarmSocialMediaUpdateRequest $request, int $id)
@@ -280,7 +279,7 @@ class FarmController extends Controller
             $farm->update();
         }
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 
     public function deactivate(FarmDeactivateRequest $request, int $id)
@@ -301,6 +300,6 @@ class FarmController extends Controller
             }
         }
 
-        return new BaseResource($farm);
+        return new FarmResource($farm);
     }
 }

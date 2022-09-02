@@ -36,6 +36,7 @@ final class Address extends Base implements
         'longitude',
         'timezone',
         'directions',
+        'stand',
         'type'
     ];
 

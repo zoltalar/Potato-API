@@ -24,6 +24,12 @@ class FarmResource extends JsonResource
             'publish_address' => $this->publish_address,
             'publish_mailing_address' => $this->publish_mailing_address,
             'fax' => $this->fax,
+            'email' => $this->when(
+                auth()->check() && auth()->id() === $this->user_id,
+                function() {
+                    return $this->email;
+                }
+            ),
             'website' => $this->website,
             'description' => $this->description,
             'facebook' => $this->facebook,
