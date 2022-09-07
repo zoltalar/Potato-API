@@ -28,8 +28,8 @@ class MarketStoreRequest extends BaseRequest
     public function attributes(): array
     {
         return [
-            'name' => mb_strtolower(__('phrases.farm_market_name')),
-            'promote' => mb_strtolower(__('phrases.promote_this_farm_market'))
+            'name' => mb_strtolower(__('phrases.farmers_market_name')),
+            'promote' => mb_strtolower(__('phrases.promote_this_farmers_market'))
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\MarketContactInformationUpdateRequest;
+use App\Http\Requests\Potato\MarketDescriptionUpdateRequest;
 use App\Http\Requests\Potato\MarketStoreRequest;
 use App\Http\Resources\Potato\MarketResource;
 use App\Models\Language;
@@ -95,6 +96,20 @@ class MarketController extends Controller
         if ($market !== null) {
             $market->fill($request->only($market->getFillable()));
             $market->update();
+        }
+
+        return new MarketResource($market);
+    }
+
+    public function updateDescription(MarketDescriptionUpdateRequest $request, int $id)
+    {
+        $market = auth()
+            ->user()
+            ->markets()
+            ->find($id);
+
+        if ($market !== null) {
+            $market->update(['description' => $request->description]);
         }
 
         return new MarketResource($market);

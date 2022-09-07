@@ -30,7 +30,7 @@ class MarketContactInformationUpdateRequest extends BaseRequest
     public function attributes(): array
     {
         return [
-            'name' => mb_strtolower(__('phrases.farm_name')),
+            'name' => mb_strtolower(__('phrases.farmers_market_name')),
             'first_name' => mb_strtolower(__('phrases.first_name')),
             'last_name' => mb_strtolower(__('phrases.last_name')),
             'phone' => mb_strtolower(__('phrases.phone')),
