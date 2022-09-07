@@ -10,6 +10,7 @@ use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\Country;
 use App\Models\Farm;
+use App\Models\Market;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,11 @@ class AddressController extends Controller
 
         if ($type === Address::TYPE_ADDRESSABLE_FARM) {
             $addressable = Farm::query()
+                ->with(['addresses'])
+                ->where('user_id', auth()->id())
+                ->find($id);
+        } elseif ($type === Address::TYPE_ADDRESSABLE_MARKET) {
+            $addressable = Market::query()
                 ->with(['addresses'])
                 ->where('user_id', auth()->id())
                 ->find($id);
