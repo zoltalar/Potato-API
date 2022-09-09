@@ -14,7 +14,7 @@ class OperatingHourController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['meta']);
     }
 
     public function save(OperatingHoursRequest $request, string $type, int $id)
@@ -45,5 +45,10 @@ class OperatingHourController extends Controller
         }
 
         return new BaseResource($hours);
+    }
+
+    public function meta()
+    {
+        return response()->json(['types' => OperatingHour::types()]);
     }
 }

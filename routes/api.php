@@ -267,6 +267,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Operating Hours
     Route::group(['prefix' => 'operating-hours'], function() {
        Route::post('save/{type}/{id}', [ApiPotatoOperatingHourController::class, 'save'])->name('api.potato.operating-hours.save');
+       Route::get('meta', [ApiPotatoOperatingHourController::class, 'meta'])->name('api.potato.operating-hours.meta');
     });
 
     // Prices
