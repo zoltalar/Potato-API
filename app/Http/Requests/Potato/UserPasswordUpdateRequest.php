@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
-use App\Models\Base;
-use App\Models\Country;
-use App\Models\Language;
 use App\Rules\MatchOldUserPassword;
 
 class UserPasswordUpdateRequest extends BaseRequest

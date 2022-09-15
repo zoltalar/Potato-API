@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Potato\OperatingHoursBatchRequest;
 use App\Http\Requests\Potato\OperatingHoursRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Farm;
@@ -45,6 +46,11 @@ class OperatingHourController extends Controller
         }
 
         return new BaseResource($hours);
+    }
+
+    public function saveBatch(OperatingHoursBatchRequest $request, string $type, int $id)
+    {
+
     }
 
     public function meta()

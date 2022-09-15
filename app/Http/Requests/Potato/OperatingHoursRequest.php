@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\OperatingHour;
-use App\Rules\ProductAvailabilitySeasons;
 
 class OperatingHoursRequest extends BaseRequest
 {
