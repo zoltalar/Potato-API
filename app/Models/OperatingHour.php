@@ -10,6 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class OperatingHour extends Base
 {
     const TYPE_OPERATABLE_FARM = 'farm';
+    const TYPE_OPERATABLE_MARKET = 'market';
 
     const TYPE_DATES = 1;
     const TYPE_MONTHS = 2;

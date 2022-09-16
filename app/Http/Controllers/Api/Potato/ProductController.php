@@ -38,6 +38,7 @@ class ProductController extends Controller
             if (count($products) == 0) {
                 $productable->products()->delete();
             } else {
+
                 foreach ($products as $attributes) {
                     $product = $productable
                         ->products
