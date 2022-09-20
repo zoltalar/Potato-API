@@ -110,4 +110,34 @@ class OperatingHour extends Base
 
         return $this;
     }
+
+    public function fillFromEntry(array $entry): OperatingHour
+    {
+        foreach ($entry as $attribute => $value) {
+
+            if ( ! is_array($value) && $this->hasAttribute($attribute)) {
+                $this->{$attribute} = $value;
+            }
+        }
+
+        foreach ($this->days() as $day) {
+            $data = $entry[$day] ?? [];
+            $this->{$day} = [];
+
+            if (is_array($data)) {
+                $selected = $data['selected'] ?? false;
+
+                if ($selected) {
+                    $start = $data['start'] ?? null;
+                    $end = $data['end'] ?? null;
+
+                    if ($start && $end) {
+                        $this->{$day} = [implode('-', [$start, $end])];
+                    }
+                }
+            }
+        }
+
+        return $this;
+    }
 }

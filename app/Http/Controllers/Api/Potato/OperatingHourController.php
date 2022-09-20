@@ -66,29 +66,41 @@ class OperatingHourController extends Controller
                 $operatable->operatingHours()->delete();
             } else {
                 $operatingHours = $operatable->operatingHours;
+                $savedHours = collect([]);
 
-                foreach ($hours as $i => $attributes) {
+                foreach ($hours as $i => $entry) {
                     $hour = $operatingHours[$i] ?? null;
-                }
 
-                /*
-                foreach ($products as $attributes) {
-                    $product = $productable
-                        ->products
-                        ->filter(function($product) use ($attributes) {
-                            return $product->inventory_id == $attributes['inventory_id'];
-                        })
-                        ->first();
+                    if ($hour !== null) {
+                        $hour->fillFromEntry($entry);
 
-                    if ($product !== null) {
-                        $product->update($attributes);
+                        if ($hour->update()) {
+                            $savedHours->push($hour);
+                        }
                     } else {
-                        $productable->products()->save(new Product($attributes));
+                        $hour = new OperatingHour();
+                        $hour->fillFromEntry($entry);
+
+                        if ($operatable->operatingHours()->save($hour)) {
+                            $savedHours->push($hour);
+                        }
                     }
                 }
-                */
+
+                $ids = collect($savedHours)
+                    ->pluck('id')
+                    ->toArray();
+
+                $operatable
+                    ->operatingHours()
+                    ->whereNotIn('id', $ids)
+                    ->delete();
             }
+
+            return BaseResource::collection($operatable->operatingHours()->get());
         }
+
+        return response()->json(null, 204);
     }
 
     public function meta()
