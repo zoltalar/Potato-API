@@ -30,6 +30,12 @@ class ProductController extends Controller
                 ->farms()
                 ->with(['products'])
                 ->find($id);
+        } elseif ($type === Product::TYPE_PRODUCTABLE_MARKET) {
+            $productable = auth()
+                ->user()
+                ->markets()
+                ->with(['products'])
+                ->find($id);
         }
 
         if ($productable !== null) {
