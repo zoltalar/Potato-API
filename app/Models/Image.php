@@ -59,7 +59,7 @@ final class Image extends Base
             if ($type === self::TYPE_IMAGEABLE_FARM) {
                 return asset("storage/farms/{$file}");
             } elseif ($type === self::TYPE_IMAGEABLE_MARKET) {
-                return asset('storage/markets/{$file}');
+                return asset("storage/markets/{$file}");
             }
         }
 

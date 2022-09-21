@@ -29,6 +29,11 @@ class ImageController extends Controller
                 ->user()
                 ->farms()
                 ->find($id);
+        } elseif ($type === Image::TYPE_IMAGEABLE_MARKET) {
+            $imageable = auth()
+                ->user()
+                ->markets()
+                ->find($id);
         }
 
         if ($imageable !== null) {
@@ -59,6 +64,12 @@ class ImageController extends Controller
             $imageable = auth()
                 ->user()
                 ->farms()
+                ->with(['images'])
+                ->find($imageableId);
+        } elseif ($type === Image::TYPE_IMAGEABLE_MARKET) {
+            $imageable = auth()
+                ->user()
+                ->markets()
                 ->with(['images'])
                 ->find($imageableId);
         }
@@ -92,6 +103,12 @@ class ImageController extends Controller
             $imageable = auth()
                 ->user()
                 ->farms()
+                ->with(['images'])
+                ->find($imageableId);
+        } elseif ($type === Image::TYPE_IMAGEABLE_MARKET) {
+            $imageable = auth()
+                ->user()
+                ->markets()
                 ->with(['images'])
                 ->find($imageableId);
         }
@@ -134,6 +151,12 @@ class ImageController extends Controller
                 ->farms()
                 ->with(['images'])
                 ->find($imageableId);
+        } elseif ($type === Image::TYPE_IMAGEABLE_MARKET) {
+            $imageable = auth()
+                ->user()
+                ->markets()
+                ->with(['images'])
+                ->find($imageableId);
         }
 
         if ($imageable !== null) {
@@ -172,6 +195,12 @@ class ImageController extends Controller
             $imageable = auth()
                 ->user()
                 ->farms()
+                ->with(['images'])
+                ->find($imageableId);
+        } elseif ($type === Image::TYPE_IMAGEABLE_MARKET) {
+            $imageable = auth()
+                ->user()
+                ->markets()
                 ->with(['images'])
                 ->find($imageableId);
         }
