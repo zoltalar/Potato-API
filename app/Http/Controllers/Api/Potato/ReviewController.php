@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\ReviewStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\Language;
+use App\Models\Market;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,8 @@ class ReviewController extends Controller
 
         if ($type === Review::TYPE_RATEABLE_FARM) {
             $rateable = Farm::find($id);
+        } elseif ($type === Review::TYPE_RATEABLE_MARKET) {
+            $rateable = Market::find($id);
         }
 
         if ($rateable !== null) {

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Rules;
 
 use App\Models\Farm;
+use App\Models\Market;
 use App\Models\Message;
 use App\Models\Review;
 use Illuminate\Contracts\Validation\Rule;
@@ -17,7 +18,7 @@ class ReviewUnique implements Rule
     /** @var int */
     protected $id;
 
-    public function __construct(?string $type, ?int $id)
+    public function __construct($type, $id)
     {
         $this->type = $type;
         $this->id = $id;
@@ -31,6 +32,8 @@ class ReviewUnique implements Rule
 
         if ($type === Review::TYPE_RATEABLE_FARM) {
             $rateable = Farm::find($id);
+        } elseif ($type === Review::TYPE_RATEABLE_MARKET) {
+            $rateable = Market::find($id);
         }
 
         return ($rateable !== null && $rateable->review(auth()->user()) === null);

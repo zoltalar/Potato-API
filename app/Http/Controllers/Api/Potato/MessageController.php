@@ -10,6 +10,7 @@ use App\Http\Requests\Potato\MessageStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Jobs\SendMessageJob;
 use App\Models\Farm;
+use App\Models\Market;
 use App\Models\Message;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,6 +28,10 @@ class MessageController extends Controller
 
         if ($type === Message::TYPE_MESSAGEABLE_FARM) {
             $messageable = Farm::query()
+                ->with(['user'])
+                ->find($id);
+        } elseif ($type === Message::TYPE_MESSAGEABLE_MARKET) {
+            $messageable = Market::query()
                 ->with(['user'])
                 ->find($id);
         }

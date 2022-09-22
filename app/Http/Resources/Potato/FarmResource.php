@@ -33,9 +33,13 @@ class FarmResource extends JsonResource
             'website' => $this->website,
             'description' => $this->description,
             'facebook' => $this->facebook,
+            'facebook_url' => $this->facebook_url,
             'twitter' => $this->twitter,
+            'twitter_url' => $this->twitter_url,
             'pinterest' => $this->pinterest,
+            'pinterest_url' => $this->pinterest_url,
             'instagram' => $this->instagram,
+            'instagram_url' => $this->instagram_url,
             'promote' => $this->promote,
             'active' => $this->active,
             'user_id' => $this->user_id,
@@ -57,6 +61,12 @@ class FarmResource extends JsonResource
                             });
                         });
                     return BaseResource::collection($addresses);
+                }
+            ),
+            'favorites' => $this->when(
+                $this->relationLoaded('favorites'),
+                function() {
+                    return BaseResource::collection($this->favorites);
                 }
             ),
             'images' => $this->when(

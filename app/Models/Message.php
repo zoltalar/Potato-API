@@ -10,6 +10,7 @@ use Str;
 final class Message extends Base
 {
     const TYPE_MESSAGEABLE_FARM = 'farm';
+    const TYPE_MESSAGEABLE_MARKET = 'market';
 
     protected $fillable = [
         'subject',

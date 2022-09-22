@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\Favorite;
+use App\Models\Market;
 use Exception;
 
 class FavoriteController extends Controller
@@ -24,6 +25,8 @@ class FavoriteController extends Controller
 
         if ($type === Favorite::TYPE_FAVORITEABLE_FARM) {
             $favoriteable = Farm::find($id);
+        } elseif ($type === Favorite::TYPE_FAVORITEABLE_MARKET) {
+            $favoriteable = Market::find($id);
         }
 
         if ($favoriteable !== null) {
