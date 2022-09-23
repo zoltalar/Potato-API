@@ -100,6 +100,7 @@ class ProductController extends Controller
             ->join('states', function($join) {
                 $join->on('states.id', '=', 'addresses.state_id');
             })
+            ->where('products.productable_type', Product::TYPE_PRODUCTABLE_FARM)
             ->where('products.inventory_id', $id)
             ->where('addresses.type', Address::TYPE_LOCATION)
             ->when($country, function($query) use ($country) {
