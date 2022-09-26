@@ -100,13 +100,14 @@ class ProductController extends Controller
             ->join('states', function($join) {
                 $join->on('states.id', '=', 'addresses.state_id');
             })
+            ->join('countries', function($join) {
+                $join->on('countries.id', '=', 'states.country_id');
+            })
             ->where('products.productable_type', Product::TYPE_PRODUCTABLE_FARM)
             ->where('products.inventory_id', $id)
             ->where('addresses.type', Address::TYPE_LOCATION)
             ->when($country, function($query) use ($country) {
-                return $query->whereHas('productable.addresses.state.country', function($query) use ($country) {
-                    $query->where('code', $country);
-                });
+                return $query->where('countries.code', $country);
             })
             ->groupBy('city', 'state_id')
             ->orderBy('count', 'desc')

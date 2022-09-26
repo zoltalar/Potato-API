@@ -15,13 +15,12 @@ class PriceController extends Controller
 {
     public function analytics(Request $request, int $id)
     {
-        $country = $request->header('X-Country', Country::CODE_PL);
         $currency = $request->header('X-currency', Currency::CODE_PLN);
 
         $prices = Price::query()
             ->selectRaw(
                 'inventory.name AS inventory_name,
-                DATE_FORMAT(date, "%m/%Y") AS month_year,
+                DATE_FORMAT(date, "%y/%m") AS _year_month,
                 AVG(price) AS average_price'
             )
             ->join('inventory', function($join) {
@@ -31,19 +30,14 @@ class PriceController extends Controller
                 $join->on('prices.currency_id', '=', 'currencies.id');
             })
             ->whereDate('date', '>', now()->subYear())
-            ->when( ! empty($country), function($query) use ($country) {
-                return $query->whereHas('productable.addresses.state.country', function($query) use ($country) {
-                    $query->where('code', $country);
-                });
-            })
             ->when( ! empty($currency), function($query) use ($currency) {
                 return $query->where('currencies.code', $currency);
             })
             ->when( ! empty($id), function($query) use ($id) {
                 return $query->where('inventory_id', $id);
             })
-            ->groupByRaw('inventory_id, DATE_FORMAT(date, "%m/%Y")')
-            ->orderby('month_year')
+            ->groupByRaw('inventory_id, DATE_FORMAT(date, "%y/%m")')
+            ->orderby('_year_month')
             ->get();
 
         return BaseResource::collection($prices);

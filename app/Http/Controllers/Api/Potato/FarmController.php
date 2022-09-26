@@ -235,7 +235,7 @@ class FarmController extends Controller
                 ->get();
         }
 
-        return BaseResource::collection($farms);
+        return FarmResource::collection($farms);
     }
 
     public function updateContactInformation(FarmContactInformationUpdateRequest $request, int $id)
