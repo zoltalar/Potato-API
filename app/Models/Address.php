@@ -8,6 +8,7 @@ use App\Contracts\Addressable as AddressableContract;
 use App\Contracts\Coordinable as CoordinableContract;
 use App\Traits\Addressable;
 use App\Traits\Coordinable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 final class Address extends Base implements
@@ -30,6 +31,7 @@ final class Address extends Base implements
         'address',
         'address_2',
         'city',
+        'city_id',
         'state_id',
         'zip',
         'latitude',
@@ -66,6 +68,11 @@ final class Address extends Base implements
     public function addressable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 
     // --------------------------------------------------

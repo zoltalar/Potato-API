@@ -8,6 +8,7 @@ use App\Contracts\Coordinable as CoordinableContract;
 use App\Traits\Coordinable;
 use DateTimeZone;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class City extends Base implements CoordinableContract
 {
@@ -31,11 +32,18 @@ final class City extends Base implements CoordinableContract
         'longitude' => 'float'
     ];
 
+    protected $constraints = ['addresses'];
+
     public $timestamps = false;
 
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
 
     public function state(): BelongsTo
     {

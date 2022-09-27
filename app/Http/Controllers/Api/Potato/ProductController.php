@@ -84,6 +84,7 @@ class ProductController extends Controller
             ->selectRaw(
                 'COUNT(addresses.id) AS count,
                 addresses.city AS city,
+                addresses.city_id,
                 addresses.state_id AS state_id,
                 states.name AS state_name'
             )
@@ -109,7 +110,7 @@ class ProductController extends Controller
             ->when($country, function($query) use ($country) {
                 return $query->where('countries.code', $country);
             })
-            ->groupBy('city', 'state_id')
+            ->groupBy('city', 'city_id', 'state_id')
             ->orderBy('count', 'desc')
             ->get();
 

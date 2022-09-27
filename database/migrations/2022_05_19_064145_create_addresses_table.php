@@ -18,6 +18,7 @@ class CreateAddressesTable extends Migration
             $table->string('address', 100);
             $table->string('address_2', 100)->nullable();
             $table->string('city', 60);
+            $table->bigInteger('city_id')->unsigned()->nullable();
             $table->integer('state_id')->unsigned()->nullable();
             $table->string('zip', 15);
             $table->decimal('latitude', 10, 8)->nullable();
@@ -33,6 +34,12 @@ class CreateAddressesTable extends Migration
             $table->index(['address', 'address_2', 'city', 'zip']);
 
             $table->unique(['type', 'addressable_id', 'addressable_type']);
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
 
             $table->foreign('state_id')
                 ->references('id')
