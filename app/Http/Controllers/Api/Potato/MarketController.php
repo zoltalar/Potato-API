@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\MarketContactInformationUpdateRequest;
 use App\Http\Requests\Potato\MarketDescriptionUpdateRequest;
 use App\Http\Requests\Potato\MarketSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\MarketStoreRequest;
+use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\MarketResource;
 use App\Models\Address;
 use App\Models\City;
@@ -23,7 +24,7 @@ class MarketController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'search']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'locate', 'search']);
     }
 
     public function store(MarketStoreRequest $request)
@@ -90,6 +91,38 @@ class MarketController extends Controller
         }
 
         return new MarketResource($market);
+    }
+
+    public function locate(Request $request, float $latitude, float $longitude)
+    {
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $limit = $request->get('limit', 10);
+
+        $markets = Market::query()
+            ->with([
+                'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
+                    $query->select();
+                    $query->haversine($latitude, $longitude, $abbreviation);
+                    $query->where('type', Address::TYPE_LOCATION);
+                },
+                'images' => function($query) {
+                    $query->primary();
+                }
+            ])
+            ->active()
+            ->whereHas('addresses', function($query) use ($latitude, $longitude, $abbreviation) {
+                $query
+                    ->haversine($latitude, $longitude, $abbreviation)
+                    ->where('type', Address::TYPE_LOCATION)
+                    ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+            })
+            ->orderBy('promote', 'desc')
+            ->take($limit)
+            ->get()
+            ->shuffle();
+
+        return BaseResource::collection($markets);
     }
 
     public function search(Request $request)

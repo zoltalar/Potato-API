@@ -251,6 +251,7 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'markets'], function() {
         Route::post('store', [ApiPotatoMarketController::class, 'store'])->name('api.potato.markets.store');
         Route::get('show/{id}', [ApiPotatoMarketController::class, 'show'])->name('api.potato.markets.show');
+        Route::get('locate/{latitude}/{longitude}', [ApiPotatoMarketController::class, 'locate'])->name('api.potato.markets.locate');
         Route::get('search', [ApiPotatoMarketController::class, 'search'])->name('api.potato.markets.search');
         Route::match(['PUT', 'PATCH'], 'update-contact-information/{id}', [ApiPotatoMarketController::class, 'updateContactInformation'])->name('api.potato.markets.update-contact-information');
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoMarketController::class, 'updateDescription'])->name('api.potato.markets.update-description');

@@ -67,7 +67,7 @@ class AddressController extends Controller
     public function plot(Request $request, string $type)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $key = sprintf('potato.addresses.plot.%s', $code);
+        $key = sprintf('potato.addresses.plot.%s.%s', $code, $type);
 
         $addresses = cache()->remember($key, 600, function() use ($type, $code) {
             return Address::query()
