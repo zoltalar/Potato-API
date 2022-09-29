@@ -40,6 +40,7 @@ use App\Http\Controllers\Api\Potato\OperatingHourController as ApiPotatoOperatin
 use App\Http\Controllers\Api\Potato\PriceController as ApiPotatoPriceController;
 use App\Http\Controllers\Api\Potato\ProductController as ApiPotatoProductController;
 use App\Http\Controllers\Api\Potato\RegisterController as ApiPotatoRegisterController;
+use App\Http\Controllers\Api\Potato\ResetPasswordController as ApiPotatoResetPasswordController;
 use App\Http\Controllers\Api\Potato\ReviewController as ApiPotatoReviewController;
 use App\Http\Controllers\Api\Potato\UnitController as ApiPotatoUnitController;
 use App\Http\Controllers\Api\Potato\UserController as ApiPotatoUserController;
@@ -272,6 +273,11 @@ Route::group(['prefix' => 'potato'], function() {
        Route::post('save/{type}/{id}', [ApiPotatoOperatingHourController::class, 'save'])->name('api.potato.operating-hours.save');
        Route::post('save-batch/{type}/{id}', [ApiPotatoOperatingHourController::class, 'saveBatch'])->name('api.potato.operating-hours.save-batch');
        Route::get('meta', [ApiPotatoOperatingHourController::class, 'meta'])->name('api.potato.operating-hours.meta');
+    });
+
+    // Password
+    Route::group(['prefix' => 'password'], function() {
+        Route::post('reset', [ApiPotatoResetPasswordController::class, 'reset'])->name('password.reset');
     });
 
     // Prices

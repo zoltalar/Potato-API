@@ -12,7 +12,7 @@ class FarmDeactivated implements Rule
     /** @var Farm */
     protected $farm;
 
-    public function __construct(?int $id)
+    public function __construct($id)
     {
         $this->farm = Farm::find($id);
     }
