@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Contracts\Namable as NamableContract;
+use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use App\Traits\Namable;
 use Illuminate\Auth\Authenticatable;
@@ -136,6 +137,23 @@ final class User extends Base implements
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmail());
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
+
+    public function passwordResetUrl(string $token): string
+    {
+        $query = [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset()
+        ];
+
+        $url = $this->potatoAppBaseUrl();
+
+        return sprintf('%s/password/change?%s', $url, http_build_query($query));
     }
 
     public function verificationUrl(): string

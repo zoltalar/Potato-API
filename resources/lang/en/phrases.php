@@ -61,6 +61,7 @@ return [
     'quantity' => 'Quantity',
     'rating' => 'Rating',
     'regards' => 'Regards',
+    'reset_password' => 'Reset Password',
     'start_date' => 'Start Date',
     'start_month' => 'Start Month',
     'start_time' => 'Start Time',
