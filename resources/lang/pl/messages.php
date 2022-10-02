@@ -6,6 +6,7 @@ return [
     'email_action_text_subcopy' => "Jeśli zaistnieje problem z kliknięciem w przycisk \":actionText\", skopiuj i wklej poniższy link w okno przeglądarki:",
     'email_new_message_line_1' => 'Masz nową wiadomość od :name.',
     'email_reset_password_line_1' => 'Otrzymujesz tę wiadomość e-mail, ponieważ otrzymaliśmy prośbę o zresetowanie hasła do Twojego konta.',
+    'email_reset_password_line_2' => 'Jeśli nie zażądałeś(aś) zresetowania hasła, nie są wymagane żadne dalsze działania.',
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta to nie są wymagane żadne dalsze działania.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',

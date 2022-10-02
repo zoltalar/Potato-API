@@ -277,7 +277,8 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Password
     Route::group(['prefix' => 'password'], function() {
-        Route::post('reset', [ApiPotatoResetPasswordController::class, 'reset'])->name('password.reset');
+        Route::post('email', [ApiPotatoResetPasswordController::class, 'email'])->name('password.email');
+        Route::post('reset', [ApiPotatoResetPasswordController::class, 'reset'])->name('password.update');
     });
 
     // Prices

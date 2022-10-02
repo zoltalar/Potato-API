@@ -37,6 +37,7 @@ class ResetPassword extends Notification
             ->subject(__('phrases.reset_password'))
             ->greeting(__('phrases.hello') . ',')
             ->line(__('messages.email_reset_password_line_1'))
-            ->action(__('phrases.reset_password'), $url ?? '');
+            ->action(__('phrases.reset_password'), $url ?? '')
+            ->line(__('messages.email_reset_password_line_2'));
     }
 }

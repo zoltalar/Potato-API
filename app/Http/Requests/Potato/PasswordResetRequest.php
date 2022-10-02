@@ -18,11 +18,18 @@ class PasswordResetRequest extends BaseRequest
     {
         $length = Base::DEFAULT_STRING_LENGTH;
 
-        return ['email' => ['required', 'email', "max:{$length}"]];
+        return [
+            'email' => ['required', 'email', "max:{$length}"],
+            'password' => ['required', 'min:7', 'confirmed'],
+            'token' => ['required']
+        ];
     }
 
     public function attributes(): array
     {
-        return ['email' => mb_strtolower(__('phrases.email'))];
+        return [
+            'email' => mb_strtolower(__('phrases.email')),
+            'password' => mb_strtolower(__('phrases.password'))
+        ];
     }
 }

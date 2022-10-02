@@ -153,7 +153,7 @@ final class User extends Base implements
 
         $url = $this->potatoAppBaseUrl();
 
-        return sprintf('%s/password/change?%s', $url, http_build_query($query));
+        return sprintf('%s/password/update?%s', $url, http_build_query($query));
     }
 
     public function verificationUrl(): string
