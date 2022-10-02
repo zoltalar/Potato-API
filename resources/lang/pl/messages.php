@@ -8,7 +8,7 @@ return [
     'email_reset_password_line_1' => 'Otrzymujesz tę wiadomość e-mail, ponieważ otrzymaliśmy prośbę o zresetowanie hasła do Twojego konta.',
     'email_reset_password_line_2' => 'Jeśli nie zażądałeś(aś) zresetowania hasła, nie są wymagane żadne dalsze działania.',
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
-    'email_verify_line_2' => 'Jeśli nie utworzyłeś konta to nie są wymagane żadne dalsze działania.',
+    'email_verify_line_2' => 'Jeśli nie utworzyłeś konta, nie musisz nic więcej robić.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',
     'hi_name' => 'Cześć :name',
     'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
