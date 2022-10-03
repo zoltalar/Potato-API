@@ -20,6 +20,7 @@ return [
     'end_time' => 'Czas Końcowy',
     'facebook' => 'Facebook',
     'farm_deactivation' => 'Dezaktywacja Gospodarstwa Rolnego',
+    'farmers_market_deactivation' => 'Dezaktywacja Agromarketu',
     'farmers_market_name' => 'Nazwa Agromarketu',
     'farm_name' => 'Nazwa Gospodarstwa Rolnego',
     'field_name_is_required' => 'Pole :field jest wymagane.',

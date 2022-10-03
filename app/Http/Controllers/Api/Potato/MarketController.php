@@ -6,11 +6,13 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\MarketContactInformationUpdateRequest;
+use App\Http\Requests\Potato\MarketDeactivateRequest;
 use App\Http\Requests\Potato\MarketDescriptionUpdateRequest;
 use App\Http\Requests\Potato\MarketSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\MarketStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\MarketResource;
+use App\Jobs\SendMarketDeactivationNotificationJob;
 use App\Models\Address;
 use App\Models\City;
 use App\Models\Country;
@@ -275,6 +277,27 @@ class MarketController extends Controller
         if ($market !== null) {
             $market->fill($request->only($market->getFillable()));
             $market->update();
+        }
+
+        return new MarketResource($market);
+    }
+
+    public function deactivate(MarketDeactivateRequest $request, int $id)
+    {
+        $market = auth()
+            ->user()
+            ->markets()
+            ->active()
+            ->find($id);
+
+        if ($market !== null) {
+            $market->fill($request->only($market->getFillable()));
+            $market->active = 0;
+            $market->deactivated_at = $market->freshTimestamp();
+
+            if ($market->update()) {
+                $this->dispatch(new SendMarketDeactivationNotificationJob($market));
+            }
         }
 
         return new MarketResource($market);

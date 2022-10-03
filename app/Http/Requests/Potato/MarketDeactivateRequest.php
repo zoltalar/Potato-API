@@ -5,12 +5,9 @@ declare(strict_types = 1);
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
-use App\Models\Base;
-use App\Models\Country;
-use App\Models\Language;
-use App\Rules\FarmDeactivated;
+use App\Rules\MarketDeactivated;
 
-class FarmDeactivateRequest extends BaseRequest
+class MarketDeactivateRequest extends BaseRequest
 {
     public function authorize(): bool
     {
@@ -21,7 +18,7 @@ class FarmDeactivateRequest extends BaseRequest
     {
         $id = $this->route('id');
 
-        return ['deactivation_reason' => ['required', 'string', 'max:500', new FarmDeactivated($id)]];
+        return ['deactivation_reason' => ['required', 'string', 'max:500', new MarketDeactivated($id)]];
     }
 
     public function attributes(): array

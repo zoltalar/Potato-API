@@ -4,22 +4,22 @@ declare(strict_types = 1);
 
 namespace App\Notifications;
 
-use App\Models\Farm;
+use App\Models\Market;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FarmDeactivation extends Notification
+class MarketDeactivation extends Notification
 {
     use Queueable;
 
-    /** @var Farm */
-    protected $farm;
+    /** @var Market */
+    protected $market;
 
-    public function __construct(Farm $farm)
+    public function __construct(Market $market)
     {
-        $this->farm = $farm;
+        $this->market = $market;
     }
 
     public function via($notifiable)
@@ -29,12 +29,12 @@ class FarmDeactivation extends Notification
 
     public function toMail($notifiable)
     {
-        $farm = $this->farm;
+        $market = $this->market;
 
         return (new MailMessage)
-            ->subject(__('phrases.farm_deactivation'))
+            ->subject(__('phrases.farmers_market_deactivation'))
             ->greeting(__('phrases.hello') . ',')
-            ->line(sprintf('%s: %s (%d)', __('phrases.name'), $farm->name, $farm->id))
-            ->line($farm->deactivation_reason);
+            ->line(sprintf('%s: %s (%d)', __('phrases.name'), $market->name, $market->id))
+            ->line($market->deactivation_reason);
     }
 }

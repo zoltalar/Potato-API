@@ -20,6 +20,7 @@ return [
     'end_time' => 'End Time',
     'facebook' => 'Facebook',
     'farm_deactivation' => 'Farm Deactivation',
+    'farmers_market_deactivation' => "Farmer's Market Deactivation",
     'farmers_market_name' => "Farmers' Market Name",
     'farm_name' => 'Farm Name',
     'fax' => 'Fax',
