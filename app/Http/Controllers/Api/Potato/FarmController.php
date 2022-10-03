@@ -79,7 +79,7 @@ class FarmController extends Controller
                 },
                 'reviews.user'
             ])
-            ->find($id);
+            ->findOrFail($id);
 
         if ($farm !== null) {
 

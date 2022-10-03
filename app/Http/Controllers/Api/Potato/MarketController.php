@@ -77,7 +77,7 @@ class MarketController extends Controller
                 },
                 'reviews.user'
             ])
-            ->find($id);
+            ->findOrFail($id);
 
         if ($market !== null) {
 
