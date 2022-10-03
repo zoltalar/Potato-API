@@ -10,6 +10,7 @@ use App\Http\Requests\Potato\PasswordResetRequest;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Str;
 
 class ResetPasswordController extends Controller
 {
@@ -59,6 +60,8 @@ class ResetPasswordController extends Controller
 
     protected function resetPassword($user, $password)
     {
-
+        $user->password = $password;
+        $user->remember_token = Str::random(60);
+        $user->save();
     }
 }
