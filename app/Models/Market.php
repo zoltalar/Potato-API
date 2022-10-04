@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Contracts\Namable as NamableContract;
 use App\Traits\Namable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
@@ -59,6 +60,15 @@ final class Market extends Base implements
         'pinterest_url',
         'instagram_url'
     ];
+
+    // --------------------------------------------------
+    // Scopes
+    // --------------------------------------------------
+
+    public function scopePromote(Builder $query): Builder
+    {
+        return $query->where('promote', 1);
+    }
 
     // --------------------------------------------------
     // Accessors and Mutators

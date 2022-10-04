@@ -174,7 +174,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Addresses
     Route::group(['prefix' => 'addresses'], function() {
         Route::post('save/{type}/{id}', [ApiPotatoAddressController::class, 'save'])->name('api.potato.addresses.save');
-        Route::get('plot/{type}', [ApiPotatoAddressController::class, 'plot'])->name('api.potato.addresses.plot');
+        Route::get('plot', [ApiPotatoAddressController::class, 'plot'])->name('api.potato.addresses.plot');
         Route::get('meta', [ApiPotatoAddressController::class, 'meta'])->name('api.potato.addresses.meta');
     });
 
@@ -213,6 +213,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Farms
     Route::group(['prefix' => 'farms'], function() {
+        Route::get('index', [ApiPotatoFarmController::class, 'index'])->name('api.potato.farms.index');
         Route::post('store', [ApiPotatoFarmController::class, 'store'])->name('api.potato.farms.store');
         Route::get('show/{id}', [ApiPotatoFarmController::class, 'show'])->name('api.potato.farms.show');
         Route::get('locate/{latitude}/{longitude}', [ApiPotatoFarmController::class, 'locate'])->name('api.potato.farms.locate');
@@ -250,6 +251,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Markets
     Route::group(['prefix' => 'markets'], function() {
+        Route::get('index', [ApiPotatoMarketController::class, 'index'])->name('api.potato.markets.index');
         Route::post('store', [ApiPotatoMarketController::class, 'store'])->name('api.potato.markets.store');
         Route::get('show/{id}', [ApiPotatoMarketController::class, 'show'])->name('api.potato.markets.show');
         Route::get('locate/{latitude}/{longitude}', [ApiPotatoMarketController::class, 'locate'])->name('api.potato.markets.locate');

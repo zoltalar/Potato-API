@@ -26,7 +26,33 @@ class FarmController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['show', 'locate', 'search']);
+        $this->middleware(['auth:user', 'scope:potato'])->except(['index', 'show', 'locate', 'search']);
+    }
+
+    public function index(Request $request)
+    {
+        $country = $request->header('X-country', Country::CODE_PL);
+        $limit = $request->get('limit', 10);
+        $promote = $request->promote;
+
+        $farms = Farm::query()
+            ->with([
+                'images' => function($query) {
+                    $query->primary();
+                }
+            ])
+            ->active()
+            ->whereHas('addresses.state.country', function($query) use ($country) {
+                $query->where('code', $country);
+            })
+            ->when($promote, function($query) {
+                return $query->promote();
+            })
+            ->take($limit)
+            ->get()
+            ->shuffle();
+
+        return FarmResource::collection($farms);
     }
 
     public function store(FarmStoreRequest $request)

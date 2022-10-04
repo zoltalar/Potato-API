@@ -64,12 +64,12 @@ class AddressController extends Controller
         return new BaseResource($address);
     }
 
-    public function plot(Request $request, string $type)
+    public function plot(Request $request)
     {
         $code = $request->header('X-country', Country::CODE_PL);
-        $key = sprintf('potato.addresses.plot.%s.%s', $code, $type);
+        $key = sprintf('potato.addresses.plot.%s', $code);
 
-        $addresses = cache()->remember($key, 600, function() use ($type, $code) {
+        $addresses = cache()->remember($key, 600, function() use ($code) {
             return Address::query()
                 ->select([
                     'latitude',
@@ -82,7 +82,6 @@ class AddressController extends Controller
                         $query->select(['id', 'name']);
                     }
                 ])
-                ->where('addressable_type', $type)
                 ->where('type', Address::TYPE_LOCATION)
                 ->whereHas('addressable', function($query) {
                     $query->active();
