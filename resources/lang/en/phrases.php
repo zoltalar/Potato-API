@@ -9,6 +9,7 @@ return [
     'city' => 'City',
     'code' => 'Code',
     'confirm_new_password' => 'Confirm New Password',
+    'contact' => 'Contact',
     'currency' => 'Currency',
     'current_password' => 'Current Password',
     'date_based' => 'Date Based',

@@ -4,6 +4,7 @@ return [
     'codename' => 'Ziemniaczek',
     'codename_team' => 'Zespół Ziemniaczek',
     'email_action_text_subcopy' => "Jeśli zaistnieje problem z kliknięciem w przycisk \":actionText\", skopiuj i wklej poniższy link w okno przeglądarki:",
+    'email_contact_line_1' => ':name (:email) wysłał(a) wiadomość:',
     'email_new_message_line_1' => 'Masz nową wiadomość od :name.',
     'email_reset_password_line_1' => 'Otrzymujesz tę wiadomość e-mail, ponieważ otrzymaliśmy prośbę o zresetowanie hasła do Twojego konta.',
     'email_reset_password_line_2' => 'Jeśli nie zażądałeś(aś) zresetowania hasła, nie są wymagane żadne dalsze działania.',

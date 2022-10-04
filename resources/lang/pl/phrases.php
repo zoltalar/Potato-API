@@ -9,6 +9,7 @@ return [
     'city' => 'Miasto',
     'code' => 'Kod',
     'confirm_new_password' => 'Potwierdź Nowe Hasło',
+    'contact' => 'Kontakt',
     'currency' => 'Waluta',
     'current_password' => 'Obecne Hasło',
     'date_based' => 'Na Podstawie Daty',

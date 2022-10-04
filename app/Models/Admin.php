@@ -60,4 +60,13 @@ final class Admin extends Base implements
     {
         $this->attributes['phone'] = Str::stripNonDigits($value);
     }
+
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public function preferredLocale(): string
+    {
+        return Language::CODE_EN;
+    }
 }
