@@ -20,6 +20,7 @@ class CityController extends Controller
         $country = $request->header('X-country', Country::CODE_PL);
         $countryId = $request->country_id;
         $stateId = $request->state_id;
+        $population = $request->population;
 
         if ( ! empty($countryId)) {
             $country = null;
@@ -43,7 +44,10 @@ class CityController extends Controller
                 });
             })
             ->when($stateId, function($query) use ($stateId) {
-                $query->where('state_id', $stateId);
+                return $query->where('state_id', $stateId);
+            })
+            ->when($population, function($query) use ($population) {
+                return $query->where('population', '>=', (int) $population);
             })
             ->orders('name', 'asc')
             ->take($limit);

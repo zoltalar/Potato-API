@@ -168,6 +168,9 @@ class MarketController extends Controller
 
             if ($inventory !== null) {
                 $inventoryId = $inventory->id;
+            } else {
+                // Inventory item not found so bail out
+                return MarketResource::collection(collect([]));
             }
         }
 

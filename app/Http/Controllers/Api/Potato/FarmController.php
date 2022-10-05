@@ -168,6 +168,9 @@ class FarmController extends Controller
 
             if ($inventory !== null) {
                 $inventoryId = $inventory->id;
+            } else {
+                // Inventory item not found so bail out
+                return FarmResource::collection(collect([]));
             }
         }
 

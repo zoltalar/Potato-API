@@ -21,6 +21,7 @@ final class City extends Base implements CoordinableContract
         'name',
         'name_ascii',
         'zips',
+        'population',
         'latitude',
         'longitude',
         'timezone',
@@ -28,6 +29,7 @@ final class City extends Base implements CoordinableContract
     ];
 
     protected $casts = [
+        'population' => 'integer',
         'latitude' => 'float',
         'longitude' => 'float'
     ];

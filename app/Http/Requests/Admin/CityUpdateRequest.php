@@ -18,6 +18,7 @@ class CityUpdateRequest extends BaseRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:60'],
+            'population' => ['nullable', 'numeric', 'min:0'],
             'latitude' => ['required'],
             'longitude' => ['required'],
             'state_id' => ['required', 'exists:states,id']

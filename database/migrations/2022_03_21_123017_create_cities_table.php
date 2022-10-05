@@ -15,6 +15,7 @@ class CreateCitiesTable extends Migration
             $table->string('name', 60);
             $table->string('name_ascii', 60)->nullable();
             $table->text('zips')->nullable();
+            $table->integer('population')->unsigned()->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('timezone', 35)->nullable();
