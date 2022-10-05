@@ -57,6 +57,13 @@ class CityController extends Controller
         return BaseResource::collection($cities);
     }
 
+    public function show(Request $request, City $city)
+    {
+        $city->load(['state.country']);
+
+        return new BaseResource($city);
+    }
+
     public function locate(Request $request, float $latitude, float $longitude)
     {
         $code = $request->header('X-country', Country::CODE_PL);

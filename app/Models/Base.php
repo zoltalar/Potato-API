@@ -102,7 +102,7 @@ abstract class Base extends Model
             if (is_numeric($word)) {
                 $operator = '=';
             } else {
-                $word = "$word%";
+                $word = "%$word%";
             }
 
             $query->where(function($builder) use ($columns, $operator, $word) {
