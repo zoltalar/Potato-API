@@ -260,6 +260,18 @@ class InventorySeeder extends Seeder
                 ]
             ],
             [
+                'name' => 'Grapes',
+                'category' => 'Fruits',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Winogrono'
+                ]
+            ],
+            [
                 'name' => 'Lemons',
                 'category' => 'Fruits',
                 'system' => 1,

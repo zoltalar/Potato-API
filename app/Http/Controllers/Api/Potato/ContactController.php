@@ -6,17 +6,14 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ContactRequest;
-use App\Models\Admin;
-use App\Notifications\Contact;
+use App\Jobs\SendContactJob;
 
 class ContactController extends Controller
 {
     public function contact(ContactRequest $request)
     {
-        foreach (Admin::all() as $admin) {
-            $admin->notify(new Contact($request->validated()));
-        }
+        $this->dispatch(new SendContactJob($data = $request->validated()));
 
-        return response()->json($request->validated());
+        return response()->json($data);
     }
 }

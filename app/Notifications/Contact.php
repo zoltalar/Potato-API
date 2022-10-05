@@ -29,18 +29,35 @@ class Contact extends Notification
 
     public function toMail($notifiable)
     {
-        $data = $this->data;
-
-        $firstName = Arr::get($data, 'first_name');
-        $lastName = Arr::get($data, 'last_name');
-        $name = implode(' ', [$firstName, $lastName]);
-        $email = Arr::get($data, 'email');
-        $message = Arr::get($data, 'message');
-
         return (new MailMessage)
             ->subject(__('phrases.contact'))
             ->greeting(__('phrases.hello') . ',')
-            ->line(__('messages.email_contact_line_1', ['name' => $name, 'email' => $email]))
-            ->line($message);
+            ->line(__('messages.email_contact_line_1', ['name' => $this->name(), 'email' => $this->email()]))
+            ->line($this->message());
+    }
+
+    protected function name(): string
+    {
+        $firstName = $this->data('first_name');
+        $lastName = $this->data('last_name');
+
+        return implode(' ', [$firstName, $lastName]);
+    }
+
+    protected function email(): string
+    {
+        return $this->data('email');
+    }
+
+    protected function message(): string
+    {
+        return $this->data('message');
+    }
+
+    protected function data(string $attribute): string
+    {
+        $data = $this->data;
+
+        return Arr::get($data, $attribute, '');
     }
 }
