@@ -57,7 +57,7 @@ class CityController extends Controller
         return BaseResource::collection($cities);
     }
 
-    public function show(Request $request, City $city)
+    public function show(City $city)
     {
         $city->load(['state.country']);
 
