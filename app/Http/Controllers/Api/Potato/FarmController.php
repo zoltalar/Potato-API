@@ -10,7 +10,6 @@ use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
-use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\FarmResource;
 use App\Jobs\SendFarmDeactivationNotificationJob;
 use App\Models\Address;
@@ -26,7 +25,13 @@ class FarmController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['index', 'show', 'locate', 'search']);
+        $this->middleware(['auth:user', 'scope:potato'])->except([
+            'index',
+            'show',
+            'locate',
+            'browse',
+            'search'
+        ]);
     }
 
     public function index(Request $request)
@@ -34,6 +39,10 @@ class FarmController extends Controller
         $country = $request->header('X-country', Country::CODE_PL);
         $limit = $request->get('limit', 10);
         $promote = $request->promote;
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
 
         $farms = Farm::query()
             ->with([
@@ -127,6 +136,10 @@ class FarmController extends Controller
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
         $limit = $request->get('limit', 10);
 
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
         $farms = Farm::query()
             ->with([
                 'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
@@ -150,7 +163,41 @@ class FarmController extends Controller
             ->get()
             ->shuffle();
 
-        return BaseResource::collection($farms);
+        return FarmResource::collection($farms);
+    }
+
+    public function browse(Request $request, float $latitude, float $longitude)
+    {
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $limit = $request->get('limit', 10);
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
+        $farms = Farm::query()
+            ->with([
+                'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
+                    $query->select();
+                    $query->haversine($latitude, $longitude, $abbreviation);
+                    $query->where('type', Address::TYPE_LOCATION);
+                },
+                'images' => function($query) {
+                    $query->primary();
+                }
+            ])
+            ->active()
+            ->whereHas('addresses', function($query) use ($latitude, $longitude, $abbreviation) {
+                $query
+                    ->haversine($latitude, $longitude, $abbreviation)
+                    ->where('type', Address::TYPE_LOCATION)
+                    ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+            })
+            ->orderBy('promote', 'desc')
+            ->paginate($limit);
+
+        return FarmResource::collection($farms);
     }
 
     public function search(Request $request)

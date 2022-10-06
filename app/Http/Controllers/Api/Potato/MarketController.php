@@ -10,7 +10,6 @@ use App\Http\Requests\Potato\MarketDeactivateRequest;
 use App\Http\Requests\Potato\MarketDescriptionUpdateRequest;
 use App\Http\Requests\Potato\MarketSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\MarketStoreRequest;
-use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\MarketResource;
 use App\Jobs\SendMarketDeactivationNotificationJob;
 use App\Models\Address;
@@ -34,6 +33,10 @@ class MarketController extends Controller
         $country = $request->header('X-country', Country::CODE_PL);
         $limit = $request->get('limit', 10);
         $promote = $request->promote;
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
 
         $farms = Market::query()
             ->with([
@@ -127,6 +130,10 @@ class MarketController extends Controller
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
         $limit = $request->get('limit', 10);
 
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
         $markets = Market::query()
             ->with([
                 'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
@@ -150,7 +157,7 @@ class MarketController extends Controller
             ->get()
             ->shuffle();
 
-        return BaseResource::collection($markets);
+        return MarketResource::collection($markets);
     }
 
     public function search(Request $request)

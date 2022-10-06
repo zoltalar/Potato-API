@@ -26,6 +26,10 @@ class InventoryController extends Controller
         $type = $request->type;
         $productableId = $request->productable_id;
 
+        if ($limit > 500) {
+            $limit = 500;
+        }
+
         if ($type === Product::TYPE_PRODUCTABLE_FARM) {
             $farm = Farm::query()
                 ->with('addresses.state.country')

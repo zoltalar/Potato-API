@@ -17,6 +17,10 @@ class CategoryController extends Controller
         $limit = $request->get('limit', 10);
         $language = $request->header('X-language');
 
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
         $query = Category::query()
             ->with([
                 'translations' => function($query) use ($language) {

@@ -16,6 +16,10 @@ class CountryController extends Controller
         $search = $request->search;
         $limit = $request->get('limit', 10);
 
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
         $query = Country::query()
             ->with([
                 'states',

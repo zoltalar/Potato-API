@@ -16,6 +16,10 @@ class LanguageController extends Controller
         $search = $request->search;
         $limit = $request->get('limit', 10);
 
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
         $query = Language::query()
             ->active()
             ->when($search, function($query) use ($search) {

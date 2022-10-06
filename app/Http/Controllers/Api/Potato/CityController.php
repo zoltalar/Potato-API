@@ -22,6 +22,10 @@ class CityController extends Controller
         $stateId = $request->state_id;
         $population = $request->population;
 
+        if ($limit > 25) {
+            $limit = 25;
+        }
+
         if ( ! empty($countryId)) {
             $country = null;
         }
@@ -69,6 +73,10 @@ class CityController extends Controller
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
         $limit = $request->get('limit', 10);
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
 
         $query = City::query()
             ->select([
