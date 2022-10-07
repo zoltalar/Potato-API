@@ -84,7 +84,9 @@ class AddressController extends Controller
                 ])
                 ->where('type', Address::TYPE_LOCATION)
                 ->whereHas('addressable', function($query) {
-                    $query->active();
+                    $query
+                        ->publishAddress()
+                        ->active();
                 })
                 ->whereHas('state.country', function($query) use ($code) {
                     $query->where('code', $code);

@@ -77,6 +77,16 @@ final class Farm extends Base implements
         return $query->where('promote', 1);
     }
 
+    public function scopePublishAddress(Builder $query): Builder
+    {
+        return $query->where('publish_address', 1);
+    }
+
+    public function scopePublishMailingAddress(Builder $query): Builder
+    {
+        return $query->where('publish_mailing_address', 1);
+    }
+
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
