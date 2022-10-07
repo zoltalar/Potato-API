@@ -183,6 +183,7 @@ class FarmController extends Controller
                     $query->haversine($latitude, $longitude, $abbreviation);
                     $query->where('type', Address::TYPE_LOCATION);
                 },
+                'addresses.state.country',
                 'images' => function($query) {
                     $query->primary();
                 }

@@ -26,8 +26,9 @@ class InventoryController extends Controller
         $type = $request->type;
         $productableId = $request->productable_id;
 
-        if ($limit > 500) {
-            $limit = 500;
+        // Limit of 200 needed to fetch products page
+        if ($limit > 200) {
+            $limit = 200;
         }
 
         if ($type === Product::TYPE_PRODUCTABLE_FARM) {
