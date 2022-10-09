@@ -8,16 +8,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Language;
 use App\Models\Product;
+use App\Models\Unit;
+use App\Services\GrowingArea;
+use App\Services\Haversine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['topGrowingAreas']);
+        $this->middleware(['auth:user', 'scope:potato'])->except([
+            'growingArea',
+            'topGrowingAreas'
+        ]);
     }
 
     public function save(ProductsRequest $request, string $type, int $id)
@@ -74,6 +82,55 @@ class ProductController extends Controller
         }
 
         return response()->json(null, 204);
+    }
+
+    public function growingArea(Request $request, float $latitude, float $longitude)
+    {
+        $country = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($country, Unit::TYPE_LENGTH);
+        $radius = Address::radius($abbreviation);
+
+        $products = Product::query()
+            ->select([
+                'products.id',
+                'products.inventory_id'
+            ])
+            ->with([
+                'inventory',
+                'inventory.category',
+                'inventory.category.translations',
+                'inventory.category.translations.language',
+                'inventory.translations',
+                'inventory.translations.language'
+            ])
+            ->join('farms', function($join) {
+                $join
+                    ->on('products.productable_id', '=', 'farms.id')
+                    ->where('products.productable_type', Product::TYPE_PRODUCTABLE_FARM);
+            })
+            ->leftJoin('addresses', function($join) {
+                $join
+                    ->on('addresses.addressable_id', '=', 'farms.id')
+                    ->where('addresses.addressable_type', Address::TYPE_ADDRESSABLE_FARM);
+            })
+            ->season()
+            ->where('addresses.type', Address::TYPE_LOCATION)
+            ->where(function($query) use ($latitude, $longitude, $abbreviation, $radius) {
+                $query->whereRaw(Haversine::sql() . ' < ' . $radius, [
+                    Haversine::radius($abbreviation),
+                    $latitude,
+                    $longitude,
+                    $latitude
+                ]);
+            })
+            ->where('productable_type', Product::TYPE_PRODUCTABLE_FARM)
+            ->get();
+
+        $area = new GrowingArea();
+        $area->setProducts($products);
+        $area->setRequest($request);
+
+        return response()->json($area->json());
     }
 
     public function topGrowingAreas(Request $request, int $id)
