@@ -36,13 +36,7 @@ final class GrowingArea
             $category = $this->category($product);
             $inventory = $this->inventory($product);
 
-            if ( ! isset($json[$category])) {
-                $json[$category] = [];
-            }
-
-            if ( ! in_array($inventory, $json[$category])) {
-                $json[$category][] = $inventory;
-            }
+            $json[$category][$inventory] = $product->inventory_id;
         }
 
         return $json;

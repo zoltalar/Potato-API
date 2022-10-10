@@ -25,6 +25,7 @@ class InventoryController extends Controller
         $categoryId = $request->category_id;
         $type = $request->type;
         $productableId = $request->productable_id;
+        $inventoryId = $request->inventory_id;
 
         // Limit of 200 needed to fetch products page
         if ($limit > 200) {
@@ -80,6 +81,9 @@ class InventoryController extends Controller
             })
             ->when($categoryId, function($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);
+            })
+            ->when($inventoryId, function($query) use ($inventoryId) {
+                return $query->where('id', $inventoryId);
             })
             ->orders('name', 'asc')
             ->take($limit)

@@ -21,6 +21,7 @@ class CityController extends Controller
         $countryId = $request->country_id;
         $stateId = $request->state_id;
         $population = $request->population;
+        $cityId = $request->city_id;
 
         if ($limit > 25) {
             $limit = 25;
@@ -52,6 +53,9 @@ class CityController extends Controller
             })
             ->when($population, function($query) use ($population) {
                 return $query->where('population', '>=', (int) $population);
+            })
+            ->when($cityId, function($query) use ($cityId) {
+                return $query->where('id', $cityId);
             })
             ->orders('name', 'asc')
             ->take($limit);
