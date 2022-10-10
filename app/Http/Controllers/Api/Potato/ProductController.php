@@ -8,15 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
-use App\Models\Category;
 use App\Models\Country;
-use App\Models\Language;
 use App\Models\Product;
 use App\Models\Unit;
-use App\Services\GrowingArea;
 use App\Services\Haversine;
+use App\Services\Response\GrowingArea;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -96,11 +93,7 @@ class ProductController extends Controller
                 'products.inventory_id'
             ])
             ->with([
-                'inventory',
-                'inventory.category',
-                'inventory.category.translations',
                 'inventory.category.translations.language',
-                'inventory.translations',
                 'inventory.translations.language'
             ])
             ->join('farms', function($join) {
@@ -127,7 +120,7 @@ class ProductController extends Controller
             ->get();
 
         $area = new GrowingArea();
-        $area->setProducts($products);
+        $area->setCollection($products);
         $area->setRequest($request);
 
         return response()->json($area->json());

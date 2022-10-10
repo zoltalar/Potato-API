@@ -188,6 +188,7 @@ Route::group(['prefix' => 'potato'], function() {
     // Categories
     Route::group(['prefix' => 'categories'], function() {
         Route::get('index', [ApiPotatoCategoryController::class, 'index'])->name('api.potato.categories.index');
+        Route::get('inventory', [ApiPotatoCategoryController::class, 'inventory'])->name('api.potato.categories.inventory');
     });
 
     // Cities

@@ -2,41 +2,27 @@
 
 declare(strict_types = 1);
 
-namespace App\Services;
+namespace App\Services\Response;
 
 use App\Models\Language;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 
-final class GrowingArea
+final class GrowingArea extends BaseResponse
 {
-    /** @var Collection */
-    protected $products;
-
-    /** @var Request */
-    protected $request;
-
-    public function setProducts(Collection $products)
-    {
-        $this->products = $products;
-    }
-
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function json(): array
     {
         $json = [];
-        $products = $this->products;
+        $collection = $this->collection;
 
-        foreach ($products as $product) {
+        foreach ($collection as $product) {
             $category = $this->category($product);
             $inventory = $this->inventory($product);
 
             $json[$category][$inventory] = $product->inventory_id;
+        }
+
+        foreach ($json as $category => &$data) {
+            ksort($data);
         }
 
         return $json;
