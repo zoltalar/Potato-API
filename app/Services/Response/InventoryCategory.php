@@ -8,19 +8,25 @@ use App\Models\Category;
 use App\Models\Language;
 use App\Models\Inventory;
 
-final class CategoryInventory extends BaseResponse
+final class InventoryCategory extends BaseResponse
 {
+    /** @var array */
+    protected $map = [];
+
     public function json(): array
     {
         $json = [];
         $collection = $this->collection;
 
-        foreach ($collection as $category) {
-
-            foreach ($category->inventory as $item) {
-                $json[$this->category($category)][$this->inventory($item)] = $item->id;
-            }
+        foreach ($collection as $inventory) {
+            $category = $this->category($inventory);
+            $this->map[$category] = $inventory->category->list_order;
+            $json[$category][$this->inventory($inventory)] = $inventory->id;
         }
+
+        uksort($json, function($a, $b) {
+            return $this->map[$a] > $this->map[$b];
+        });
 
         foreach ($json as $category => &$data) {
             ksort($data);
@@ -29,12 +35,13 @@ final class CategoryInventory extends BaseResponse
         return $json;
     }
 
-    protected function category(Category $category): string
+    protected function category(Inventory $inventory)
     {
-        $name = $category->name;
+        $name = $inventory->name;
         $language = $this->request->header('X-language', Language::CODE_PL);
 
-        $translation = $category
+        $translation = $inventory
+            ->category
             ->translations
             ->filter(function($translation) use ($language) {
                 return $translation->language->code === $language;
@@ -48,12 +55,12 @@ final class CategoryInventory extends BaseResponse
         return $name;
     }
 
-    protected function inventory(Inventory $item): string
+    protected function inventory(Inventory $inventory)
     {
-        $name = $item->name;
+        $name = $inventory->name;
         $language = $this->request->header('X-language', Language::CODE_PL);
 
-        $translation = $item
+        $translation = $inventory
             ->translations
             ->filter(function($translation) use ($language) {
                 return $translation->language->code === $language;

@@ -12,6 +12,7 @@ use App\Models\Farm;
 use App\Models\Inventory;
 use App\Models\Language;
 use App\Models\Product;
+use App\Services\Response\InventoryCategory;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -91,5 +92,45 @@ class InventoryController extends Controller
             ->sortBy('translations.0.name');
 
         return BaseResource::collection($inventory);
+    }
+
+    public function categories(Request $request)
+    {
+        $language = $request->header('X-language', Language::CODE_PL);
+        $country = $request->header('X-country', Country::CODE_PL);
+        $categoryId = $request->category_id;
+
+        $inventory = Inventory::query()
+            ->with([
+                'category',
+                'category.translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                },
+                'category.translations.language',
+                'translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                },
+                'translations.language'
+            ])
+            ->when($country, function($query) use ($country) {
+                return $query->whereHas('countries', function($query) use ($country) {
+                    $query->where('code', $country);
+                });
+            })
+            ->when($categoryId, function($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->orders('name', 'asc')
+            ->get();
+
+        $categories = new InventoryCategory();
+        $categories->setCollection($inventory);
+        $categories->setRequest($request);
+
+        return response()->json($categories->json());
     }
 }

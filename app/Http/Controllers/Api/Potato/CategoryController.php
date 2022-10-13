@@ -48,28 +48,4 @@ class CategoryController extends Controller
 
         return BaseResource::collection($categories);
     }
-
-    public function inventory(Request $request)
-    {
-        $country = $request->header('X-country', Country::CODE_PL);
-
-        $categories = Category::query()
-            ->with([
-                'inventory.translations.language',
-                'translations.language'
-            ])
-            ->when($country, function($query) use ($country) {
-                return $query->whereHas('inventory.countries', function($query) use ($country) {
-                    $query->where('code', $country);
-                });
-            })
-            ->orderBy('list_order')
-            ->get();
-
-        $inventory = new CategoryInventory();
-        $inventory->setCollection($categories);
-        $inventory->setRequest($request);
-
-        return response()->json($inventory->json());
-    }
 }
