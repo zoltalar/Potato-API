@@ -24,15 +24,6 @@ class CountrySeeder extends Seeder
     {
         return [
             [
-                'name' => Country::NAME_UNITED_STATES,
-                'native' => 'United States',
-                'code' => Country::CODE_US,
-                'date_format' => 'MM/DD/YYYY',
-                'time_format' => 'h:mm a',
-                'system' => 1,
-                'active' => 0
-            ],
-            [
                 'name' => Country::NAME_POLAND,
                 'native' => 'Polska',
                 'code' => Country::CODE_PL,

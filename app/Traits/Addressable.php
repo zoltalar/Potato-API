@@ -23,8 +23,6 @@ trait Addressable
 
             if ($country->name == Country::NAME_POLAND) {
                 $elements = ['address', 'zip', 'city', 'country'];
-            } elseif ($country->name == Country::NAME_UNITED_STATES) {
-                $elements = ['address', 'address_2', 'city', 'state', 'zip', 'country'];
             }
         }
 
@@ -50,19 +48,6 @@ trait Addressable
 
                 if (in_array('city', $elements)) {
                     $middle .= ( ! empty($middle) ? ' ' : '') . $this->city;
-                }
-            } elseif ($country->name == Country::NAME_UNITED_STATES) {
-
-                if (in_array('city', $elements)) {
-                    $middle = $this->city;
-                }
-
-                if (in_array('state', $elements) && ! empty($this->state_id)) {
-                    $middle .= ( ! empty($middle) ? ', ' : '') . $this->state->abbreviation;
-                }
-
-                if (in_array('zip', $elements) && ! empty($this->zip)) {
-                    $middle .= ( ! empty($middle) ? ' ' : '') . $this->zip;
                 }
             }
         }

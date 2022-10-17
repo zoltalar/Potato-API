@@ -20,7 +20,6 @@ class CitySeeder extends Seeder
 
     /** @var string[] */
     protected $files = [
-        'usa.csv',
         'poland.csv'
     ];
 
@@ -47,10 +46,6 @@ class CitySeeder extends Seeder
 
                     if ( ! isset($this->cache['states'][$stateName])) {
                         $field = 'name';
-
-                        if ($record['country'] == Country::NAME_UNITED_STATES) {
-                            $field = 'abbreviation';
-                        }
 
                         $state = State::where($field, $stateName)->first();
 

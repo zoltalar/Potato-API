@@ -32,12 +32,6 @@ class CountryUnitSeeder extends Seeder
     protected function matrix(): array
     {
         return [
-            Country::NAME_UNITED_STATES => [
-                Unit::ABBREVIATION_POUND,
-                Unit::ABBREVIATION_MILE,
-                Unit::ABBREVIATION_GALLON,
-                Unit::ABBREVIATION_QUANTITY
-            ],
             Country::NAME_POLAND => [
                 Unit::ABBREVIATION_KILOGRAM,
                 Unit::ABBREVIATION_KILOMETER,

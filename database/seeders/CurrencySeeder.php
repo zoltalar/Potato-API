@@ -20,12 +20,6 @@ class CurrencySeeder extends Seeder
     {
         return [
             [
-                'name' => Currency::NAME_US_DOLLAR,
-                'code' => Currency::CODE_USD,
-                'symbol' => '$',
-                'number' => 840
-            ],
-            [
                 'name' => Currency::NAME_EURO,
                 'code' => Currency::CODE_EUR,
                 'symbol' => '€',
