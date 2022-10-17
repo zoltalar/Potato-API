@@ -62,7 +62,7 @@ class CitySeeder extends Seeder
                             'name' => $record['name'],
                             'latitude' => $record['latitude'],
                             'longitude' => $record['longitude'],
-                            'population' => $record['population'] ?? null,
+                            'population' => (int) $record['population'] ?? null,
                             'state_id' => $this->cache['states'][$stateName]
                         ];
 
