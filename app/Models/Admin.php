@@ -60,7 +60,11 @@ final class Admin extends Base implements
 
     public function setPhoneAttribute($value): void
     {
-        $this->attributes['phone'] = Str::stripNonDigits($value);
+        if ( ! empty($value)) {
+            $value = Str::stripNonDigits($value);
+        }
+
+        $this->attributes['phone'] = $value;
     }
 
     // --------------------------------------------------
