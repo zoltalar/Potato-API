@@ -166,7 +166,7 @@ final class User extends Base implements
         $id = $this->getKey();
         $email = encrypt($this->getEmailForVerification());
 
-        return sprintf('%s/email/verify/%d/%s', $url, $id, $email);
+        return sprintf('%s/email/verify?%s', $url, http_build_query(compact('id', 'email')));
     }
 
     public function potatoAppBaseUrl(): string
