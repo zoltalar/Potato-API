@@ -126,13 +126,13 @@ class CategorySeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Preserves',
+                'name' => 'Processed Food',
                 'type' => Category::TYPE_INVENTORY,
                 'list_order' => 8,
                 'system' => 1,
                 'active' => 1,
                 'translations' => [
-                    Language::NAME_POLISH => 'Przetwory'
+                    Language::NAME_POLISH => 'Żywność Przetworzona'
                 ]
             ],
             [

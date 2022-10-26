@@ -100,6 +100,7 @@ class InventorySeeder extends Seeder
             $this->coffeeAndTeas(),
             $this->honey(),
             $this->grains(),
+            $this->processedFood(),
             $this->meats()
         );
     }
@@ -1530,6 +1531,60 @@ class InventorySeeder extends Seeder
                 ],
                 'translations' => [
                     'Polish' => 'Pszenica'
+                ]
+            ]
+        ];
+    }
+
+    protected function processedFood(): array
+    {
+        return [
+            [
+                'name' => 'Baked Goods',
+                'category' => 'Processed Food',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Wypieki'
+                ]
+            ],
+            [
+                'name' => 'Beer',
+                'category' => 'Processed Food',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Piwo'
+                ]
+            ],
+            [
+                'name' => 'Bread',
+                'category' => 'Processed Food',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Chleb'
+                ]
+            ],
+            [
+                'name' => 'Wine',
+                'category' => 'Processed Food',
+                'system' => 1,
+                'countries' => [
+                    'Poland',
+                    'United States'
+                ],
+                'translations' => [
+                    'Polish' => 'Wino'
                 ]
             ]
         ];
