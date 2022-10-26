@@ -249,6 +249,7 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'inventory'], function() {
         Route::get('index', [ApiPotatoInventoryController::class, 'index'])->name('api.potato.inventory.index');
         Route::get('categories', [ApiPotatoInventoryController::class, 'categories'])->name('api.potato.inventory.categories');
+        Route::get('show/{id}', [ApiPotatoInventoryController::class, 'show'])->name('api.potato.inventory.show');
     });
 
     // Languages

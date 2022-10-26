@@ -23,6 +23,7 @@ class InventoryController extends Controller
         $limit = $request->get('limit', 10);
         $language = $request->header('X-language', Language::CODE_PL);
         $country = $request->header('X-country', Country::CODE_PL);
+        $countryable = $request->countryable;
         $categoryId = $request->category_id;
         $type = $request->type;
         $productableId = $request->productable_id;
@@ -75,7 +76,7 @@ class InventoryController extends Controller
                         });
                 });
             })
-            ->when($country, function($query) use ($country) {
+            ->when($country && $countryable, function($query) use ($country) {
                 return $query->whereHas('countries', function($query) use ($country) {
                     $query->where('code', $country);
                 });
@@ -132,5 +133,28 @@ class InventoryController extends Controller
         $categories->setRequest($request);
 
         return response()->json($categories->json());
+    }
+
+    public function show(Request $request, int $id)
+    {
+        $language = $request->header('X-language', Language::CODE_PL);
+
+        $inventory = Inventory::query()
+            ->with([
+                'category',
+                'category.translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                },
+                'translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                }
+            ])
+            ->find($id);
+
+        return new BaseResource($inventory);
     }
 }
