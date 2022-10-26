@@ -21,7 +21,8 @@ class ProductController extends Controller
     {
         $this->middleware(['auth:user', 'scope:potato'])->except([
             'growingArea',
-            'topGrowingAreas'
+            'topGrowingAreas',
+            'topSellingAreas'
         ]);
     }
 
@@ -155,6 +156,47 @@ class ProductController extends Controller
                 $join->on('countries.id', '=', 'states.country_id');
             })
             ->where('products.productable_type', Product::TYPE_PRODUCTABLE_FARM)
+            ->where('products.inventory_id', $id)
+            ->where('addresses.type', Address::TYPE_LOCATION)
+            ->when($country, function($query) use ($country) {
+                return $query->where('countries.code', $country);
+            })
+            ->groupBy('city', 'city_id', 'state_id')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        return BaseResource::collection($areas);
+    }
+
+    public function topSellingAreas(Request $request, int $id)
+    {
+        $country = $request->header('X-country', Country::CODE_PL);
+
+        $areas = Product::query()
+            ->selectRaw(
+                'COUNT(addresses.id) AS count,
+                addresses.city AS city,
+                addresses.city_id,
+                addresses.state_id AS state_id,
+                states.name AS state_name'
+            )
+            ->join('markets', function($join) {
+                $join
+                    ->on('products.productable_id', '=', 'markets.id')
+                    ->where('products.productable_type', Product::TYPE_PRODUCTABLE_MARKET);
+            })
+            ->leftJoin('addresses', function($join) {
+                $join
+                    ->on('addresses.addressable_id', '=', 'markets.id')
+                    ->where('addresses.addressable_type', Address::TYPE_ADDRESSABLE_MARKET);
+            })
+            ->join('states', function($join) {
+                $join->on('states.id', '=', 'addresses.state_id');
+            })
+            ->join('countries', function($join) {
+                $join->on('countries.id', '=', 'states.country_id');
+            })
+            ->where('products.productable_type', Product::TYPE_PRODUCTABLE_MARKET)
             ->where('products.inventory_id', $id)
             ->where('addresses.type', Address::TYPE_LOCATION)
             ->when($country, function($query) use ($country) {
