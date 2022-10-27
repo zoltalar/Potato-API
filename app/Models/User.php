@@ -150,6 +150,18 @@ final class User extends Base implements
 
     public function passwordResetUrl(string $token): string
     {
+        $locale = $this->preferredLocale();
+        $controller = '';
+        $action = '';
+
+        if ($locale === Language::CODE_PL) {
+            $controller = 'haslo';
+            $action = 'aktualizacja';
+        } elseif ($locale === Language::CODE_EN) {
+            $controller = 'password';
+            $action = 'update';
+        }
+
         $query = [
             'token' => $token,
             'email' => $this->getEmailForPasswordReset()
@@ -157,16 +169,40 @@ final class User extends Base implements
 
         $url = $this->potatoAppBaseUrl();
 
-        return sprintf('%s/password/update?%s', $url, http_build_query($query));
+        return sprintf(
+            '%s/%s/%s/%s?%s',
+            $url,
+            $locale,
+            $controller,
+            $action,
+            http_build_query($query)
+        );
     }
 
     public function verificationUrl(): string
     {
+        $locale = $this->preferredLocale();
+        $controller = 'email';
+        $action = '';
+
+        if ($locale === Language::CODE_PL) {
+            $action = 'weryfikuj';
+        } elseif ($locale === Language::CODE_EN) {
+            $action = 'verify';
+        }
+
         $url = $this->potatoAppBaseUrl();
         $id = $this->getKey();
         $email = encrypt($this->getEmailForVerification());
 
-        return sprintf('%s/pl/email/weryfikuj?%s', $url, http_build_query(compact('id', 'email')));
+        return sprintf(
+            '%s/%s/%s/%s?%s',
+            $url,
+            $locale,
+            $controller,
+            $action,
+            http_build_query(compact('id', 'email'))
+        );
     }
 
     public function potatoAppBaseUrl(): string
