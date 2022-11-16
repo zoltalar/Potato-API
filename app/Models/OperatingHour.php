@@ -32,6 +32,8 @@ class OperatingHour extends Base
     ];
 
     protected $casts = [
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
         'monday' => 'array',
         'tuesday' => 'array',
         'wednesday' => 'array',

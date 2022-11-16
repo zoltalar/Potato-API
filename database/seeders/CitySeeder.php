@@ -19,9 +19,7 @@ class CitySeeder extends Seeder
     protected $cache = [];
 
     /** @var string[] */
-    protected $files = [
-        'poland.csv'
-    ];
+    protected $files = ['poland.csv'];
 
     /** @var string */
     protected $path = 'database/seeders/csv/cities/';
