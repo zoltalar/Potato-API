@@ -8,6 +8,8 @@ return [
     'email_new_message_line_1' => 'You have a new message from :name.',
     'email_reset_password_line_1' => 'You are receiving this email because we received a password reset request for your account.',
     'email_reset_password_line_2' => 'If you did not request a password reset, no further action is required.',
+    'email_verification_code_line_1' => 'Your verification code is:',
+    'email_verification_code_line_2' => 'Please enter this code in our website to activate your account.',
     'email_verify_line_1' => 'Please click the button below to verify your email address.',
     'email_verify_line_2' => 'If you did not create an account, no further action is required.',
     'farm_deactivated_error' => 'This farm is already deactivated.',

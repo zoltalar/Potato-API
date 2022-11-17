@@ -6,7 +6,7 @@ namespace App\Models;
 
 use App\Contracts\Namable as NamableContract;
 use App\Notifications\ResetPassword;
-use App\Notifications\VerifyEmail;
+use App\Notifications\VerificationCode as VerificationCodeNotification;
 use App\Traits\Namable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
@@ -140,7 +140,9 @@ final class User extends Base implements
 
     public function sendEmailVerificationNotification(): void
     {
-        $this->notify(new VerifyEmail());
+        $code = VerificationCode::createFor($this->getEmailForVerification());
+
+        $this->notify(new VerificationCodeNotification($code));
     }
 
     public function sendPasswordResetNotification($token)

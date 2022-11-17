@@ -14,6 +14,7 @@ use App\Models\Market;
 use App\Models\Message;
 use App\Models\OperatingHour;
 use App\Models\Review;
+use App\Models\VerificationCode;
 use App\Observers\AddressObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\CityObserver;
@@ -22,6 +23,7 @@ use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
 use App\Observers\MarketObserver;
 use App\Observers\MessageObserver;
+use App\Observers\VerificationCodeObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -61,5 +63,6 @@ class AppServiceProvider extends ServiceProvider
         Inventory::observe(InventoryObserver::class);
         Market::observe(MarketObserver::class);
         Message::observe(MessageObserver::class);
+        VerificationCode::observe(VerificationCodeObserver::class);
     }
 }
