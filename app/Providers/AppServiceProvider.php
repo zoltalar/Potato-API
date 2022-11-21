@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Base;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Event;
 use App\Models\Farm;
 use App\Models\Image;
 use App\Models\Inventory;
@@ -46,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         // Morph Maps
         Relation::enforceMorphMap([
             'category' => Category::class,
+            'event' => Event::class,
             'farm' => Farm::class,
             'image' => Image::class,
             'inventory' => Inventory::class,

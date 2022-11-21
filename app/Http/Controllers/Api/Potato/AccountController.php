@@ -9,12 +9,33 @@ use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\FarmResource;
 use App\Http\Resources\Potato\FavoriteResource;
 use App\Http\Resources\Potato\MarketResource;
+use App\Models\Event;
 
 class AccountController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth:user', 'scope:potato']);
+    }
+
+    public function events()
+    {
+        $events = Event::query()
+            ->with([
+                'eventable' => function($query) {
+                    $query->select([
+                        'id',
+                        'name'
+                    ]);
+                }
+            ])
+            ->whereHas('eventable', function($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return BaseResource::collection($events);
     }
 
     public function farms()

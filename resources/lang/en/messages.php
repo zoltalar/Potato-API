@@ -12,6 +12,7 @@ return [
     'email_verification_code_line_2' => 'Please enter this code in our website to activate your account.',
     'email_verify_line_1' => 'Please click the button below to verify your email address.',
     'email_verify_line_2' => 'If you did not create an account, no further action is required.',
+    'event_eventable_error' => 'Selected :attribute is invalid',
     'farm_deactivated_error' => 'This farm is already deactivated.',
     'hi_name' => 'Hi :name',
     'market_deactivated_error' => "This farmer's market is already deactivated.",

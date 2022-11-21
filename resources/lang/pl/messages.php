@@ -12,6 +12,7 @@ return [
     'email_verification_code_line_2' => 'Wprowadź ten kod na naszej stronie internetowej, aby aktywować swoje konto.',
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta, nie musisz nic więcej robić.',
+    'event_eventable_error' => 'Wybrane pole :attribute jest nieprawidłowe.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',
     'hi_name' => 'Cześć :name',
     'market_deactivated_error' => 'Ten agromarket jest już dezaktywowany.',

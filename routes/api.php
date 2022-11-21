@@ -30,6 +30,7 @@ use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
 use App\Http\Controllers\Api\Potato\ContactController as ApiPotatoContactController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\CurrencyController as ApiPotatoCurrencyController;
+use App\Http\Controllers\Api\Potato\EventController as ApiPotatoEventController;
 use App\Http\Controllers\Api\Potato\FarmController as ApiPotatoFarmController;
 use App\Http\Controllers\Api\Potato\FavoriteController as ApiPotatoFavoriteController;
 use App\Http\Controllers\Api\Potato\ImageController as ApiPotatoImageController;
@@ -165,6 +166,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Account
     Route::group(['prefix' => 'account'], function() {
+        Route::get('events', [ApiPotatoAccountController::class, 'events'])->name('api.potato.account.events');
         Route::get('farms', [ApiPotatoAccountController::class, 'farms'])->name('api.potato.account.farms');
         Route::get('favorites', [ApiPotatoAccountController::class, 'favorites'])->name('api.potato.account.favorites');
         Route::get('markets', [ApiPotatoAccountController::class, 'markets'])->name('api.potato.account.markets');
@@ -214,6 +216,12 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'email'], function() {
         Route::match(['PUT', 'PATCH'], 'verify/{code}', [ApiPotatoVerificationController::class, 'verify'])->name('verification.verify');
         Route::post('resend', [ApiPotatoVerificationController::class, 'resend'])->name('verification.resend');
+    });
+
+    // Events
+    Route::group(['prefix' => 'events'], function() {
+        Route::post('store', [ApiPotatoEventController::class, 'store'])->name('api.potato.events.store');
+        Route::get('meta', [ApiPotatoEventController::class, 'meta'])->name('api.potato.events.meta');
     });
 
     // Farms

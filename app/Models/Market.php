@@ -174,6 +174,11 @@ final class Market extends Base implements
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function events(): MorphMany
+    {
+        return $this->morphMany(Event::class, 'eventable');
+    }
+
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoriteable');
