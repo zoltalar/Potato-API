@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Event;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
@@ -43,6 +44,24 @@ class EventController extends Controller
 
             $eventable->events()->save($event);
         }
+
+        return new BaseResource($event);
+    }
+
+    public function show(int $id)
+    {
+        $event = Event::query()
+            ->with([
+                'addresses',
+                'addresses.state.country',
+                'images' => function($query) {
+                    $query
+                        ->orderBy('primary', 'desc')
+                        ->orderBy('cover', 'desc')
+                        ->orderBy('id', 'asc');
+                },
+            ])
+            ->findOrFail($id);
 
         return new BaseResource($event);
     }

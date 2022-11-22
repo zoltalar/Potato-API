@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 final class Event extends Base
@@ -52,14 +53,19 @@ final class Event extends Base
     // Relationships
     // --------------------------------------------------
 
-    public function addresses(): HasMany
+    public function addresses(): MorphMany
     {
-        return $this->hasMany(Address::class);
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     public function eventable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     // --------------------------------------------------
