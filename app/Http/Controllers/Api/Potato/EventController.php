@@ -5,16 +5,21 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Event;
-use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->only(['store']);
+        $this
+            ->middleware(['auth:user', 'scope:potato'])
+            ->only([
+                'store',
+                'updateGeneralInformation'
+            ]);
     }
 
     public function store(EventStoreRequest $request)
@@ -62,6 +67,22 @@ class EventController extends Controller
                 },
             ])
             ->findOrFail($id);
+
+        return new BaseResource($event);
+    }
+
+    public function updateGeneralInformation(EventGeneralInformationUpdateRequest $request, int $id)
+    {
+        $event = Event::query()
+            ->whereHas('eventable', function($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->find($id);
+
+        if ($event !== null) {
+            $event->fill($request->only($event->getFillable()));
+            $event->update();
+        }
 
         return new BaseResource($event);
     }
