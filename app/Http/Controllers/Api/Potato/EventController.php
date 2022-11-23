@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Potato\EventDescriptionUpdateRequest;
 use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\BaseResource;
@@ -18,7 +19,8 @@ class EventController extends Controller
             ->middleware(['auth:user', 'scope:potato'])
             ->only([
                 'store',
-                'updateGeneralInformation'
+                'updateGeneralInformation',
+                'updateDescription'
             ]);
     }
 
@@ -65,6 +67,13 @@ class EventController extends Controller
                         ->orderBy('cover', 'desc')
                         ->orderBy('id', 'asc');
                 },
+                'eventable' => function($query) {
+                    $query->select([
+                        'id',
+                        'name',
+                        'user_id'
+                    ]);
+                }
             ])
             ->findOrFail($id);
 
@@ -82,6 +91,21 @@ class EventController extends Controller
         if ($event !== null) {
             $event->fill($request->only($event->getFillable()));
             $event->update();
+        }
+
+        return new BaseResource($event);
+    }
+
+    public function updateDescription(EventDescriptionUpdateRequest $request, int $id)
+    {
+        $event = Event::query()
+            ->whereHas('eventable', function($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->find($id);
+
+        if ($event !== null) {
+            $event->update(['description' => $request->description]);
         }
 
         return new BaseResource($event);
