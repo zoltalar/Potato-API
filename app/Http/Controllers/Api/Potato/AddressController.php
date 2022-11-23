@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\AddressRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\Country;
+use App\Models\Event;
 use App\Models\Farm;
 use App\Models\Market;
 use App\Models\Unit;
@@ -18,7 +19,9 @@ class AddressController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato'])->except(['plot', 'meta']);
+        $this
+            ->middleware(['auth:user', 'scope:potato'])
+            ->except(['plot', 'meta']);
     }
 
     public function save(AddressRequest $request, string $type, int $id)
@@ -26,7 +29,14 @@ class AddressController extends Controller
         $address = null;
         $addressable = null;
 
-        if ($type === Address::TYPE_ADDRESSABLE_FARM) {
+        if ($type === Address::TYPE_ADDRESSABLE_EVENT) {
+            $addressable = Event::query()
+                ->with(['addresses'])
+                ->whereHas('eventable', function($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->find($id);
+        } elseif ($type === Address::TYPE_ADDRESSABLE_FARM) {
             $addressable = Farm::query()
                 ->with(['addresses'])
                 ->where('user_id', auth()->id())
@@ -95,6 +105,39 @@ class AddressController extends Controller
         });
 
         return BaseResource::collection($addresses);
+    }
+
+    public function destroy(int $id, string $type, int $addressableId)
+    {
+        $status = 403;
+        $addressable = null;
+
+        if ($type === Address::TYPE_ADDRESSABLE_EVENT) {
+            $addressable = Event::query()
+                ->with(['addresses'])
+                ->find($addressableId);
+        }
+
+        if ($addressable !== null) {
+
+            if ($addressable->addresses->contains('id', $id)) {
+                $address = $addressable
+                    ->addresses
+                    ->filter(function($address) use ($id) {
+                        return $address->getKey() === $id;
+                    })
+                    ->first();
+
+                if ($address !== null) {
+
+                    if ($address->delete()) {
+                        $status = 204;
+                    }
+                }
+            }
+        }
+
+        return response()->json(null, $status);
     }
 
     public function meta(Request $request)

@@ -22,6 +22,7 @@ class AccountController extends Controller
     {
         $events = Event::query()
             ->with([
+                'addresses.state.country',
                 'eventable' => function($query) {
                     $query->select([
                         'id',

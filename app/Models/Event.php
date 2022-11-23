@@ -69,6 +69,19 @@ final class Event extends Base
     }
 
     // --------------------------------------------------
+    // Accessors and Mutators
+    // --------------------------------------------------
+
+    public function setDescriptionAttribute($value): void
+    {
+        if ( ! empty($value)) {
+            $value = strip_tags($value);
+        }
+
+        $this->attributes['description'] = $value;
+    }
+
+    // --------------------------------------------------
     // Other
     // --------------------------------------------------
 

@@ -90,6 +90,7 @@ class EventController extends Controller
 
         if ($event !== null) {
             $event->fill($request->only($event->getFillable()));
+            $event->status = Event::STATUS_AWAITING_APPROVAL;
             $event->update();
         }
 

@@ -24,6 +24,7 @@ final class Address extends Base implements
     const TYPE_LOCATION = 1;
     const TYPE_MAILING = 2;
 
+    const TYPE_ADDRESSABLE_EVENT = 'event';
     const TYPE_ADDRESSABLE_FARM = 'farm';
     const TYPE_ADDRESSABLE_MARKET = 'market';
 
@@ -98,6 +99,7 @@ final class Address extends Base implements
     public static function addressableTypes(): array
     {
         return [
+            self::TYPE_ADDRESSABLE_EVENT,
             self::TYPE_ADDRESSABLE_FARM,
             self::TYPE_ADDRESSABLE_MARKET
         ];
