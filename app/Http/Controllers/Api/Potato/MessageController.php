@@ -9,6 +9,7 @@ use App\Http\Requests\Potato\MessageReplyRequest;
 use App\Http\Requests\Potato\MessageStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Jobs\SendMessageJob;
+use App\Models\Event;
 use App\Models\Farm;
 use App\Models\Market;
 use App\Models\Message;
@@ -26,7 +27,11 @@ class MessageController extends Controller
     {
         $message = $messageable = null;
 
-        if ($type === Message::TYPE_MESSAGEABLE_FARM) {
+        if ($type === Message::TYPE_MESSAGEABLE_EVENT) {
+            $messageable = Event::query()
+                ->with(['eventable.user'])
+                ->find($id);
+        } elseif ($type === Message::TYPE_MESSAGEABLE_FARM) {
             $messageable = Farm::query()
                 ->with(['user'])
                 ->find($id);
@@ -37,12 +42,14 @@ class MessageController extends Controller
         }
 
         if ($messageable !== null) {
+            $recipient = $messageable->recipient();
+
             $message = new Message();
             $message->fill($request->only($message->getFillable()));
-            $message->recipient_id = $messageable->user_id;
+            $message->recipient_id = $recipient->id ?? null;
 
             if ($message->save()) {
-                $this->dispatch(new SendMessageJob(auth()->user(), $messageable->user));
+                $this->dispatch(new SendMessageJob(auth()->user(), $recipient));
             }
         }
 

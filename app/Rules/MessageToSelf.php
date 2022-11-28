@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Rules;
 
+use App\Models\Event;
 use App\Models\Farm;
 use App\Models\Market;
 use App\Models\Message;
@@ -29,13 +30,27 @@ class MessageToSelf implements Rule
         $id = $this->id;
         $messageable = null;
 
-        if ($type === Message::TYPE_MESSAGEABLE_FARM) {
-            $messageable = Farm::find($id);
+        if ($type === Message::TYPE_MESSAGEABLE_EVENT) {
+            $messageable = Event::query()
+                ->with(['eventable.user'])
+                ->find($id);
+        } elseif ($type === Message::TYPE_MESSAGEABLE_FARM) {
+            $messageable = Farm::query()
+                ->with(['user'])
+                ->find($id);
         } elseif ($type === Message::TYPE_MESSAGEABLE_MARKET) {
-            $messageable = Market::find($id);
+            $messageable = Market::query()
+                ->with(['user'])
+                ->find($id);
         }
 
-        return ($messageable !== null && $messageable->user_id != auth()->id());
+        if ($messageable !== null) {
+            $recipient = $messageable->recipient();
+
+            return ($recipient !== null && $recipient->id != auth()->id());
+        }
+
+        return true;
     }
 
     public function message(): string

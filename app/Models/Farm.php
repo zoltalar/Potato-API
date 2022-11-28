@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Contracts\Messageable as MessageableContract;
 use App\Contracts\Namable as NamableContract;
 use App\Traits\Namable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -16,7 +17,8 @@ use Str;
 
 final class Farm extends Base implements
     NamableContract,
-    HasLocalePreference
+    HasLocalePreference,
+    MessageableContract
 {
     use Namable,
         Notifiable;
@@ -230,6 +232,11 @@ final class Farm extends Base implements
         }
 
         return $code;
+    }
+
+    public function recipient(): ?User
+    {
+        return $this->user ?? null;
     }
 
     public function averageRating(): float

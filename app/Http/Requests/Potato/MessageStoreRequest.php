@@ -25,8 +25,8 @@ class MessageStoreRequest extends BaseRequest
         $id = $this->route('id');
 
         return [
-            'subject' => ['nullable', "max:{$length}", new MessageToSelf($type, $id)],
-            'content' => ['required', 'max:1000']
+            'subject' => ['nullable', "max:{$length}"],
+            'content' => ['required', 'max:1000', new MessageToSelf($type, $id)]
         ];
     }
 

@@ -16,7 +16,6 @@ class CreateEventsTable extends Migration
 
             $table->id();
             $table->string('title', $length);
-            $table->tinyInteger('type')->unsigned()->nullable();
             $table->string('website', $length)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('email', $length)->nullable();

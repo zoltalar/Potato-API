@@ -9,6 +9,7 @@ use Str;
 
 final class Message extends Base
 {
+    const TYPE_MESSAGEABLE_EVENT = 'event';
     const TYPE_MESSAGEABLE_FARM = 'farm';
     const TYPE_MESSAGEABLE_MARKET = 'market';
 

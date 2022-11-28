@@ -19,6 +19,7 @@ use App\Models\VerificationCode;
 use App\Observers\AddressObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\CityObserver;
+use App\Observers\EventObserver;
 use App\Observers\FarmObserver;
 use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
@@ -60,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         Address::observe(AddressObserver::class);
         Category::observe(CategoryObserver::class);
         City::observe(CityObserver::class);
+        Event::observe(EventObserver::class);
         Farm::observe(FarmObserver::class);
         Image::observe(ImageObserver::class);
         Inventory::observe(InventoryObserver::class);

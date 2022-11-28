@@ -8,8 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\EventDescriptionUpdateRequest;
 use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
-use App\Http\Resources\BaseResource;
+use App\Http\Resources\Potato\EventResource;
 use App\Models\Event;
+use Exception;
 
 class EventController extends Controller
 {
@@ -20,7 +21,8 @@ class EventController extends Controller
             ->only([
                 'store',
                 'updateGeneralInformation',
-                'updateDescription'
+                'updateDescription',
+                'destroy'
             ]);
     }
 
@@ -52,7 +54,7 @@ class EventController extends Controller
             $eventable->events()->save($event);
         }
 
-        return new BaseResource($event);
+        return new EventResource($event);
     }
 
     public function show(int $id)
@@ -61,12 +63,6 @@ class EventController extends Controller
             ->with([
                 'addresses',
                 'addresses.state.country',
-                'images' => function($query) {
-                    $query
-                        ->orderBy('primary', 'desc')
-                        ->orderBy('cover', 'desc')
-                        ->orderBy('id', 'asc');
-                },
                 'eventable' => function($query) {
                     $query->select([
                         'id',
@@ -77,7 +73,7 @@ class EventController extends Controller
             ])
             ->findOrFail($id);
 
-        return new BaseResource($event);
+        return new EventResource($event);
     }
 
     public function updateGeneralInformation(EventGeneralInformationUpdateRequest $request, int $id)
@@ -94,7 +90,7 @@ class EventController extends Controller
             $event->update();
         }
 
-        return new BaseResource($event);
+        return new EventResource($event);
     }
 
     public function updateDescription(EventDescriptionUpdateRequest $request, int $id)
@@ -109,7 +105,29 @@ class EventController extends Controller
             $event->update(['description' => $request->description]);
         }
 
-        return new BaseResource($event);
+        return new EventResource($event);
+    }
+
+    public function destroy(int $id)
+    {
+        $status = 403;
+
+        $event = Event::query()
+            ->whereHas('eventable', function($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->find($id);
+
+        if ($event !== null) {
+
+            try {
+                if ($event->delete()) {
+                    $status = 204;
+                }
+            } catch (Exception $e) {}
+        }
+
+        return response()->json(null, $status);
     }
 
     public function meta()

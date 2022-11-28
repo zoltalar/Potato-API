@@ -93,7 +93,7 @@ class AddressController extends Controller
                     }
                 ])
                 ->where('type', Address::TYPE_LOCATION)
-                ->whereHas('addressable', function($query) {
+                ->whereHasMorph('addressable', [ Farm::class, Market::class ], function($query) {
                     $query
                         ->publishAddress()
                         ->active();

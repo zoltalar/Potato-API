@@ -4,12 +4,13 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Contracts\Messageable as MessageableContract;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Str;
 
-final class Event extends Base
+final class Event extends Base implements MessageableContract
 {
     const TYPE_EVENTABLE_FARM = 'farm';
     const TYPE_EVENTABLE_MARKET = 'market';
@@ -21,7 +22,6 @@ final class Event extends Base
 
     protected $fillable = [
         'title',
-        'type',
         'website',
         'phone',
         'email',
@@ -63,11 +63,6 @@ final class Event extends Base
         return $this->morphTo();
     }
 
-    public function images(): MorphMany
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
     // --------------------------------------------------
     // Accessors and Mutators
     // --------------------------------------------------
@@ -81,9 +76,23 @@ final class Event extends Base
         $this->attributes['description'] = $value;
     }
 
+    public function setPhoneAttribute($value): void
+    {
+        if ( ! empty($value)) {
+            $value = Str::stripNonDigits($value);
+        }
+
+        $this->attributes['phone'] = $value;
+    }
+
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public function recipient(): ?User
+    {
+        return $this->eventable->user ?? null;
+    }
 
     public static function eventableTypes(): array
     {
