@@ -17,7 +17,7 @@ class EventResource extends JsonResource
             'website' => $this->website,
             'phone' => $this->phone,
             'email' => $this->when(
-                auth()->check() && auth()->id() === $this->user_id,
+                auth()->check() && auth()->id() === $this->eventable->user_id,
                 function() {
                     return $this->email;
                 }
@@ -27,6 +27,7 @@ class EventResource extends JsonResource
             'end_date' => $this->end_date,
             'end_time' => $this->end_time,
             'description' => $this->description,
+            'status' => $this->status,
             'addresses' => $this->when(
                 $this->relationLoaded('addresses'),
                 function() {
@@ -40,7 +41,9 @@ class EventResource extends JsonResource
                     $eventable = $this->eventable;
                     return new BaseResource($eventable);
                 }
-            )
+            ),
+            'eventable_type' => $this->eventable_type,
+            'eventable_id' => $this->eventable_id
         ];
     }
 }

@@ -86,6 +86,9 @@ class FarmController extends Controller
             ->with([
                 'addresses',
                 'addresses.state.country',
+                'events' => function($query) {
+                    $query->approved();
+                },
                 'images' => function($query) {
                     $query
                         ->orderBy('primary', 'desc')

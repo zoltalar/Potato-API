@@ -63,6 +63,12 @@ class FarmResource extends JsonResource
                     return BaseResource::collection($addresses);
                 }
             ),
+            'events' => $this->when(
+                $this->relationLoaded('events'),
+                function() {
+                    return EventResource::collection($this->events);
+                }
+            ),
             'favorites' => $this->when(
                 $this->relationLoaded('favorites'),
                 function() {

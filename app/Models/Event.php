@@ -44,9 +44,9 @@ final class Event extends Base implements MessageableContract
     // Scopes
     // --------------------------------------------------
 
-    public function scopeDraft(Builder $query): Builder
+    public function scopeApproved(Builder $query): Builder
     {
-        return $query->where('status', self::STATUS_DRAFT);
+        return $query->where('status', self::STATUS_APPROVED);
     }
 
     // --------------------------------------------------
