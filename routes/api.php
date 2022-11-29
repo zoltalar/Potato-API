@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
 use App\Http\Controllers\Api\Admin\ImageController as ApiAdminImageController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
 use App\Http\Controllers\Api\Admin\LanguageController as ApiAdminLanguageController;
+use App\Http\Controllers\Api\Admin\MarketController as ApiAdminMarketController;
 use App\Http\Controllers\Api\Admin\MessageController as ApiAdminMessageController;
 use App\Http\Controllers\Api\Admin\ReviewController as ApiAdminReviewController;
 use App\Http\Controllers\Api\Admin\TranslationController as ApiAdminTranslationController;
@@ -128,6 +129,12 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::post('store', [ApiAdminLanguageController::class, 'store'])->name('api.admin.languages.store');
         Route::match(['PUT', 'PATCH'], 'update/{language}', [ApiAdminLanguageController::class, 'update'])->name('api.admin.languages.update');
         Route::delete('{language}', [ApiAdminLanguageController::class, 'destroy'])->name('api.admin.languages.destroy');
+    });
+
+    // Markets
+    Route::group(['prefix' => 'markets'], function() {
+        Route::get('index', [ApiAdminMarketController::class, 'index'])->name('api.admin.markets.index');
+        Route::match(['PUT', 'PATCH'], 'activate/{farm}', [ApiAdminMarketController::class, 'activate'])->name('api.admin.markets.activate');
     });
 
     // Messages
