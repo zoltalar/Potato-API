@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthentic
 use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryController;
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
+use App\Http\Controllers\Api\Admin\EventController as ApiAdminEventController;
 use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
 use App\Http\Controllers\Api\Admin\ImageController as ApiAdminImageController;
 use App\Http\Controllers\Api\Admin\InventoryController as ApiAdminInventoryController;
@@ -100,6 +101,12 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Countries
     Route::group(['prefix' => 'countries'], function() {
         Route::get('index', [ApiAdminCountryController::class, 'index'])->name('api.admin.countries.index');
+    });
+
+    // Events
+    Route::group(['prefix' => 'events'], function() {
+        Route::get('index', [ApiAdminEventController::class, 'index'])->name('api.admin.events.index');
+        Route::get('meta', [ApiAdminEventController::class, 'meta'])->name('api.admin.events.meta');
     });
 
     // Farms
