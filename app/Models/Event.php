@@ -49,6 +49,17 @@ final class Event extends Base implements MessageableContract
         return $query->where('status', self::STATUS_APPROVED);
     }
 
+    public function scopeFuture(Builder $query): Builder
+    {
+        $today = date('Y-m-d');
+
+        return $query->where(function($query) use ($today) {
+            $query
+                ->whereDate('start_date', '>=', $today)
+                ->orWhereDate('end_date', '>=', $today);
+        });
+    }
+
     // --------------------------------------------------
     // Relationships
     // --------------------------------------------------

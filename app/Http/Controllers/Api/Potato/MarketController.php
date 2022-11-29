@@ -86,6 +86,13 @@ class MarketController extends Controller
             ->with([
                 'addresses',
                 'addresses.state.country',
+                'events' => function($query) {
+                    $query
+                        ->future()
+                        ->approved()
+                        ->orderBy('start_date')
+                        ->orderBy('end_date');
+                },
                 'images' => function($query) {
                     $query
                         ->orderBy('primary', 'desc')

@@ -87,7 +87,11 @@ class FarmController extends Controller
                 'addresses',
                 'addresses.state.country',
                 'events' => function($query) {
-                    $query->approved();
+                    $query
+                        ->future()
+                        ->approved()
+                        ->orderBy('start_date')
+                        ->orderBy('end_date');
                 },
                 'images' => function($query) {
                     $query
