@@ -7,7 +7,7 @@ namespace App\Http\Requests\Admin;
 use App\Http\Requests\BaseRequest;
 use App\Models\Base;
 
-class FarmUpdateRequest extends BaseRequest
+class MarketUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
     {

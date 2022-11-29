@@ -134,7 +134,8 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Markets
     Route::group(['prefix' => 'markets'], function() {
         Route::get('index', [ApiAdminMarketController::class, 'index'])->name('api.admin.markets.index');
-        Route::match(['PUT', 'PATCH'], 'activate/{farm}', [ApiAdminMarketController::class, 'activate'])->name('api.admin.markets.activate');
+        Route::match(['PUT', 'PATCH'], 'update/{market}', [ApiAdminMarketController::class, 'update'])->name('api.admin.markets.update');
+        Route::match(['PUT', 'PATCH'], 'activate/{market}', [ApiAdminMarketController::class, 'activate'])->name('api.admin.markets.activate');
     });
 
     // Messages

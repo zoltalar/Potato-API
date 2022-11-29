@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FarmUpdateRequest;
+use App\Http\Requests\Admin\MarketUpdateRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Farm;
 use App\Models\Market;
@@ -57,6 +58,14 @@ class MarketController extends Controller
         $markets = $query->paginate($limit);
 
         return BaseResource::collection($markets);
+    }
+
+    public function update(MarketUpdateRequest $request, Market $market)
+    {
+        $market->fill($request->only($market->getFillable()));
+        $market->update();
+
+        return new BaseResource($market);
     }
 
     public function activate(Market $market)
