@@ -20,8 +20,8 @@ class CreateEventsTable extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('email', $length)->nullable();
             $table->date('start_date')->nullable();
-            $table->time('start_time')->nullable();
             $table->date('end_date')->nullable();
+            $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('status')->unsigned()->nullable();

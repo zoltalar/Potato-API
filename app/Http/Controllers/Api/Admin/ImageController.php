@@ -23,6 +23,14 @@ class ImageController extends Controller
         $limit = $request->get('limit', 9);
 
         $query = Image::query()
+            ->with([
+                'imageable' => function($query) {
+                    $query->select([
+                        'id',
+                        'name'
+                    ]);
+                }
+            ])
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
                     $query->search(['title'], $search);

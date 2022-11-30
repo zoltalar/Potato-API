@@ -26,8 +26,8 @@ final class Event extends Base implements MessageableContract
         'phone',
         'email',
         'start_date',
-        'start_time',
         'end_date',
+        'start_time',
         'end_time',
         'description',
         'status'
