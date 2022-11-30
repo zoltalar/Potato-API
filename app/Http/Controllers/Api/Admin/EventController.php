@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CityStoreRequest;
 use App\Http\Requests\Admin\CityUpdateRequest;
+use App\Http\Requests\Admin\EventUpdateRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\City;
 use App\Models\Event;
@@ -61,6 +62,14 @@ class EventController extends Controller
         $events = $query->paginate($limit);
 
         return BaseResource::collection($events);
+    }
+
+    public function update(EventUpdateRequest $request, Event $event)
+    {
+        $event->fill($request->only($event->getFillable()));
+        $event->update();
+
+        return new BaseResource($event);
     }
 
     public function meta()

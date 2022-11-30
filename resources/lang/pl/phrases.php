@@ -74,6 +74,7 @@ return [
     'start_month' => 'Miesiąc Początkowy',
     'start_time' => 'Czas Rozpoczęcia',
     'state' => 'Stan',
+    'status' => 'Status',
     'subject' => 'Temat',
     'thanks' => 'Dzięki',
     'this_field_is_required' => 'To pole jest wymagane.',

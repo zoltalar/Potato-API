@@ -106,6 +106,7 @@ Route::group(['prefix' => '7pyn5wd'], function() {
     // Events
     Route::group(['prefix' => 'events'], function() {
         Route::get('index', [ApiAdminEventController::class, 'index'])->name('api.admin.events.index');
+        Route::match(['PUT', 'PATCH'], 'update/{event}', [ApiAdminEventController::class, 'update'])->name('api.admin.events.update');
         Route::get('meta', [ApiAdminEventController::class, 'meta'])->name('api.admin.events.meta');
     });
 

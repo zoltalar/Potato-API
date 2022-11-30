@@ -74,6 +74,7 @@ return [
     'start_month' => 'Start Month',
     'start_time' => 'Start Time',
     'state' => 'State',
+    'status' => 'Status',
     'subject' => 'Subject',
     'thanks' => 'Thanks',
     'this_field_is_required' => 'This field is required',
