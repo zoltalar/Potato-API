@@ -9,8 +9,12 @@ use App\Http\Requests\Potato\EventDescriptionUpdateRequest;
 use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\Potato\EventResource;
+use App\Models\Address;
+use App\Models\Country;
 use App\Models\Event;
+use App\Models\Unit;
 use Exception;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
@@ -74,6 +78,40 @@ class EventController extends Controller
             ->findOrFail($id);
 
         return new EventResource($event);
+    }
+
+    public function locate(Request $request, float $latitude, float $longitude)
+    {
+        $code = $request->header('X-country', Country::CODE_PL);
+        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $limit = $request->get('limit', 10);
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
+        $events = Event::query()
+            ->with([
+                'addresses' => function($query) use ($latitude, $longitude, $abbreviation) {
+                    $query->select();
+                    $query->haversine($latitude, $longitude, $abbreviation);
+                    $query->where('type', Address::TYPE_LOCATION);
+                },
+                'addresses.state'
+            ])
+            ->future()
+            ->approved()
+            ->whereHas('addresses', function($query) use ($latitude, $longitude, $abbreviation) {
+                $query
+                    ->haversine($latitude, $longitude, $abbreviation)
+                    ->where('type', Address::TYPE_LOCATION)
+                    ->havingRaw('distance < ?', [Address::radius($abbreviation)]);
+            })
+            ->orderBy('start_date', 'asc')
+            ->take($limit)
+            ->get();
+
+        return EventResource::collection($events);
     }
 
     public function updateGeneralInformation(EventGeneralInformationUpdateRequest $request, int $id)

@@ -239,6 +239,7 @@ Route::group(['prefix' => 'potato'], function() {
     Route::group(['prefix' => 'events'], function() {
         Route::post('store', [ApiPotatoEventController::class, 'store'])->name('api.potato.events.store');
         Route::get('show/{id}', [ApiPotatoEventController::class, 'show'])->name('api.potato.events.show');
+        Route::get('locate/{latitude}/{longitude}', [ApiPotatoEventController::class, 'locate'])->name('api.potato.events.locate');
         Route::match(['PUT', 'PATCH'], 'update-general-information/{id}', [ApiPotatoEventController::class, 'updateGeneralInformation'])->name('api.potato.events.update-general-information');
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoEventController::class, 'updateDescription'])->name('api.potato.events.update-description');
         Route::delete('{id}', [ApiPotatoEventController::class, 'destroy'])->name('api.potato.events.destroy');

@@ -115,6 +115,9 @@ class AddressController extends Controller
         if ($type === Address::TYPE_ADDRESSABLE_EVENT) {
             $addressable = Event::query()
                 ->with(['addresses'])
+                ->whereHas('eventable', function($query) {
+                    $query->where('user_id', auth()->id());
+                })
                 ->find($addressableId);
         }
 
