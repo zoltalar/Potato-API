@@ -270,17 +270,18 @@ class FarmController extends Controller
                 ])
                 ->active()
                 ->where(function($query) use ($city, $abbreviation, $radius, $location) {
-                    $query->whereHas('addresses', function($query) use ($city, $abbreviation, $radius) {
-                        $query
-                            ->haversine($city->latitude, $city->longitude, $abbreviation)
-                            ->where('type', Address::TYPE_LOCATION)
-                            ->havingRaw('distance < ?', [$radius]);
-                    })
-                    ->orWhereHas('addresses', function($query) use ($location) {
-                        $query
-                            ->search(['city'], $location)
-                            ->where('type', Address::TYPE_LOCATION);
-                    });
+                    $query
+                        ->whereHas('addresses', function($query) use ($city, $abbreviation, $radius) {
+                            $query
+                                ->haversine($city->latitude, $city->longitude, $abbreviation)
+                                ->where('type', Address::TYPE_LOCATION)
+                                ->havingRaw('distance < ?', [$radius]);
+                        })
+                        ->orWhereHas('addresses', function($query) use ($location) {
+                            $query
+                                ->search(['city'], $location)
+                                ->where('type', Address::TYPE_LOCATION);
+                        });
                 })
                 ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
                     return $query->where(function($query) use ($inventoryId) {

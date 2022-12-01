@@ -20,6 +20,10 @@ final class Event extends Base implements MessageableContract
     const STATUS_APPROVED = 3;
     const STATUS_DECLINED = 4;
 
+    const SCOPE_FUTURE = 1;
+    const SCOPE_PAST = 2;
+    const SCOPE_ALL = 3;
+
     protected $fillable = [
         'title',
         'website',
@@ -57,6 +61,17 @@ final class Event extends Base implements MessageableContract
             $query
                 ->whereDate('start_date', '>=', $today)
                 ->orWhereDate('end_date', '>=', $today);
+        });
+    }
+
+    public function scopePast(Builder $query): Builder
+    {
+        $today = date('Y-m-d');
+
+        return $query->where(function($query) use ($today) {
+            $query
+                ->whereDate('start_date', '<', $today)
+                ->orWhereDate('end_date', '<', $today);
         });
     }
 
@@ -110,6 +125,15 @@ final class Event extends Base implements MessageableContract
         return [
             self::TYPE_EVENTABLE_FARM => __('phrases.farm'),
             self::TYPE_EVENTABLE_MARKET => __('phrases.market')
+        ];
+    }
+
+    public static function scopes(): array
+    {
+        return [
+            self::SCOPE_FUTURE => __('phrases.upcoming_events'),
+            self::SCOPE_PAST => __('phrases.past_events'),
+            self::SCOPE_ALL => __('phrases.all_events')
         ];
     }
 

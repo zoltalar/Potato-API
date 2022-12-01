@@ -80,7 +80,7 @@ final class Address extends Base implements
     // Other
     // --------------------------------------------------
 
-    public static function radius(string $unit, int $radius = 100): int
+    public static function radius(string $unit, int $radius = 500): int
     {
         switch($unit) {
             default:

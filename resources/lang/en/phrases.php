@@ -2,6 +2,7 @@
 
 return [
     'address' => 'Address',
+    'all_events' => 'All Events',
     'all_rights_reserved' => 'All Rights Reserved',
     'amount' => 'Amount',
     'approved' => 'Approved',
@@ -56,6 +57,7 @@ return [
     'operating_hours' => 'Operating Hours',
     'organizer' => 'Organizer',
     'password' => 'Password',
+    'past_events' => 'Past Events',
     'phone' => 'Phone',
     'photo' => 'Photo',
     'pinterest' => 'Pinterest',
@@ -83,6 +85,7 @@ return [
     'twitter' => 'Twitter',
     'type' => 'Type',
     'unit' => 'Unit',
+    'upcoming_events' => 'Upcoming Events',
     'verify_email_address' => 'Verify Email Address',
     'volume' => 'Volume',
     'website' => 'Website',

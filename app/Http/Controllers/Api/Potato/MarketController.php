@@ -235,6 +235,11 @@ class MarketController extends Controller
         $countryCode = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
+        $limit = $request->get('limit', 10);
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
 
         // Attempt to find the city
         if (empty($cityId) && ! empty($location)) {
@@ -287,7 +292,7 @@ class MarketController extends Controller
                     });
                 })
                 ->orderBy('promote', 'desc')
-                ->get();
+                ->paginate($limit);
         } else {
             $markets = Market::query()
                 ->with([
@@ -316,7 +321,7 @@ class MarketController extends Controller
                     });
                 })
                 ->orderBy('promote', 'desc')
-                ->get();
+                ->paginate($limit);
         }
 
         return MarketResource::collection($markets);

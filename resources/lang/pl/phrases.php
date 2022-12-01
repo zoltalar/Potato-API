@@ -2,6 +2,7 @@
 
 return [
     'address' => 'Adres',
+    'all_events' => 'Wszystkie Wydarzenia',
     'all_rights_reserved' => 'Wszystkie Prawa Zastrzeżone',
     'amount' => 'Ilość',
     'approved' => 'Zatwierdzone',
@@ -56,6 +57,7 @@ return [
     'operating_hours' => 'Godziny Otwarcia',
     'organizer' => 'Organizator',
     'password' => 'Hasło',
+    'past_events' => 'Przeszłe Wydarzenia',
     'phone' => 'Telefon',
     'photo' => 'Zdjęcie',
     'pinterest' => 'Pinterest',
@@ -83,6 +85,7 @@ return [
     'twitter' => 'Twitter',
     'type' => 'Typ',
     'unit' => 'Jednostka',
+    'upcoming_events' => 'Nadchodzące Wydarzenia',
     'verify_email_address' => 'Zweryfikuj Swój Email',
     'volume' => 'Pojemność',
     'website' => 'Strona',
