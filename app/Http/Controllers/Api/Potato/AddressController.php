@@ -79,7 +79,7 @@ class AddressController extends Controller
         $code = $request->header('X-country', Country::CODE_PL);
         $key = sprintf('potato.addresses.plot.%s', $code);
 
-        $addresses = cache()->remember($key, 600, function() use ($code) {
+        $addresses = cache()->remember($key, 1, function() use ($code) {
             return Address::query()
                 ->select([
                     'latitude',
@@ -89,14 +89,22 @@ class AddressController extends Controller
                 ])
                 ->with([
                     'addressable' => function($query) {
-                        $query->select(['id', 'name']);
+                        $query->select(['id']);
                     }
                 ])
                 ->where('type', Address::TYPE_LOCATION)
-                ->whereHasMorph('addressable', [ Farm::class, Market::class ], function($query) {
+                ->where(function($query) {
                     $query
-                        ->publishAddress()
-                        ->active();
+                        ->whereHasMorph('addressable', [ Farm::class, Market::class ], function($query) {
+                            $query
+                                ->publishAddress()
+                                ->active();
+                        })
+                        ->orWhereHasMorph('addressable', [ Event::class ], function($query) {
+                            $query
+                                ->approved()
+                                ->future();
+                        });
                 })
                 ->whereHas('state.country', function($query) use ($code) {
                     $query->where('code', $code);

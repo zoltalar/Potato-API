@@ -237,6 +237,7 @@ Route::group(['prefix' => 'potato'], function() {
 
     // Events
     Route::group(['prefix' => 'events'], function() {
+        Route::get('index', [ApiPotatoEventController::class, 'index'])->name('api.potato.events.index');
         Route::post('store', [ApiPotatoEventController::class, 'store'])->name('api.potato.events.store');
         Route::get('show/{id}', [ApiPotatoEventController::class, 'show'])->name('api.potato.events.show');
         Route::get('locate/{latitude}/{longitude}', [ApiPotatoEventController::class, 'locate'])->name('api.potato.events.locate');

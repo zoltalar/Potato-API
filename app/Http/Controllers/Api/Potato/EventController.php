@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\EventDescriptionUpdateRequest;
 use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
+use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\EventResource;
 use App\Models\Address;
 use App\Models\City;
@@ -29,6 +30,39 @@ class EventController extends Controller
                 'updateDescription',
                 'destroy'
             ]);
+    }
+
+    public function index(Request $request)
+    {
+        $country = $request->header('X-country', Country::CODE_PL);
+        $limit = $request->get('limit', 10);
+        $scope = $request->get('scope', Event::SCOPE_FUTURE);
+
+        if ($limit > 10) {
+            $limit = 10;
+        }
+
+        $events = Event::query()
+            ->with([
+                'addresses',
+                'addresses.state.country'
+            ])
+            ->approved()
+            ->whereHas('addresses.state.country', function($query) use ($country) {
+                $query->where('code', $country);
+            })
+            ->when($scope, function($query) use ($scope) {
+                if ($scope === Event::SCOPE_FUTURE) {
+                    return $query->future();
+                } elseif ($scope === Event::SCOPE_PAST) {
+                    return $query->past();
+                }
+            })
+            ->orderBy('start_date')
+            ->take($limit)
+            ->get();
+
+        return EventResource::collection($events);
     }
 
     public function store(EventStoreRequest $request)
