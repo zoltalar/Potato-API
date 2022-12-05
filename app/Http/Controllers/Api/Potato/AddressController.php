@@ -87,11 +87,6 @@ class AddressController extends Controller
                     'addressable_id',
                     'addressable_type'
                 ])
-                ->with([
-                    'addressable' => function($query) {
-                        $query->select(['id']);
-                    }
-                ])
                 ->where('type', Address::TYPE_LOCATION)
                 ->where(function($query) {
                     $query
