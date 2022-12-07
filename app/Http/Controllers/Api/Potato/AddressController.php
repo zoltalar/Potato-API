@@ -79,7 +79,7 @@ class AddressController extends Controller
         $code = $request->header('X-country', Country::CODE_PL);
         $key = sprintf('potato.addresses.plot.%s', $code);
 
-        $addresses = cache()->remember($key, 1, function() use ($code) {
+        $addresses = cache()->remember($key, 600, function() use ($code) {
             return Address::query()
                 ->select([
                     'latitude',

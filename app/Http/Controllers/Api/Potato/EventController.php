@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\EventDescriptionUpdateRequest;
 use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
-use App\Http\Resources\BaseResource;
 use App\Http\Resources\Potato\EventResource;
 use App\Models\Address;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\Unit;
+use App\Services\Ics;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -52,9 +52,9 @@ class EventController extends Controller
                 $query->where('code', $country);
             })
             ->when($scope, function($query) use ($scope) {
-                if ($scope === Event::SCOPE_FUTURE) {
+                if ($scope == Event::SCOPE_FUTURE) {
                     return $query->future();
-                } elseif ($scope === Event::SCOPE_PAST) {
+                } elseif ($scope == Event::SCOPE_PAST) {
                     return $query->past();
                 }
             })
@@ -306,6 +306,15 @@ class EventController extends Controller
         }
 
         return response()->json(null, $status);
+    }
+
+    public function calendar(Event $event)
+    {
+        $event->load(['addresses']);
+
+        return response()->streamDownload(function() use ($event) {
+            echo (new Ics($event));
+        });
     }
 
     public function meta()

@@ -4,14 +4,20 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Contracts\Icsable as IcsableContract;
 use App\Contracts\Messageable as MessageableContract;
+use App\Traits\Icsable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Str;
 
-final class Event extends Base implements MessageableContract
+final class Event extends Base implements
+    IcsableContract,
+    MessageableContract
 {
+    use Icsable;
+
     const TYPE_EVENTABLE_FARM = 'farm';
     const TYPE_EVENTABLE_MARKET = 'market';
 
@@ -114,6 +120,20 @@ final class Event extends Base implements MessageableContract
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
+
+    public function address(): ?Address
+    {
+        if ($this->relationLoaded('addresses')) {
+            return $this
+                ->addresses
+                ->filter(function($address) {
+                    return $address->type === Address::TYPE_LOCATION;
+                })
+                ->first();
+        }
+
+        return null;
+    }
 
     public function recipient(): ?User
     {

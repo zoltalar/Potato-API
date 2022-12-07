@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Observers;
 
 use App\Models\Address;
+use App\Models\Country;
 use App\Services\AddressCoordinatesResolver;
 
 class AddressObserver
@@ -23,6 +24,10 @@ class AddressObserver
 
                 $address->latitude = $latitude;
                 $address->longitude = $longitude;
+
+                if ($address->state->country->name === Country::NAME_POLAND) {
+                    $address->timezone = 'Europe/Warsaw';
+                }
             }
         }
     }

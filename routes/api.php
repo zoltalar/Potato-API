@@ -245,6 +245,7 @@ Route::group(['prefix' => 'potato'], function() {
         Route::match(['PUT', 'PATCH'], 'update-general-information/{id}', [ApiPotatoEventController::class, 'updateGeneralInformation'])->name('api.potato.events.update-general-information');
         Route::match(['PUT', 'PATCH'], 'update-description/{id}', [ApiPotatoEventController::class, 'updateDescription'])->name('api.potato.events.update-description');
         Route::delete('{id}', [ApiPotatoEventController::class, 'destroy'])->name('api.potato.events.destroy');
+        Route::get('calendar/{event}', [ApiPotatoEventController::class, 'calendar'])->name('api.potato.events.calendar');
         Route::get('meta', [ApiPotatoEventController::class, 'meta'])->name('api.potato.events.meta');
     });
 
