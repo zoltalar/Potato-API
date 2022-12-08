@@ -119,6 +119,7 @@ class FarmController extends Controller
                         ->active()
                         ->orderBy('created_at', 'desc');
                 },
+                'reviews.comments.user',
                 'reviews.user'
             ])
             ->findOrFail($id);

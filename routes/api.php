@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\Potato\AddressController as ApiPotatoAddressControl
 use App\Http\Controllers\Api\Potato\AuthenticationController as ApiPotatoAuthenticationController;
 use App\Http\Controllers\Api\Potato\CategoryController as ApiPotatoCategoryController;
 use App\Http\Controllers\Api\Potato\CityController as ApiPotatoCityController;
+use App\Http\Controllers\Api\Potato\CommentController as ApiPotatoCommentController;
 use App\Http\Controllers\Api\Potato\ContactController as ApiPotatoContactController;
 use App\Http\Controllers\Api\Potato\CountryController as ApiPotatoCountryController;
 use App\Http\Controllers\Api\Potato\CurrencyController as ApiPotatoCurrencyController;
@@ -214,6 +215,11 @@ Route::group(['prefix' => 'potato'], function() {
         Route::get('index', [ApiPotatoCityController::class, 'index'])->name('api.potato.cities.index');
         Route::get('show/{city}', [ApiPotatoCityController::class, 'show'])->name('api.potato.cities.show');
         Route::get('locate/{latitude}/{longitude}', [ApiPotatoCityController::class, 'locate'])->name('api.potato.cities.locate');
+    });
+
+    // Comments
+    Route::group(['prefix' => 'comments'], function() {
+        Route::post('store/{type}/{id}', [ApiPotatoCommentController::class, 'store'])->name('api.potato.comments.store');
     });
 
     // Contact

@@ -3,6 +3,8 @@
 return [
     'codename' => 'Potato',
     'codename_team' => 'Potato Team',
+    'comment_reviews_to_self_error' => 'You cannot comment your own reviews.',
+    'comment_to_self_error' => 'You cannot comment your own entities.',
     'email_action_text_subcopy' => "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below into your web browser:",
     'email_contact_line_1' => ':name (:email) has sent you a message:',
     'email_new_message_line_1' => 'You have a new message from :name.',
@@ -20,7 +22,7 @@ return [
     'message_to_self_error' => 'You cannot send messages to yourself.',
     'product_availability_seasons_error' => 'Please select at least one season.',
     'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',
-    'review_unique_error' => 'You already created a review for this farm or market',
+    'review_unique_error' => 'You already created a review for this farm or market.',
     'time_field_after_error' => 'The :field must be a time after :time',
     'unique_translation_error' => 'Translation already exists.'
 ];

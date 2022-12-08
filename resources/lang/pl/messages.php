@@ -3,6 +3,8 @@
 return [
     'codename' => 'Ziemniaczek',
     'codename_team' => 'Zespół Ziemniaczek',
+    'comment_reviews_to_self_error' => 'Nie możesz komentować własnych recenzji.',
+    'comment_to_self_error' => 'Nie możesz komentować własnych encji.',
     'email_action_text_subcopy' => "Jeśli zaistnieje problem z kliknięciem w przycisk \":actionText\", skopiuj i wklej poniższy link w okno przeglądarki:",
     'email_contact_line_1' => ':name (:email) wysłał(a) wiadomość:',
     'email_new_message_line_1' => 'Masz nową wiadomość od :name.',
