@@ -119,7 +119,23 @@ class MarketController extends Controller
                         ->active()
                         ->orderBy('created_at', 'desc');
                 },
-                'reviews.user'
+                'reviews.comments' => function($query) {
+                    $query->orderBy('created_at');
+                },
+                'reviews.comments.user' => function($query) {
+                    $query->select([
+                        'id',
+                        'first_name',
+                        'last_name'
+                    ]);
+                },
+                'reviews.user' => function($query) {
+                    $query->select([
+                        'id',
+                        'first_name',
+                        'last_name'
+                    ]);
+                }
             ])
             ->findOrFail($id);
 
