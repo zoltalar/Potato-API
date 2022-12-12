@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\AdminController as ApiAdminController;
 use App\Http\Controllers\Api\Admin\AuthenticationController as ApiAdminAuthenticationController;
 use App\Http\Controllers\Api\Admin\CategoryController as ApiAdminCategoryController;
 use App\Http\Controllers\Api\Admin\CityController as ApiAdminCityController;
+use App\Http\Controllers\Api\Admin\CommentController as ApiAdminCommentController;
 use App\Http\Controllers\Api\Admin\CountryController as ApiAdminCountryController;
 use App\Http\Controllers\Api\Admin\EventController as ApiAdminEventController;
 use App\Http\Controllers\Api\Admin\FarmController as ApiAdminFarmController;
@@ -97,6 +98,12 @@ Route::group(['prefix' => '7pyn5wd'], function() {
         Route::post('store', [ApiAdminCityController::class, 'store'])->name('api.admin.cities.store');
         Route::match(['PUT', 'PATCH'], 'update/{city}', [ApiAdminCityController::class, 'update'])->name('api.admin.cities.update');
         Route::get('meta', [ApiAdminCityController::class, 'meta'])->name('api.admin.cities.meta');
+    });
+
+    // Comments
+    Route::group(['prefix' => 'comments'], function() {
+        Route::get('index', [ApiAdminCommentController::class, 'index'])->name('api.admin.comments.index');
+        Route::delete('{comment}', [ApiAdminCommentController::class, 'destroy'])->name('api.admin.comments.destroy');
     });
 
     // Countries
