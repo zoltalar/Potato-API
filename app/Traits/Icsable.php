@@ -9,12 +9,12 @@ use DateTimeZone;
 
 trait Icsable
 {
-    public function summary(): ?string
+    public function getSummary(): ?string
     {
         return $this->title;
     }
 
-    public function description(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

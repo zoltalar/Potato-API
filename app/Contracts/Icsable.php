@@ -8,9 +8,9 @@ use DateTime;
 
 interface Icsable
 {
-    public function summary(): ?string;
+    public function getSummary(): ?string;
 
-    public function description(): ?string;
+    public function getDescription(): ?string;
 
     public function startsAt(): DateTime;
 

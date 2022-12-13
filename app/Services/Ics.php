@@ -21,8 +21,8 @@ final class Ics
         $icsable = $this->icsable;
 
         $event = Event::create()
-            ->name($icsable->summary())
-            ->description($icsable->description());
+            ->name($icsable->getSummary())
+            ->description($icsable->getDescription());
 
         $address = $this->icsable->address();
 
