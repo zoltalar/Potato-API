@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperatingHoursTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -35,4 +35,4 @@ class CreateOperatingHoursTable extends Migration
     {
         Schema::dropIfExists('operating_hours');
     }
-}
+};
