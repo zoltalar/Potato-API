@@ -289,6 +289,7 @@ Route::prefix('potato')->group(function() {
         Route::match(['PUT', 'PATCH'], 'update-cover/{id}/{type}/{imageableId}', [ApiPotatoImageController::class, 'updateCover'])->name('api.potato.images.update-cover');
         Route::match(['PUT', 'PATCH'], 'update-primary/{id}/{type}/{imageableId}', [ApiPotatoImageController::class, 'updatePrimary'])->name('api.potato.images.update-primary');
         Route::delete('{id}/{type}/{imageableId}', [ApiPotatoImageController::class, 'destroy'])->name('api.potato.images.destroy');
+        Route::get('stream/{file}', [ApiPotatoImageController::class, 'stream'])->name('api.potato.images.stream');
     });
 
     // Inventory

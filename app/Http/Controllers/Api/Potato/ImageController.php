@@ -7,8 +7,10 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ImageStoreRequest;
 use App\Http\Resources\BaseResource;
+use App\Models\Farm;
 use App\Models\Image;
 use App\Models\Inventory;
+use App\Models\Market;
 use Illuminate\Http\Request;
 use Str;
 
@@ -16,7 +18,9 @@ class ImageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:user', 'scope:potato']);
+        $this
+            ->middleware(['auth:user', 'scope:potato'])
+            ->except(['stream']);
     }
 
     public function store(ImageStoreRequest $request, string $type, int $id)
@@ -225,5 +229,34 @@ class ImageController extends Controller
         }
 
         return response()->json(null, $status);
+    }
+    
+    public function stream(string $file)
+    {
+        $image = Image::query()
+            ->with(['imageable'])
+            ->file($file)
+            ->first();
+        
+        abort_if($image === null, 404);
+        
+        $imageable = $image->imageable;
+            
+        if ($imageable instanceof Farm) {
+            $path = storage_path("app/public/farms/{$file}");
+        } elseif ($imageable instanceof Market) {
+            $path = storage_path("app/public/markets/{$file}");
+        }
+
+        if (isset($path)) {
+            $headers = [
+                'Cache-Control' => 'no-cache',
+                'Content-Type' => $imageable->mime,
+            ];
+
+            return response()->stream(function() use ($path) {
+                echo file_get_contents($path);
+            }, 200, $headers);
+        }
     }
 }

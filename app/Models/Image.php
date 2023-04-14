@@ -12,6 +12,11 @@ final class Image extends Base
 {
     const TYPE_IMAGEABLE_FARM = 'farm';
     const TYPE_IMAGEABLE_MARKET = 'market';
+    
+    const TYPES = [
+        self::TYPE_IMAGEABLE_FARM,
+        self::TYPE_IMAGEABLE_MARKET
+    ];
 
     protected $fillable = [
         'title',
@@ -44,6 +49,19 @@ final class Image extends Base
     {
         return $query->where('primary', 1);
     }
+    
+    public function scopeFile(Builder $query, string $file): Builder
+    {
+        return $query->where(function($query) use ($file) {
+            $query
+                ->where('file', $file)
+                ->orWhere(function($query) use ($file) {
+                    $query
+                        ->orWhereJsonContains('variations->cover->file', $file)
+                        ->orWhereJsonContains('variations->primary->file', $file);
+                });                
+        });
+    }
 
     // --------------------------------------------------
     // Accessors and Mutators
@@ -52,15 +70,9 @@ final class Image extends Base
     public function getFileUrlAttribute($value): ?string
     {
         $file = $this->attributes['file'] ?? null;
-        $type = $this->imageable()->getRelated()->getMorphClass();
 
         if ( ! empty($file)) {
-
-            if ($type === self::TYPE_IMAGEABLE_FARM) {
-                return asset("storage/farms/{$file}");
-            } elseif ($type === self::TYPE_IMAGEABLE_MARKET) {
-                return asset("storage/markets/{$file}");
-            }
+            return route('api.potato.images.stream', ['file' => $file]);
         }
 
         return null;
@@ -90,17 +102,9 @@ final class Image extends Base
             $value = json_decode($value, true);
 
             if (is_array($value)) {
-                $type = $this->imageable()->getRelated()->getMorphClass();
-
+                
                 foreach ($value as $crop => & $data) {
-
-                    if ($type === self::TYPE_IMAGEABLE_FARM) {
-                        $data['file_url'] = asset("storage/farms/{$data['file']}");
-                    } elseif ($type === self::TYPE_IMAGEABLE_MARKET) {
-                        $data['file_url'] = asset("storage/markets/{$data['file']}");
-                    } else {
-                        $data['file_url'] = null;
-                    }
+                    $data['file_url'] = route('api.potato.images.stream', ['file' => $data['file']]);
                 }
             }
         }
