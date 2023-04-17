@@ -15,6 +15,7 @@ use App\Models\Country;
 use App\Models\Event;
 use App\Models\Unit;
 use App\Services\Ics;
+use App\Services\Request\LimitRequestVar;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -35,12 +36,8 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $country = $request->header('X-country', Country::CODE_PL);
-        $limit = $request->get('limit', 10);
         $scope = $request->get('scope', Event::SCOPE_FUTURE);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $events = Event::query()
             ->with([
@@ -119,11 +116,7 @@ class EventController extends Controller
     {
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $events = Event::query()
             ->with([
@@ -159,11 +152,7 @@ class EventController extends Controller
         $countryCode = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         // Attempt to find the city
         if (empty($cityId) && ! empty($location)) {

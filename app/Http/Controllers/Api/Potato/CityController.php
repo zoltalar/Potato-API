@@ -9,6 +9,7 @@ use App\Http\Resources\BaseResource;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Unit;
+use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -16,16 +17,12 @@ class CityController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = $request->get('limit', 10);
+        $limit = (new LimitRequestVar(max: 25))->get();
         $country = $request->header('X-country', Country::CODE_PL);
         $countryId = $request->country_id;
         $stateId = $request->state_id;
         $population = $request->population;
         $cityId = $request->city_id;
-
-        if ($limit > 25) {
-            $limit = 25;
-        }
 
         if ( ! empty($countryId)) {
             $country = null;
@@ -76,11 +73,7 @@ class CityController extends Controller
     {
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $query = City::query()
             ->select([

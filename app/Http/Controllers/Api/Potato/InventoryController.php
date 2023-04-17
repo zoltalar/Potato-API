@@ -12,6 +12,7 @@ use App\Models\Farm;
 use App\Models\Inventory;
 use App\Models\Language;
 use App\Models\Product;
+use App\Services\Request\LimitRequestVar;
 use App\Services\Response\InventoryCategory;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = $request->get('limit', 10);
+        $limit = (new LimitRequestVar(max: 200))->get(); // Limit of 200 needed to fetch products page
         $language = $request->header('X-language', Language::CODE_PL);
         $country = $request->header('X-country', Country::CODE_PL);
         $countryable = $request->countryable;
@@ -28,11 +29,6 @@ class InventoryController extends Controller
         $type = $request->type;
         $productableId = $request->productable_id;
         $inventoryId = $request->inventory_id;
-
-        // Limit of 200 needed to fetch products page
-        if ($limit > 200) {
-            $limit = 200;
-        }
 
         if ($type === Product::TYPE_PRODUCTABLE_FARM) {
             $farm = Farm::query()

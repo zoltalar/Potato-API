@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Language;
+use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
 class LanguageController extends Controller
@@ -14,11 +15,7 @@ class LanguageController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $query = Language::query()
             ->active()

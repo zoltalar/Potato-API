@@ -7,9 +7,8 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Category;
-use App\Models\Country;
 use App\Models\Language;
-use App\Services\Response\CategoryInventory;
+use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -17,12 +16,8 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = $request->get('limit', 10);
+        $limit = (new LimitRequestVar())->get();
         $language = $request->header('X-language', Language::CODE_PL);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
 
         $query = Category::query()
             ->with([

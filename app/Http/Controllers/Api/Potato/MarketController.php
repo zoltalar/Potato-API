@@ -19,6 +19,7 @@ use App\Models\Inventory;
 use App\Models\Language;
 use App\Models\Market;
 use App\Models\Unit;
+use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
 class MarketController extends Controller
@@ -37,12 +38,8 @@ class MarketController extends Controller
     public function index(Request $request)
     {
         $country = $request->header('X-country', Country::CODE_PL);
-        $limit = $request->get('limit', 10);
+        $limit = (new LimitRequestVar())->get();
         $promote = $request->promote;
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
 
         $farms = Market::query()
             ->with([
@@ -157,11 +154,7 @@ class MarketController extends Controller
     {
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $markets = Market::query()
             ->with([
@@ -193,11 +186,7 @@ class MarketController extends Controller
     {
         $code = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         $markets = Market::query()
             ->with([
@@ -251,11 +240,7 @@ class MarketController extends Controller
         $countryCode = $request->header('X-country', Country::CODE_PL);
         $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
-        $limit = $request->get('limit', 10);
-
-        if ($limit > 10) {
-            $limit = 10;
-        }
+        $limit = (new LimitRequestVar())->get();
 
         // Attempt to find the city
         if (empty($cityId) && ! empty($location)) {
