@@ -10,8 +10,8 @@ use App\Models\Address;
 use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
-use App\Models\Language;
 use App\Models\Product;
+use App\Services\Request\LanguageRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use App\Services\Response\InventoryCategory;
 use Illuminate\Http\Request;
@@ -21,8 +21,8 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = (new LimitRequestVar(max: 200))->get(); // Limit of 200 needed to fetch products page
-        $language = $request->header('X-language', Language::CODE_PL);
+        $limit = (new LimitRequestVar(max: 200))->get();                        // Limit of 200 needed to fetch products page
+        $language = (new LanguageRequestHeader())->get();
         $country = $request->header('X-country', Country::CODE_PL);
         $countryable = $request->countryable;
         $categoryId = $request->category_id;
@@ -93,7 +93,7 @@ class InventoryController extends Controller
 
     public function categories(Request $request)
     {
-        $language = $request->header('X-language', Language::CODE_PL);
+        $language = (new LanguageRequestHeader())->get();
         $country = $request->header('X-country', Country::CODE_PL);
         $categoryId = $request->category_id;
 
@@ -133,7 +133,7 @@ class InventoryController extends Controller
 
     public function show(Request $request, int $id)
     {
-        $language = $request->header('X-language', Language::CODE_PL);
+        $language = (new LanguageRequestHeader())->get();
 
         $inventory = Inventory::query()
             ->with([

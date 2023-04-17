@@ -6,7 +6,7 @@ namespace App\Services\Request;
 
 use Illuminate\Http\Request;
 
-class RequestVar extends BaseRequest
+class RequestHeader extends BaseRequest
 {
     /** var string */
     protected $name;
@@ -28,7 +28,7 @@ class RequestVar extends BaseRequest
     
     public function get(): mixed
     {        
-        return $this->request->get(
+        return $this->request->header(
             $this->name(),
             $this->default()
         );

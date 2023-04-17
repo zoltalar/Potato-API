@@ -16,9 +16,9 @@ use App\Models\Address;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Inventory;
-use App\Models\Language;
 use App\Models\Market;
 use App\Models\Unit;
+use App\Services\Request\LanguageRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
@@ -77,7 +77,7 @@ class MarketController extends Controller
 
     public function show(Request $request, int $id)
     {
-        $language = $request->header('X-language', Language::CODE_PL);
+        $language = (new LanguageRequestHeader())->get();
 
         $market = Market::query()
             ->with([
