@@ -11,6 +11,12 @@ abstract class BaseRequest
     /** @var Request */
     protected $request;
     
+    /** var string */
+    protected $name;
+    
+    /** var mixed */
+    protected $default;
+    
     public function __construct(?Request $request = null) 
     {
         if (empty($request)) {
@@ -18,6 +24,16 @@ abstract class BaseRequest
         }
         
         $this->request = $request;
+    }
+    
+    protected function name(): string
+    {
+        return $this->name;
+    }
+    
+    protected function default(): mixed
+    {
+        return $this->default;
     }
     
     abstract public function get(): mixed;

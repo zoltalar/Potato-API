@@ -14,12 +14,13 @@ use App\Http\Resources\Potato\MarketResource;
 use App\Jobs\SendMarketDeactivationNotificationJob;
 use App\Models\Address;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Inventory;
 use App\Models\Market;
 use App\Models\Unit;
+use App\Services\Request\CountryRequestHeader;
 use App\Services\Request\LanguageRequestHeader;
 use App\Services\Request\LimitRequestVar;
+use App\Services\Request\MarketsSearchRequest;
 use Illuminate\Http\Request;
 
 class MarketController extends Controller
@@ -37,7 +38,7 @@ class MarketController extends Controller
 
     public function index(Request $request)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $limit = (new LimitRequestVar())->get();
         $promote = $request->promote;
 
@@ -150,10 +151,10 @@ class MarketController extends Controller
         return new MarketResource($market);
     }
 
-    public function locate(Request $request, float $latitude, float $longitude)
+    public function locate(float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $markets = Market::query()
@@ -182,10 +183,10 @@ class MarketController extends Controller
         return MarketResource::collection($markets);
     }
 
-    public function browse(Request $request, float $latitude, float $longitude)
+    public function browse(float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $markets = Market::query()
@@ -214,7 +215,7 @@ class MarketController extends Controller
     }
 
     public function search(Request $request)
-    {
+    {        
         $item = $request->item;
         $inventoryId = $request->get('inventory_id', 0);
 
@@ -237,8 +238,8 @@ class MarketController extends Controller
         $location = $request->location;
         $city = null;
         $cityId = $request->get('city_id', 0);
-        $countryCode = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
+        $countryCode = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
         $limit = (new LimitRequestVar())->get();
 

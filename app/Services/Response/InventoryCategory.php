@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Services\Response;
 
-use App\Models\Category;
 use App\Models\Language;
 use App\Models\Inventory;
 

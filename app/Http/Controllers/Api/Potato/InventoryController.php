@@ -11,6 +11,7 @@ use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
 use App\Models\Product;
+use App\Services\Request\CountryRequestHeader;
 use App\Services\Request\LanguageRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use App\Services\Response\InventoryCategory;
@@ -23,7 +24,7 @@ class InventoryController extends Controller
         $search = $request->search;
         $limit = (new LimitRequestVar(max: 200))->get();                        // Limit of 200 needed to fetch products page
         $language = (new LanguageRequestHeader())->get();
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $countryable = $request->countryable;
         $categoryId = $request->category_id;
         $type = $request->type;
@@ -94,7 +95,7 @@ class InventoryController extends Controller
     public function categories(Request $request)
     {
         $language = (new LanguageRequestHeader())->get();
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $categoryId = $request->category_id;
 
         $inventory = Inventory::query()

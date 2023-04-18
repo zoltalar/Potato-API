@@ -14,11 +14,11 @@ use App\Http\Resources\Potato\FarmResource;
 use App\Jobs\SendFarmDeactivationNotificationJob;
 use App\Models\Address;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Farm;
 use App\Models\Inventory;
-use App\Models\Language;
 use App\Models\Unit;
+use App\Services\Request\CountryRequestHeader;
+use App\Services\Request\FarmsSearchRequest;
 use App\Services\Request\LanguageRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class FarmController extends Controller
 
     public function index(Request $request)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $limit = (new LimitRequestVar())->get();
         $promote = $request->promote;
 
@@ -76,7 +76,7 @@ class FarmController extends Controller
         return new FarmResource($farm);
     }
 
-    public function show(Request $request, int $id)
+    public function show(int $id)
     {
         $language = (new LanguageRequestHeader())->get();
 
@@ -153,8 +153,8 @@ class FarmController extends Controller
 
     public function locate(Request $request, float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $farms = Farm::query()
@@ -183,10 +183,10 @@ class FarmController extends Controller
         return FarmResource::collection($farms);
     }
 
-    public function browse(Request $request, float $latitude, float $longitude)
+    public function browse(float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $farms = Farm::query()
@@ -214,118 +214,9 @@ class FarmController extends Controller
         return FarmResource::collection($farms);
     }
 
-    public function search(Request $request)
+    public function search()
     {
-        $item = $request->item;
-        $inventoryId = $request->get('inventory_id', 0);
-
-        // Attempt to find the inventory item
-        if (empty($inventoryId) && ! empty($item)) {
-            $inventory = Inventory::query()
-                ->whereHas('translations', function($query) use ($item) {
-                    $query->search(['name'], $item);
-                })
-                ->first();
-
-            if ($inventory !== null) {
-                $inventoryId = $inventory->id;
-            } else {
-                // Inventory item not found so bail out
-                return FarmResource::collection(collect([]));
-            }
-        }
-
-        $location = $request->location;
-        $city = null;
-        $cityId = $request->get('city_id', 0);
-        $countryCode = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
-        $radius = Address::radius($abbreviation, (int) $request->radius);
-        $limit = (new LimitRequestVar())->get();
-
-        // Attempt to find the city
-        if (empty($cityId) && ! empty($location)) {
-            $city = City::query()
-                ->search(['name', 'name_ascii'], $location)
-                ->whereHas('state.country', function($query) use ($countryCode) {
-                    $query->where('code', $countryCode);
-                })
-                ->first();
-        } elseif ( ! empty($cityId)) {
-            $city = City::find($cityId);
-        }
-
-        // We have the city model
-        if ($city !== null) {
-            $farms = Farm::query()
-                ->with([
-                    'addresses' => function($query) use ($city, $abbreviation) {
-                        $query->select();
-                        $query->haversine($city->latitude, $city->longitude, $abbreviation);
-                        $query->where('type', Address::TYPE_LOCATION);
-                    },
-                    'addresses.state.country',
-                    'images' => function($query) {
-                        $query->primary();
-                    },
-                    'products.inventory.translations'
-                ])
-                ->active()
-                ->where(function($query) use ($city, $abbreviation, $radius, $location) {
-                    $query
-                        ->whereHas('addresses', function($query) use ($city, $abbreviation, $radius) {
-                            $query
-                                ->haversine($city->latitude, $city->longitude, $abbreviation)
-                                ->where('type', Address::TYPE_LOCATION)
-                                ->havingRaw('distance < ?', [$radius]);
-                        })
-                        ->orWhereHas('addresses', function($query) use ($location) {
-                            $query
-                                ->search(['city'], $location)
-                                ->where('type', Address::TYPE_LOCATION);
-                        });
-                })
-                ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
-                    return $query->where(function($query) use ($inventoryId) {
-                        $query->whereHas('products', function($query) use ($inventoryId) {
-                            $query
-                                ->season()
-                                ->where('inventory_id', $inventoryId);
-                        });
-                    });
-                })
-                ->orderBy('promote', 'desc')
-                ->paginate($limit);
-        } else {
-            $farms = Farm::query()
-                ->with([
-                    'addresses' => function($query) {
-                        $query->where('type', Address::TYPE_LOCATION);
-                    },
-                    'addresses.state.country',
-                    'images' => function($query) {
-                        $query->primary();
-                    },
-                    'products.inventory.translations'
-                ])
-                ->active()
-                ->whereHas('addresses', function($query) use ($location) {
-                    $query
-                        ->search(['city'], $location)
-                        ->where('type', Address::TYPE_LOCATION);
-                })
-                ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
-                    return $query->where(function($query) use ($inventoryId) {
-                        $query->whereHas('products', function($query) use ($inventoryId) {
-                            $query
-                                ->season()
-                                ->where('inventory_id', $inventoryId);
-                        });
-                    });
-                })
-                ->orderBy('promote', 'desc')
-                ->paginate($limit);
-        }
+        $farms = (new FarmsSearchRequest())->get();
 
         return FarmResource::collection($farms);
     }

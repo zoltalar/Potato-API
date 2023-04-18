@@ -51,27 +51,8 @@ final class Unit extends Base
     // --------------------------------------------------
     // Other
     // --------------------------------------------------
-
-    public static function types(): array
-    {
-        return [
-            self::TYPE_LENGTH => __('phrases.length'),
-            self::TYPE_VOLUME => __('phrases.volume'),
-            self::TYPE_AREA => __('phrases.area'),
-            self::TYPE_WEIGHT => __('phrases.weight'),
-            self::TYPE_QUANTITY => __('phrases.quantity')
-        ];
-    }
-
-    public static function systems(): array
-    {
-        return [
-            self::SYSTEM_METRIC => __('phrases.metric'),
-            self::SYSTEM_IMPERIAL => __('phrases.imperial')
-        ];
-    }
-
-    public static function unitAbbreviation(string $code, int $type): string
+    
+    public static function abbreviation(string $code, int $type): string
     {
         $abbreviation = Unit::ABBREVIATION_KILOMETER;
 
@@ -94,5 +75,24 @@ final class Unit extends Base
         }
 
         return $abbreviation;
+    }
+
+    public static function types(): array
+    {
+        return [
+            self::TYPE_LENGTH => __('phrases.length'),
+            self::TYPE_VOLUME => __('phrases.volume'),
+            self::TYPE_AREA => __('phrases.area'),
+            self::TYPE_WEIGHT => __('phrases.weight'),
+            self::TYPE_QUANTITY => __('phrases.quantity')
+        ];
+    }
+
+    public static function systems(): array
+    {
+        return [
+            self::SYSTEM_METRIC => __('phrases.metric'),
+            self::SYSTEM_IMPERIAL => __('phrases.imperial')
+        ];
     }
 }

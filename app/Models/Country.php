@@ -43,4 +43,13 @@ final class Country extends Base
     {
         return $this->belongsToMany(Unit::class);
     }
+    
+    // --------------------------------------------------
+    // Other
+    // --------------------------------------------------
+
+    public static function codes(): array
+    {
+        return [self::CODE_PL];
+    }
 }

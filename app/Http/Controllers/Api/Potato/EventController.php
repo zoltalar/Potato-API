@@ -15,6 +15,7 @@ use App\Models\Country;
 use App\Models\Event;
 use App\Models\Unit;
 use App\Services\Ics;
+use App\Services\Request\CountryRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class EventController extends Controller
 
     public function index(Request $request)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $scope = $request->get('scope', Event::SCOPE_FUTURE);
         $limit = (new LimitRequestVar())->get();
 
@@ -112,10 +113,10 @@ class EventController extends Controller
         return new EventResource($event);
     }
 
-    public function locate(Request $request, float $latitude, float $longitude)
+    public function locate(float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $events = Event::query()
@@ -149,8 +150,8 @@ class EventController extends Controller
         $location = $request->location;
         $city = null;
         $cityId = $request->get('city_id', 0);
-        $countryCode = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($countryCode, Unit::TYPE_LENGTH);
+        $countryCode = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
         $limit = (new LimitRequestVar())->get();
 

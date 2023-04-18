@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class RequestHeader extends BaseRequest
 {
-    /** var string */
-    protected $name;
-    
-    /** var mixed */
-    protected $default;
-
     public function __construct(
         string $name,
         mixed $default = null,
@@ -32,15 +26,5 @@ class RequestHeader extends BaseRequest
             $this->name(),
             $this->default()
         );
-    }
-    
-    protected function name(): string
-    {
-        return $this->name;
-    }
-    
-    protected function default(): mixed
-    {
-        return $this->default;
     }
 }

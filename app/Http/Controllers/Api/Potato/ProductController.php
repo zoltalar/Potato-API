@@ -8,10 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
-use App\Models\Country;
 use App\Models\Product;
 use App\Models\Unit;
 use App\Services\Haversine;
+use App\Services\Request\CountryRequestHeader;
 use App\Services\Response\GrowingArea;
 use Illuminate\Http\Request;
 
@@ -84,8 +84,8 @@ class ProductController extends Controller
 
     public function growingArea(Request $request, float $latitude, float $longitude)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($country, Unit::TYPE_LENGTH);
+        $country = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($country, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation);
 
         $products = Product::query()
@@ -129,7 +129,7 @@ class ProductController extends Controller
 
     public function topGrowingAreas(Request $request, int $id)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
 
         $areas = Product::query()
             ->selectRaw(
@@ -170,7 +170,7 @@ class ProductController extends Controller
 
     public function topSellingAreas(Request $request, int $id)
     {
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
 
         $areas = Product::query()
             ->selectRaw(

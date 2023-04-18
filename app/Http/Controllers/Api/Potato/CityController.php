@@ -9,6 +9,7 @@ use App\Http\Resources\BaseResource;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Unit;
+use App\Services\Request\CountryRequestHeader;
 use App\Services\Request\LimitRequestVar;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class CityController extends Controller
     {
         $search = $request->search;
         $limit = (new LimitRequestVar(max: 25))->get();
-        $country = $request->header('X-country', Country::CODE_PL);
+        $country = (new CountryRequestHeader())->get();
         $countryId = $request->country_id;
         $stateId = $request->state_id;
         $population = $request->population;
@@ -69,10 +70,10 @@ class CityController extends Controller
         return new BaseResource($city);
     }
 
-    public function locate(Request $request, float $latitude, float $longitude)
+    public function locate(float $latitude, float $longitude)
     {
-        $code = $request->header('X-country', Country::CODE_PL);
-        $abbreviation = Unit::unitAbbreviation($code, Unit::TYPE_LENGTH);
+        $code = (new CountryRequestHeader())->get();
+        $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
         $limit = (new LimitRequestVar())->get();
 
         $query = City::query()
