@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Parameter;
 
 use Illuminate\Http\Request;
 
-class RequestHeader extends BaseRequest
+class HeaderParameter extends BaseParameter
 {
     public function __construct(
         string $name,

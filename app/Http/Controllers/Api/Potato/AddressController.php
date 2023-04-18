@@ -8,12 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\AddressRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
-use App\Models\Country;
 use App\Models\Event;
 use App\Models\Farm;
 use App\Models\Market;
 use App\Models\Unit;
-use App\Services\Request\CountryRequestHeader;
+use App\Services\Parameter\CountryHeader;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -77,7 +76,7 @@ class AddressController extends Controller
 
     public function plot(Request $request)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $key = sprintf('potato.addresses.plot.%s', $code);
 
         $addresses = cache()->remember($key, 600, function() use ($code) {
@@ -149,7 +148,7 @@ class AddressController extends Controller
 
     public function meta()
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
 
         $meta = [

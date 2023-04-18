@@ -7,10 +7,9 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Unit;
-use App\Services\Request\CountryRequestHeader;
-use App\Services\Request\LimitRequestVar;
+use App\Services\Parameter\CountryHeader;
+use App\Services\Parameter\LimitVar;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -18,8 +17,8 @@ class CityController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = (new LimitRequestVar(max: 25))->get();
-        $country = (new CountryRequestHeader())->get();
+        $limit = (new LimitVar(max: 25))->get();
+        $country = (new CountryHeader())->get();
         $countryId = $request->country_id;
         $stateId = $request->state_id;
         $population = $request->population;
@@ -72,9 +71,9 @@ class CityController extends Controller
 
     public function locate(float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $query = City::query()
             ->select([

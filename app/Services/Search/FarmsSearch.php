@@ -2,21 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Search;
 
 use App\Models\Address;
 use App\Models\City;
 use App\Models\Farm;
-use App\Models\Inventory;
 use App\Models\Unit;
-use App\Traits\SearchableRequest;
+use App\Services\Parameter\CountryHeader;
+use App\Services\Parameter\LimitVar;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-final class FarmsSearchRequest extends BaseRequest
+final class FarmsSearch extends BaseSearch
 {
-    use SearchableRequest;
-    
-    public function get(): mixed
+    public function results(): mixed
     {
         $inventoryId = $this->inventoryId();
         
@@ -33,52 +31,12 @@ final class FarmsSearchRequest extends BaseRequest
         return $this->basicSearch($inventoryId);
     }
     
-    protected function inventoryId(): int
-    {
-        $itemName = $this->request->item;
-        $inventoryId = $this->request->get('inventory_id', 0);
-        
-        if (empty($inventoryId) && ! empty($itemName)) {
-            $inventory = Inventory::query()
-                ->whereHas('translations', function($query) use ($itemName) {
-                    $query->search(['name'], $itemName);
-                })
-                ->first();
-                
-            if ($inventory !== null) {
-                $inventoryId = $inventory->id;
-            }
-        }
-        
-        return (int) $inventoryId;
-    }
-    
-    protected function city(): City|null
-    {
-        $locationName = $this->request->location;
-        $cityId = $this->request->get('city_id', 0);
-        
-        if (empty($cityId) && ! empty($locationName)) {
-            $country = $this->country();
-            
-            $city = City::query()
-                ->search(['name', 'name_ascii'], $locationName)
-                ->whereHas('state.country', function($query) use ($country) {
-                    $query->where('code', $country);
-                })
-                ->first();
-        } else {
-            $city = City::find($cityId);
-        }
-        
-        return $city;
-    }
-    
     protected function haversineSearch(City $city, int $inventoryId): LengthAwarePaginator
     {
-        $country = $this->country();
+        $country = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($country, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $this->request->radius);
+        $limit = (new LimitVar())->get();
         
         return Farm::query()
             ->with([
@@ -112,12 +70,13 @@ final class FarmsSearchRequest extends BaseRequest
                 });
             })
             ->orderBy('promote', 'desc')
-            ->paginate($this->limit());
+            ->paginate($limit);
     }
     
     protected function basicSearch(int $inventoryId): LengthAwarePaginator
     {
-        $locationName = $this->request->location;
+        $location = $this->request->location;
+        $limit = (new LimitVar())->get();
         
         return Farm::query()
             ->with([
@@ -131,9 +90,9 @@ final class FarmsSearchRequest extends BaseRequest
                 'products.inventory.translations'
             ])
             ->active()
-            ->whereHas('addresses', function($query) use ($locationName) {
+            ->whereHas('addresses', function($query) use ($location) {
                 $query
-                    ->search(['city'], $locationName)
+                    ->search(['city'], $location)
                     ->where('type', Address::TYPE_LOCATION);
             })
             ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
@@ -146,6 +105,6 @@ final class FarmsSearchRequest extends BaseRequest
                 });
             })
             ->orderBy('promote', 'desc')
-            ->paginate($this->limit());
+            ->paginate($limit);
     }
 }

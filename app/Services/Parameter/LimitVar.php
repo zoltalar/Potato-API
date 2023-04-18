@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Parameter;
 
 use Illuminate\Http\Request;
 
-final class LimitRequestVar extends RequestVar
+final class LimitVar extends QueryStringParameter
 {
     /** @var int|float */
     private $max;

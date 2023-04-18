@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Parameter;
 
 use App\Models\Language;
 use Illuminate\Http\Request;
 
-class LanguageRequestHeader extends RequestHeader
+final class LanguageHeader extends HeaderParameter
 {
     public function __construct(
         string $name = 'X-language',

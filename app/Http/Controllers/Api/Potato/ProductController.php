@@ -11,7 +11,7 @@ use App\Models\Address;
 use App\Models\Product;
 use App\Models\Unit;
 use App\Services\Haversine;
-use App\Services\Request\CountryRequestHeader;
+use App\Services\Parameter\CountryHeader;
 use App\Services\Response\GrowingArea;
 use Illuminate\Http\Request;
 
@@ -84,7 +84,7 @@ class ProductController extends Controller
 
     public function growingArea(Request $request, float $latitude, float $longitude)
     {
-        $country = (new CountryRequestHeader())->get();
+        $country = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($country, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation);
 
@@ -129,7 +129,7 @@ class ProductController extends Controller
 
     public function topGrowingAreas(Request $request, int $id)
     {
-        $country = (new CountryRequestHeader())->get();
+        $country = (new CountryHeader())->get();
 
         $areas = Product::query()
             ->selectRaw(
@@ -170,7 +170,7 @@ class ProductController extends Controller
 
     public function topSellingAreas(Request $request, int $id)
     {
-        $country = (new CountryRequestHeader())->get();
+        $country = (new CountryHeader())->get();
 
         $areas = Product::query()
             ->selectRaw(

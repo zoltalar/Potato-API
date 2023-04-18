@@ -13,14 +13,12 @@ use App\Http\Requests\Potato\MarketStoreRequest;
 use App\Http\Resources\Potato\MarketResource;
 use App\Jobs\SendMarketDeactivationNotificationJob;
 use App\Models\Address;
-use App\Models\City;
-use App\Models\Inventory;
 use App\Models\Market;
 use App\Models\Unit;
-use App\Services\Request\CountryRequestHeader;
-use App\Services\Request\LanguageRequestHeader;
-use App\Services\Request\LimitRequestVar;
-use App\Services\Request\MarketsSearchRequest;
+use App\Services\Parameter\CountryHeader;
+use App\Services\Parameter\LanguageHeader;
+use App\Services\Parameter\LimitVar;
+use App\Services\Search\MarketsSearch;
 use Illuminate\Http\Request;
 
 class MarketController extends Controller
@@ -38,8 +36,8 @@ class MarketController extends Controller
 
     public function index(Request $request)
     {
-        $country = (new CountryRequestHeader())->get();
-        $limit = (new LimitRequestVar())->get();
+        $country = (new CountryHeader())->get();
+        $limit = (new LimitVar())->get();
         $promote = $request->promote;
 
         $farms = Market::query()
@@ -76,9 +74,9 @@ class MarketController extends Controller
         return new MarketResource($market);
     }
 
-    public function show(Request $request, int $id)
+    public function show(int $id)
     {
-        $language = (new LanguageRequestHeader())->get();
+        $language = (new LanguageHeader())->get();
 
         $market = Market::query()
             ->with([
@@ -153,9 +151,9 @@ class MarketController extends Controller
 
     public function locate(float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $markets = Market::query()
             ->with([
@@ -185,9 +183,9 @@ class MarketController extends Controller
 
     public function browse(float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $markets = Market::query()
             ->with([
@@ -216,7 +214,7 @@ class MarketController extends Controller
 
     public function search()
     {        
-        $markets = (new MarketsSearchRequest())->get();
+        $markets = (new MarketsSearch())->results();
 
         return MarketResource::collection($markets);
     }

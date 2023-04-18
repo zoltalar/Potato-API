@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Parameter;
 
 use Illuminate\Http\Request;
 
-abstract class BaseRequest
+abstract class BaseParameter
 {
     /** @var Request */
     protected $request;

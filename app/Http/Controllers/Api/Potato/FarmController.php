@@ -13,14 +13,12 @@ use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\Potato\FarmResource;
 use App\Jobs\SendFarmDeactivationNotificationJob;
 use App\Models\Address;
-use App\Models\City;
 use App\Models\Farm;
-use App\Models\Inventory;
 use App\Models\Unit;
-use App\Services\Request\CountryRequestHeader;
-use App\Services\Request\FarmsSearchRequest;
-use App\Services\Request\LanguageRequestHeader;
-use App\Services\Request\LimitRequestVar;
+use App\Services\Parameter\CountryHeader;
+use App\Services\Parameter\LanguageHeader;
+use App\Services\Parameter\LimitVar;
+use App\Services\Search\FarmsSearch;
 use Illuminate\Http\Request;
 
 class FarmController extends Controller
@@ -38,8 +36,8 @@ class FarmController extends Controller
 
     public function index(Request $request)
     {
-        $country = (new CountryRequestHeader())->get();
-        $limit = (new LimitRequestVar())->get();
+        $country = (new CountryHeader())->get();
+        $limit = (new LimitVar())->get();
         $promote = $request->promote;
 
         $farms = Farm::query()
@@ -78,7 +76,7 @@ class FarmController extends Controller
 
     public function show(int $id)
     {
-        $language = (new LanguageRequestHeader())->get();
+        $language = (new LanguageHeader())->get();
 
         $farm = Farm::query()
             ->with([
@@ -153,9 +151,9 @@ class FarmController extends Controller
 
     public function locate(Request $request, float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $farms = Farm::query()
             ->with([
@@ -185,9 +183,9 @@ class FarmController extends Controller
 
     public function browse(float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $farms = Farm::query()
             ->with([
@@ -216,7 +214,7 @@ class FarmController extends Controller
 
     public function search()
     {
-        $farms = (new FarmsSearchRequest())->get();
+        $farms = (new FarmsSearch())->results();
 
         return FarmResource::collection($farms);
     }

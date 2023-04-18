@@ -10,7 +10,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Coordinable
 {
-    public function scopeHaversine(Builder $query, float $latitude, float $longitude, string $unit = Unit::ABBREVIATION_KILOMETER): Builder
+    public function scopeHaversine(
+        Builder $query, 
+        float $latitude, 
+        float $longitude, 
+        string $unit = Unit::ABBREVIATION_KILOMETER
+    ): Builder
     {
         $sql = sprintf('%s AS `distance`', Haversine::sql());
         $radius = Haversine::radius($unit);

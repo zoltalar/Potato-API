@@ -11,12 +11,11 @@ use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\Potato\EventResource;
 use App\Models\Address;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Event;
 use App\Models\Unit;
 use App\Services\Ics;
-use App\Services\Request\CountryRequestHeader;
-use App\Services\Request\LimitRequestVar;
+use App\Services\Parameter\CountryHeader;
+use App\Services\Parameter\LimitVar;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -36,9 +35,9 @@ class EventController extends Controller
 
     public function index(Request $request)
     {
-        $country = (new CountryRequestHeader())->get();
+        $country = (new CountryHeader())->get();
         $scope = $request->get('scope', Event::SCOPE_FUTURE);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $events = Event::query()
             ->with([
@@ -115,9 +114,9 @@ class EventController extends Controller
 
     public function locate(float $latitude, float $longitude)
     {
-        $code = (new CountryRequestHeader())->get();
+        $code = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($code, Unit::TYPE_LENGTH);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $events = Event::query()
             ->with([
@@ -150,10 +149,10 @@ class EventController extends Controller
         $location = $request->location;
         $city = null;
         $cityId = $request->get('city_id', 0);
-        $countryCode = (new CountryRequestHeader())->get();
+        $countryCode = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($countryCode, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $request->radius);
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         // Attempt to find the city
         if (empty($cityId) && ! empty($location)) {

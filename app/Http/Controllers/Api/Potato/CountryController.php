@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Country;
-use App\Services\Request\LimitRequestVar;
+use App\Services\Parameter\LimitVar;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -15,7 +15,7 @@ class CountryController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = (new LimitRequestVar())->get();
+        $limit = (new LimitVar())->get();
 
         $query = Country::query()
             ->with([

@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Request;
+namespace App\Services\Parameter;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
 
-class CountryRequestHeader extends RequestHeader
+final class CountryHeader extends HeaderParameter
 {
     public function __construct(
         string $name = 'X-country',
