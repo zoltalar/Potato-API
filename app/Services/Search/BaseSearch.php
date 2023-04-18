@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Services\Search;
 
+use App\Models\City;
+use App\Models\Inventory;
 use App\Services\Parameter\CountryHeader;
 
 abstract class BaseSearch 

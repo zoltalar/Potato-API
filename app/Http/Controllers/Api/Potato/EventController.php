@@ -10,12 +10,12 @@ use App\Http\Requests\Potato\EventGeneralInformationUpdateRequest;
 use App\Http\Requests\Potato\EventStoreRequest;
 use App\Http\Resources\Potato\EventResource;
 use App\Models\Address;
-use App\Models\City;
 use App\Models\Event;
 use App\Models\Unit;
 use App\Services\Ics;
 use App\Services\Parameter\CountryHeader;
 use App\Services\Parameter\LimitVar;
+use App\Services\Search\EventsSearch;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -144,97 +144,7 @@ class EventController extends Controller
 
     public function search(Request $request)
     {
-        $scope = (int) $request->scope;
-        $keyword = $request->keyword;
-        $location = $request->location;
-        $city = null;
-        $cityId = $request->get('city_id', 0);
-        $countryCode = (new CountryHeader())->get();
-        $abbreviation = Unit::abbreviation($countryCode, Unit::TYPE_LENGTH);
-        $radius = Address::radius($abbreviation, (int) $request->radius);
-        $limit = (new LimitVar())->get();
-
-        // Attempt to find the city
-        if (empty($cityId) && ! empty($location)) {
-            $city = City::query()
-                ->search(['name', 'name_ascii'], $location)
-                ->whereHas('state.country', function($query) use ($countryCode) {
-                    $query->where('code', $countryCode);
-                })
-                ->first();
-        } elseif ( ! empty($cityId)) {
-            $city = City::find($cityId);
-        }
-
-        // We have the city model
-        if ($city !== null) {
-            $events = Event::query()
-                ->with([
-                    'addresses' => function($query) use ($city, $abbreviation) {
-                        $query->select();
-                        $query->haversine($city->latitude, $city->longitude, $abbreviation);
-                        $query->where('type', Address::TYPE_LOCATION);
-                    },
-                    'addresses.state.country'
-                ])
-                ->approved()
-                ->when($keyword, function($query) use ($keyword) {
-                    return $query->where(function($query) use ($keyword) {
-                        $query->search(['title', 'description'], $keyword);
-                    });
-                })
-                ->where(function($query) use ($city, $abbreviation, $radius, $location) {
-                    $query
-                        ->whereHas('addresses', function($query) use ($city, $abbreviation, $radius) {
-                            $query
-                                ->haversine($city->latitude, $city->longitude, $abbreviation)
-                                ->where('type', Address::TYPE_LOCATION)
-                                ->havingRaw('distance < ?', [$radius]);
-                        })
-                        ->orWhereHas('addresses', function($query) use ($location) {
-                            $query
-                                ->search(['city'], $location)
-                                ->where('type', Address::TYPE_LOCATION);
-                        });
-                })
-                ->when($scope, function($query) use ($scope) {
-                    if ($scope === Event::SCOPE_FUTURE) {
-                        return $query->future();
-                    } elseif ($scope === Event::SCOPE_PAST) {
-                        return $query->past();
-                    }
-                })
-                ->orderBy('start_date')
-                ->paginate($limit);
-        } else {
-            $events = Event::query()
-                ->with([
-                    'addresses' => function($query) {
-                        $query->where('type', Address::TYPE_LOCATION);
-                    },
-                    'addresses.state.country'
-                ])
-                ->approved()
-                ->when($keyword, function($query) use ($keyword) {
-                    return $query->where(function($query) use ($keyword) {
-                        $query->search(['title', 'description'], $keyword);
-                    });
-                })
-                ->where(function($query) use ($location) {
-                    $query
-                        ->search(['city'], $location)
-                        ->where('type', Address::TYPE_LOCATION);
-                })
-                ->when($scope, function($query) use ($scope) {
-                    if ($scope === Event::SCOPE_FUTURE) {
-                        return $query->future();
-                    } elseif ($scope === Event::SCOPE_PAST) {
-                        return $query->past();
-                    }
-                })
-                ->orderBy('start_date')
-                ->paginate($limit);
-        }
+        $events = (new EventsSearch())->results();
 
         return EventResource::collection($events);
     }
