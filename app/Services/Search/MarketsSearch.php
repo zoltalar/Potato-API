@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\City;
 use App\Models\Market;
 use App\Models\Unit;
+use App\Services\Parameter\CountryHeader;
 use App\Services\Parameter\LimitVar;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -32,7 +33,7 @@ final class MarketsSearch extends BaseSearch
     
     protected function haversineSearch(City $city, int $inventoryId): LengthAwarePaginator
     {
-        $country = $this->country();
+        $country = (new CountryHeader())->get();
         $abbreviation = Unit::abbreviation($country, Unit::TYPE_LENGTH);
         $radius = Address::radius($abbreviation, (int) $this->request->radius);
         $limit = (new LimitVar())->get();
