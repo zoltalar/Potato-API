@@ -105,7 +105,8 @@ class EventController extends Controller
                         'name',
                         'user_id'
                     ]);
-                }
+                },
+                'eventable.addresses.state.country'
             ])
             ->findOrFail($id);
 
@@ -142,7 +143,7 @@ class EventController extends Controller
         return EventResource::collection($events);
     }
 
-    public function search(Request $request)
+    public function search()
     {
         $events = (new EventsSearch())->results();
 
