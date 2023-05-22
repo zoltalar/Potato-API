@@ -170,6 +170,16 @@ final class User extends Base implements
         ];
 
         $url = $this->potatoAppBaseUrl();
+        
+        if ($locale === Language::CODE_PL) {
+            return sprintf(
+                '%s/%s/%s?%s',
+                $url,
+                $controller,
+                $action,
+                http_build_query($query)
+            );
+        }
 
         return sprintf(
             '%s/%s/%s/%s?%s',
@@ -196,6 +206,16 @@ final class User extends Base implements
         $url = $this->potatoAppBaseUrl();
         $id = $this->getKey();
         $email = encrypt($this->getEmailForVerification());
+        
+        if ($locale === Language::CODE_PL) {
+            return sprintf(
+                '%s/%s/%s?%s',
+                $url,
+                $controller,
+                $action,
+                http_build_query(compact('id', 'email'))
+            );
+        }
 
         return sprintf(
             '%s/%s/%s/%s?%s',
