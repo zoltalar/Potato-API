@@ -30,6 +30,18 @@ class UnitSeeder extends Seeder
                 'system' => Unit::SYSTEM_METRIC
             ],
             [
+                'abbreviation' => Unit::ABBREVIATION_GRAM,
+                'name' => 'gram',
+                'type' => Unit::TYPE_WEIGHT,
+                'system' => Unit::SYSTEM_METRIC
+            ],
+            [
+                'abbreviation' => Unit::ABBREVIATION_MILIGRAM,
+                'name' => 'miligram',
+                'type' => Unit::TYPE_WEIGHT,
+                'system' => Unit::SYSTEM_METRIC
+            ],
+            [
                 'abbreviation' => Unit::ABBREVIATION_KILOMETER,
                 'name' => 'kilometer',
                 'type' => Unit::TYPE_LENGTH,

@@ -16,6 +16,7 @@ use App\Models\Market;
 use App\Models\Message;
 use App\Models\OperatingHour;
 use App\Models\Review;
+use App\Models\Substance;
 use App\Models\VerificationCode;
 use App\Observers\AddressObserver;
 use App\Observers\CategoryObserver;
@@ -56,7 +57,8 @@ class AppServiceProvider extends ServiceProvider
             'inventory' => Inventory::class,
             'market' => Market::class,
             'operating_hour' => OperatingHour::class,
-            'review' => Review::class
+            'review' => Review::class,
+            'substance' => Substance::class
         ]);
 
         // Observers

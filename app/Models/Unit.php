@@ -10,6 +10,8 @@ final class Unit extends Base
 {
     const ABBREVIATION_KILOMETER = 'km';
     const ABBREVIATION_KILOGRAM = 'kg';
+    const ABBREVIATION_GRAM = 'g';
+    const ABBREVIATION_MILIGRAM = 'mg';
     const ABBREVIATION_LITER = 'l';
     const ABBREVIATION_MILE = 'mi';
     const ABBREVIATION_POUND = 'lb';
