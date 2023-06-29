@@ -36,6 +36,12 @@ class UnitSeeder extends Seeder
                 'system' => Unit::SYSTEM_METRIC
             ],
             [
+                'abbreviation' => Unit::ABBREVIATION_MICROGRAM,
+                'name' => 'microgram',
+                'type' => Unit::TYPE_WEIGHT,
+                'system' => Unit::SYSTEM_METRIC
+            ],
+            [
                 'abbreviation' => Unit::ABBREVIATION_MILIGRAM,
                 'name' => 'miligram',
                 'type' => Unit::TYPE_WEIGHT,

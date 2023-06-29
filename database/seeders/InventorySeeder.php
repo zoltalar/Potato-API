@@ -188,13 +188,13 @@ class InventorySeeder extends Seeder
                     ],
                     [
                         'name' => 'Vitamin C',
-                        'value' => 7,
-                        'value_unit' => '%'
+                        'value' => 4.6,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ],
                     [
                         'name' => 'Magnesium',
-                        'value' => 1,
-                        'value_unit' => '%'
+                        'value' => 4,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ]
                 ],
                 'translations' => [
@@ -208,6 +208,52 @@ class InventorySeeder extends Seeder
                 'countries' => [
                     Country::NAME_POLAND,
                     'United States'
+                ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 48
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 1.4,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 11.12,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.39,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sodium',
+                        'value' => 1,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 13,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 259,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin A',
+                        'value' => 96,
+                        'value_unit' => Unit::ABBREVIATION_MICROGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 10,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
                 ],
                 'translations' => [
                     'Polish' => 'Morele'

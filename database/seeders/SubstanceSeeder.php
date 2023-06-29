@@ -140,6 +140,13 @@ class SubstanceSeeder extends Seeder
                 ]
             ],
             [
+                'name' => 'Vitamin A',
+                'active' => 1,
+                'translations' => [
+                    Language::NAME_POLISH => 'Witamina A'
+                ]
+            ],
+            [
                 'name' => 'Vitamin B6',
                 'active' => 1,
                 'translations' => [
