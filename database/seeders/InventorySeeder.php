@@ -8,7 +8,9 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Inventory;
 use App\Models\Language;
+use App\Models\Substance;
 use App\Models\Translation;
+use App\Models\Unit;
 use Arr;
 use Illuminate\Database\Seeder;
 
@@ -21,9 +23,11 @@ class InventorySeeder extends Seeder
     {
         foreach ($this->inventory() as $inventory) {
             $countries = $inventory['countries'] ?? [];
+            $substances = $inventory['substances'] ?? [];
             $translations = $inventory['translations'] ?? [];
 
             unset($inventory['translations']);
+            unset($inventory['substances']);
             unset($inventory['countries']);
 
             if ( ! isset($this->cache['categories'][$inventory['category']])) {
@@ -60,6 +64,32 @@ class InventorySeeder extends Seeder
 
                             if ( ! $inventory->countries()->get()->contains($country->id)) {
                                 $inventory->countries()->attach($country->id);
+                            }
+                        }
+                    }
+                    
+                    // Add substances
+                    foreach ($substances as $substanceAttributes) {
+                        $substanceName = $substanceAttributes['name'];
+                        
+                        if ( ! isset($this->cache['substances'][$substanceName])) {
+                            $substance = Substance::where('name', $substanceName)->first();
+                            
+                            if ($substance !== null) {
+                                $this->cache['substances'][$substanceName] = $substance;
+                            }
+                        }
+                        
+                        if (isset($this->cache['substances'][$substanceName])) {
+                            $substance = $this->cache['substances'][$substanceName];
+                            
+                            if ($inventory->substance($substance) === null) {
+                                $attributes = [
+                                    'value' => $substanceAttributes['value'],
+                                    'value_unit' => $substanceAttributes['value_unit'] ?? null
+                                ];
+                                
+                                $inventory->substances()->attach($substance, $attributes);
                             }
                         }
                     }
@@ -113,8 +143,59 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
+                ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 52
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 0.3,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 13.8,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sugar',
+                        'value' => 10.4,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fiber',
+                        'value' => 2.4,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.2,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sodium',
+                        'value' => 1,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 107,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 7,
+                        'value_unit' => '%'
+                    ],
+                    [
+                        'name' => 'Magnesium',
+                        'value' => 1,
+                        'value_unit' => '%'
+                    ]
                 ],
                 'translations' => [
                     'Polish' => 'Jabłka'
@@ -125,7 +206,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -159,7 +240,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -171,7 +252,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -183,7 +264,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -195,7 +276,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -207,7 +288,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -230,7 +311,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -242,7 +323,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -265,7 +346,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -321,7 +402,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -333,7 +414,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -345,7 +426,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -366,7 +447,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -378,7 +459,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -390,7 +471,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -402,7 +483,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -414,7 +495,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Fruits',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -443,7 +524,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -455,7 +536,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -467,7 +548,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -479,7 +560,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -491,7 +572,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -508,7 +589,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -520,7 +601,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -532,7 +613,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -544,7 +625,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -556,7 +637,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -568,7 +649,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -580,7 +661,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -592,7 +673,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -604,7 +685,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -616,7 +697,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -628,7 +709,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -645,7 +726,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -662,7 +743,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -674,7 +755,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -686,7 +767,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -698,7 +779,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -715,7 +796,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -727,7 +808,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -739,7 +820,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -751,7 +832,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -763,7 +844,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -775,7 +856,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -795,7 +876,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -807,7 +888,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -819,7 +900,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -831,7 +912,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -843,7 +924,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -855,7 +936,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -867,7 +948,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -879,7 +960,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -891,7 +972,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -903,7 +984,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -915,7 +996,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -927,7 +1008,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -939,7 +1020,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -951,7 +1032,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -963,7 +1044,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -975,7 +1056,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -987,7 +1068,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -999,7 +1080,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1019,7 +1100,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1031,7 +1112,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1043,7 +1124,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1055,7 +1136,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Vegetables',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1073,7 +1154,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Dairy and Eggs',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1085,7 +1166,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Dairy and Eggs',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1097,7 +1178,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Dairy and Eggs',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1109,7 +1190,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Dairy and Eggs',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1121,7 +1202,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Dairy and Eggs',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1161,7 +1242,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1173,7 +1254,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1185,7 +1266,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1208,7 +1289,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1253,7 +1334,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1265,7 +1346,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Nuts and Seeds',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1336,7 +1417,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1348,7 +1429,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1360,7 +1441,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1372,7 +1453,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1384,7 +1465,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1396,7 +1477,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Honey',
                 'system' => 1,
                 'countries' => [
-                    'Poland'
+                    Country::NAME_POLAND
                 ],
                 'translations' => [
                     'Polish' => 'Miód Rzepakowy'
@@ -1413,7 +1494,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1425,7 +1506,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland'
+                    Country::NAME_POLAND
                 ],
                 'translations' => [
                     'Polish' => 'Gryka'
@@ -1436,7 +1517,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1448,7 +1529,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland'
+                    Country::NAME_POLAND
                 ],
                 'translations' => [
                     'Polish' => 'Proso'
@@ -1459,7 +1540,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1491,7 +1572,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1503,7 +1584,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1515,7 +1596,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland'
+                    Country::NAME_POLAND
                 ],
                 'translations' => [
                     'Polish' => 'Orkisz'
@@ -1526,7 +1607,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Grains',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1544,7 +1625,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Processed Food',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1556,7 +1637,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Processed Food',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1568,7 +1649,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Processed Food',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1580,7 +1661,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Processed Food',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1598,7 +1679,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1610,7 +1691,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1622,7 +1703,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1634,7 +1715,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1646,7 +1727,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1658,7 +1739,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1670,7 +1751,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1682,7 +1763,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1694,7 +1775,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1706,7 +1787,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1718,7 +1799,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1730,7 +1811,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1742,7 +1823,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [
@@ -1754,7 +1835,7 @@ class InventorySeeder extends Seeder
                 'category' => 'Meats',
                 'system' => 1,
                 'countries' => [
-                    'Poland',
+                    Country::NAME_POLAND,
                     'United States'
                 ],
                 'translations' => [

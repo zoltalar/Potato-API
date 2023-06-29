@@ -80,6 +80,21 @@ final class Inventory extends Base
     {
         return $this->belongsToMany(Country::class);
     }
+    
+    public function substance(Substance $substance): ?object
+    {
+        return $this
+            ->substances()
+            ->where('substance_id', $substance->id)
+            ->first();
+    }
+    
+    public function substances(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Substance::class)
+            ->withPivot(['value', 'value_unit']);
+    }
 
     public function translation(Language $language): ?object
     {
