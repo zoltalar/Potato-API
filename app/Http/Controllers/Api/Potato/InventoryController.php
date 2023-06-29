@@ -21,7 +21,7 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $limit = (new LimitVar(max: 200))->get();                               // Limit of 200 needed to fetch products page
+        $limit = (new LimitVar(max: 200))->get(); // Limit of 200 needed to fetch products page
         $language = (new LanguageHeader())->get();
         $country = (new CountryHeader())->get();
         $countryable = $request->countryable;
@@ -139,6 +139,12 @@ class InventoryController extends Controller
             ->with([
                 'category',
                 'category.translations' => function($query) use ($language) {
+                    $query->whereHas('language', function($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                },
+                'substances',
+                'substances.translations' => function ($query) use ($language) {
                     $query->whereHas('language', function($query) use ($language) {
                         $query->where('code', $language);
                     });
