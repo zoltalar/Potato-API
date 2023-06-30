@@ -641,46 +641,21 @@ class InventorySeeder extends Seeder
                 'substances' => [
                     [
                         'name' => 'Calories',
-                        'value' => 282
-                    ],
-                    [
-                        'name' => 'Protein',
-                        'value' => 2.45,
-                        'value_unit' => Unit::ABBREVIATION_GRAM
+                        'value' => 50
                     ],
                     [
                         'name' => 'Carbohydrates',
-                        'value' => 75.03,
+                        'value' => 12,
                         'value_unit' => Unit::ABBREVIATION_GRAM
-                    ],
-                    [
-                        'name' => 'Fat',
-                        'value' => 0.39,
-                        'value_unit' => Unit::ABBREVIATION_GRAM
-                    ],
-                    [
-                        'name' => 'Sodium',
-                        'value' => 2,
-                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
-                    ],
-                    [
-                        'name' => 'Calcium',
-                        'value' => 39,
-                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
-                    ],
-                    [
-                        'name' => 'Iron',
-                        'value' => 1.02,
-                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
-                    ],
+                    ],                    
                     [
                         'name' => 'Potassium',
-                        'value' => 656,
+                        'value' => 150,
                         'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ],
                     [
                         'name' => 'Vitamin C',
-                        'value' => 0.4,
+                        'value' => 14,
                         'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ],
                 ],
@@ -701,18 +676,38 @@ class InventorySeeder extends Seeder
                         'value' => 282
                     ],
                     [
-                        'name' => 'Carbohydrates',
-                        'value' => 12,
+                        'name' => 'Protein',
+                        'value' => 2.45,
                         'value_unit' => Unit::ABBREVIATION_GRAM
                     ],
                     [
+                        'name' => 'Carbohydrates',
+                        'value' => 75.03,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.39,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 39,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 1.02,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
                         'name' => 'Potassium',
-                        'value' => 150,
+                        'value' => 656,
                         'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ],
                     [
                         'name' => 'Vitamin C',
-                        'value' => 14,
+                        'value' => 0.4,
                         'value_unit' => Unit::ABBREVIATION_MILIGRAM
                     ],
                 ],
