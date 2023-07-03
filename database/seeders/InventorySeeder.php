@@ -3410,6 +3410,52 @@ class InventorySeeder extends Seeder
                     Country::NAME_POLAND,
                     'United States'
                 ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 22
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 3.09,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 3.28,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.34,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sodium',
+                        'value' => 5,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 3,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 0.5,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 318,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 2.1,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                ],
                 'translations' => [
                     'Polish' => 'Pieczarki'
                 ]
