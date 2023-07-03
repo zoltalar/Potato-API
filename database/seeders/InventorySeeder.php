@@ -2099,7 +2099,58 @@ class InventorySeeder extends Seeder
             [
                 'name' => 'Bok Choy',
                 'category' => 'Vegetables',
-                'system' => 1
+                'system' => 1,
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 13
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 1.5,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 2.18,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.2,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sodium',
+                        'value' => 65,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 105,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 0.8,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 252,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin A',
+                        'value' => 223,
+                        'value_unit' => Unit::ABBREVIATION_MICROGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 45,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                ],
             ],
             [
                 'name' => 'Broad beans',
