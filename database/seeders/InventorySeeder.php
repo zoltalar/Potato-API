@@ -4861,6 +4861,57 @@ class InventorySeeder extends Seeder
                     Country::NAME_POLAND,
                     'United States'
                 ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 16
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 1.21,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 3.35,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 0.18,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Sodium',
+                        'value' => 10,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 15,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 0.35,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 262,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin A',
+                        'value' => 10,
+                        'value_unit' => Unit::ABBREVIATION_MICROGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 17,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                ],
                 'translations' => [
                     'Polish' => 'Cukinia'
                 ]
