@@ -5956,6 +5956,32 @@ class InventorySeeder extends Seeder
                 'category' => 'Coffee and Teas',
                 'system' => 1,
                 'countries' => [],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 1
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 0.2,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 1,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 0.01,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 25,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                ],
                 'translations' => [
                     'Polish' => 'Czarna Herbata'
                 ]
