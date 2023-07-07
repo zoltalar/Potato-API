@@ -5571,6 +5571,47 @@ class InventorySeeder extends Seeder
                     Country::NAME_POLAND,
                     'United States'
                 ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 599
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 28.03,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 15.26,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Fat',
+                        'value' => 52.5,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 61,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 1.52,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 726,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Vitamin C',
+                        'value' => 0.8,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                ],
                 'translations' => [
                     'Polish' => 'Orzeszki Ziemne'
                 ]
