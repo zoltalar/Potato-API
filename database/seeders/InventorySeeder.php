@@ -6645,7 +6645,7 @@ class InventorySeeder extends Seeder
                 'countries' => [
                     Country::NAME_POLAND,
                     'United States'
-                ],
+                ],                
                 'translations' => [
                     'Polish' => 'Wypieki'
                 ]
@@ -6657,6 +6657,37 @@ class InventorySeeder extends Seeder
                 'countries' => [
                     Country::NAME_POLAND,
                     'United States'
+                ],
+                'substances' => [
+                    [
+                        'name' => 'Calories',
+                        'value' => 43
+                    ],
+                    [
+                        'name' => 'Protein',
+                        'value' => 0.46,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Carbohydrates',
+                        'value' => 3.55,
+                        'value_unit' => Unit::ABBREVIATION_GRAM
+                    ],
+                    [
+                        'name' => 'Calcium',
+                        'value' => 4,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Iron',
+                        'value' => 0.02,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
+                    [
+                        'name' => 'Potassium',
+                        'value' => 27,
+                        'value_unit' => Unit::ABBREVIATION_MILIGRAM
+                    ],
                 ],
                 'translations' => [
                     'Polish' => 'Piwo'
