@@ -22,15 +22,6 @@ class AdminSeeder extends Seeder
 
     protected function admins(): array
     {
-        return [
-            [
-                'first_name' => 'Wojciech',
-                'last_name' => 'Pirog',
-                'email' => 'voytechp@gmail.com',
-                'password' => 'oxtx456',
-                'system' => 1,
-                'active' => 1
-            ]
-        ];
+        return [];
     }
 }
