@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+
 final class Comment extends Base
 {
     const TYPE_COMMENTABLE_REVIEW = 'review';
