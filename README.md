@@ -1,4 +1,5 @@
 # Potato API
+localharvest.org clone
 
 #### Installation
 * `composer install`
