@@ -325,67 +325,67 @@ class StateSeeder extends Seeder
     {
         return [
             [
-                'name' => 'dolnośląskie',
+                'name' => 'Dolnośląskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'kujawsko-pomorskie',
+                'name' => 'Kujawsko-Pomorskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'lubelskie',
+                'name' => 'Lubelskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'lubuskie',
+                'name' => 'Lubuskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'łódzkie',
+                'name' => 'Łódzkie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'małopolskie',
+                'name' => 'Małopolskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'mazowieckie',
+                'name' => 'Mazowieckie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'opolskie',
+                'name' => 'Opolskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'podkarpackie',
+                'name' => 'Podkarpackie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'podlaskie',
+                'name' => 'Podlaskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'pomorskie',
+                'name' => 'Pomorskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'śląskie',
+                'name' => 'Śląskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'świętokrzyskie',
+                'name' => 'Świętokrzyskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'warmińsko-mazurskie',
+                'name' => 'Warmińsko-Mazurskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'wielkopolskie',
+                'name' => 'Wielkopolskie',
                 'country' => 'Poland'
             ],
             [
-                'name' => 'zachodniopomorskie',
+                'name' => 'Zachodniopomorskie',
                 'country' => 'Poland'
             ]
         ];

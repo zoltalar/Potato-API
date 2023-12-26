@@ -63,17 +63,14 @@ abstract class Base extends Model
 
         return $query->orderBy($column, $direction);
     }
-
-    /**
-     * Dynamic scope for performing search against specified columns in a model.
-     *
-     * @param   Builder $query
-     * @param   array $columns
-     * @param   ?string $phrase
-     * @param   ?array $callbacks
-     * @return  Builder
-     */
-    public function scopeSearch(Builder $query, array $columns, string $phrase = null, array $callbacks = []): Builder
+    
+    public function scopeSearch(
+        Builder $query, 
+        array $columns, 
+        string $phrase = null, 
+        string $wildcard = '', 
+        array $callbacks = []
+    ): Builder
     {
         if (empty($phrase)) {
             $phrase = request()->get('search');
@@ -102,7 +99,7 @@ abstract class Base extends Model
             if (is_numeric($word)) {
                 $operator = '=';
             } else {
-                $word = "%$word%";
+                $word = "{$wildcard}$word%";
             }
 
             $query->where(function($builder) use ($columns, $operator, $word) {

@@ -66,9 +66,9 @@ class InventoryController extends Controller
             ->when($search, function($query) use ($search) {
                 return $query->where(function($query) use ($search) {
                     $query
-                        ->search(['name'], $search)
+                        ->search(['name'], $search, '%')
                         ->orWhereHas('translations', function($query) use ($search) {
-                            $query->search(['name'], $search);
+                            $query->search(['name'], $search, '%');
                         });
                 });
             })
