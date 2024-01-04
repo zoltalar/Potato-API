@@ -35,20 +35,17 @@ class AddressOwner implements Rule
         $id = $this->id;
         
         if ($type === Address::TYPE_ADDRESSABLE_EVENT) {
+            // @todo fix addressable var for events
             $addressable = Event::query()
                 ->whereHas('eventable', function($query) {
                     $query->where('user_id', auth()->id());
                 })
                 ->find($id);
         } elseif ($type === Address::TYPE_ADDRESSABLE_FARM) {
-            $addressable = Farm::query()
-                ->where('user_id', auth()->id())
-                ->find($id);
+            $addressable = Farm::find($id);
         } elseif ($type === Address::TYPE_ADDRESSABLE_MARKET) {
-            $addressable = Market::query()
-                ->where('user_id', auth()->id())
-                ->find($id);
-        } logger()->info($type);logger()->info($id);
+            $addressable = Market::find($id);
+        }
         
         if (isset($addressable)) {
             $this->addressable = $addressable;

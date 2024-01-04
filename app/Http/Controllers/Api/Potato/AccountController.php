@@ -45,6 +45,8 @@ class AccountController extends Controller
             ->user()
             ->farms()
             ->with([
+                'addresses',
+                'addresses.state.country',
                 'images' => function($query) {
                     $query
                         ->orderBy('primary', 'desc')
