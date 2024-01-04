@@ -14,6 +14,7 @@ return [
     'comment' => 'Comment',
     'confirm_new_password' => 'Confirm New Password',
     'contact' => 'Contact',
+    'country' => 'Country',
     'currency' => 'Currency',
     'current_password' => 'Current Password',
     'date_based' => 'Date Based',

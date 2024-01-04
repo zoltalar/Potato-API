@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Services\Image;
 
-use App\Models\Farm;
 use App\Models\Image;
 
 abstract class BaseCrop

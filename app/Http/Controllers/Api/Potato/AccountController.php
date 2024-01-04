@@ -52,7 +52,7 @@ class AccountController extends Controller
                         ->orderBy('id', 'asc');
                 }
             ])
-            ->orderBy('name', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return FarmResource::collection($farms);

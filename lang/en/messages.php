@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'address_owner_error' => 'This address cannot be edited.',
     'codename' => 'Potato',
     'codename_team' => 'Potato Team',
     'comment_reviews_to_self_error' => 'You cannot comment your own reviews.',
@@ -16,6 +17,7 @@ return [
     'email_verify_line_2' => 'If you did not create an account, no further action is required.',
     'event_eventable_error' => 'Selected :attribute is invalid',
     'farm_deactivated_error' => 'This farm is already deactivated.',
+    'farm_owner_error' => 'This farm cannot be edited.',
     'hi_name' => 'Hi :name',
     'market_deactivated_error' => "This farmer's market is already deactivated.",
     'match_old_user_password_error' => 'The :attribute does not match user password.',

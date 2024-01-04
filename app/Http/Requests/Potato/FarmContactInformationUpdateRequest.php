@@ -6,8 +6,7 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\Base;
-use App\Models\Country;
-use App\Models\Language;
+use App\Rules\FarmOwner;
 
 class FarmContactInformationUpdateRequest extends BaseRequest
 {
@@ -19,9 +18,10 @@ class FarmContactInformationUpdateRequest extends BaseRequest
     public function rules(): array
     {
         $length = Base::DEFAULT_STRING_LENGTH;
+        $id = $this->route('id');
 
         return [
-            'name' => ['required', "max:{$length}"],
+            'name' => ['required', "max:{$length}", new FarmOwner($id)],
             'first_name' => ['nullable', 'string', 'max:100'],
             'last_name' => ['nullable', 'string', 'max:100'],
             'phone' => ['nullable', 'max:20'],

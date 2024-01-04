@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'address_owner_error' => 'Nie można edytować tego adresu.',
     'codename' => 'Ziemniaczek',
     'codename_team' => 'Zespół Ziemniaczek',
     'comment_reviews_to_self_error' => 'Nie możesz komentować własnych recenzji.',
@@ -16,6 +17,7 @@ return [
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta, nie musisz nic więcej robić.',
     'event_eventable_error' => 'Wybrane pole :attribute jest nieprawidłowe.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',
+    'farm_owner_error' => 'Nie można edytować tego gospodarstwa rolnego.',
     'hi_name' => 'Cześć :name',
     'market_deactivated_error' => 'Ten agromarket jest już dezaktywowany.',
     'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
