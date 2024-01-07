@@ -24,6 +24,7 @@ return [
     'message_to_self_error' => 'Nie możesz wysyłać wiadomości do siebie.',
     'operating_hours_owner_error' => 'Nie można edytować tych godzin otwarcia.',
     'product_availability_seasons_error' => 'Prosimy wybrać przynajmniej jeden sezon.',
+    'product_unique_error' => 'Ten produkt został już dodany.',
     'review_to_self_error' => 'Nie możesz wystawić recenzji własnym gospodarstwom rolnym lub agromarketom.',
     'review_unique_error' => 'Recenzja została już przez Ciebie utworzona.',
     'time_field_after_error' => 'Pole :field musi być po :time.',

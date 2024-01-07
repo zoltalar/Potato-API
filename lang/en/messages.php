@@ -24,6 +24,7 @@ return [
     'message_to_self_error' => 'You cannot send messages to yourself.',
     'operating_hours_owner_error' => 'These operating hours cannot be edited.',
     'product_availability_seasons_error' => 'Please select at least one season.',
+    'product_unique_error' => 'This product has already been added.',
     'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',
     'review_unique_error' => 'You already created a review for this farm or market.',
     'time_field_after_error' => 'The :field must be a time after :time',
