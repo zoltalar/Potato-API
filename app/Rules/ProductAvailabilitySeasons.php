@@ -24,7 +24,7 @@ class ProductAvailabilitySeasons implements Rule
         $count = 0;
 
         foreach ($seasons as $season) {
-            if ($product[$season] == 1) {
+            if (isset($product[$season]) && $product[$season] == 1) {
                 $count++;
             }
         }

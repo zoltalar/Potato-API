@@ -22,6 +22,7 @@ return [
     'market_deactivated_error' => 'Ten agromarket jest już dezaktywowany.',
     'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
     'message_to_self_error' => 'Nie możesz wysyłać wiadomości do siebie.',
+    'operating_hours_owner_error' => 'Nie można edytować tych godzin otwarcia.',
     'product_availability_seasons_error' => 'Prosimy wybrać przynajmniej jeden sezon.',
     'review_to_self_error' => 'Nie możesz wystawić recenzji własnym gospodarstwom rolnym lub agromarketom.',
     'review_unique_error' => 'Recenzja została już przez Ciebie utworzona.',

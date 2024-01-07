@@ -6,6 +6,7 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\OperatingHour;
+use App\Rules\OperatingHoursOwner;
 
 class OperatingHoursRequest extends BaseRequest
 {
@@ -16,7 +17,10 @@ class OperatingHoursRequest extends BaseRequest
 
     public function rules(): array
     {
-        $rules = [];
+        $type = $this->route('type');
+        $id = $this->route('id');
+        
+        $rules = ['exceptions' => ['nullable', 'max:1000', new OperatingHoursOwner($type, $id)]];
 
         foreach (OperatingHour::days() as $day) {
             $rules[$day . '.start'] = ['nullable', 'required_if:' . $day . '.selected,==,true'];
@@ -28,7 +32,7 @@ class OperatingHoursRequest extends BaseRequest
 
     public function attributes(): array
     {
-        $attributes = [];
+        $attributes = ['exceptions' => mb_strtolower(__('phrases.exceptions'))];
 
         foreach (OperatingHour::days() as $day) {
             $attributes[$day . '.start'] = mb_strtolower(__('phrases.start_time'));

@@ -22,6 +22,7 @@ return [
     'market_deactivated_error' => "This farmer's market is already deactivated.",
     'match_old_user_password_error' => 'The :attribute does not match user password.',
     'message_to_self_error' => 'You cannot send messages to yourself.',
+    'operating_hours_owner_error' => 'These operating hours cannot be edited.',
     'product_availability_seasons_error' => 'Please select at least one season.',
     'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',
     'review_unique_error' => 'You already created a review for this farm or market.',

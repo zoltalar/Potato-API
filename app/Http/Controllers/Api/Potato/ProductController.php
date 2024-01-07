@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Potato;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
+use App\Http\Requests\Potato\ProductStoreRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\Product;
@@ -24,6 +25,33 @@ class ProductController extends Controller
             'topGrowingAreas',
             'topSellingAreas'
         ]);
+    }
+    
+    public function store(ProductStoreRequest $request, string $type, int $id)
+    {
+        $product = null;
+        $productable = null;
+
+        if ($type === Product::TYPE_PRODUCTABLE_FARM) {
+            $productable = auth()
+                ->user()
+                ->farms()
+                ->find($id);
+        } elseif ($type === Product::TYPE_PRODUCTABLE_MARKET) {
+            $productable = auth()
+                ->user()
+                ->markets()
+                ->find($id);
+        }
+        
+        if ($productable !== null) {
+            $product = new Product();
+            $product->fill($request->only($product->getFillable()));
+            
+            $productable->products()->save($product);
+        }
+        
+        return new BaseResource($product);
     }
 
     public function save(ProductsRequest $request, string $type, int $id)
