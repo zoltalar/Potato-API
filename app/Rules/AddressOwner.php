@@ -65,6 +65,8 @@ class AddressOwner implements Rule
 
     public function message(): string
     {
-        return __('messages.address_owner_error');
+        $type = $this->type;
+        
+        return __("messages.{$type}_address_owner_error");
     }
 }

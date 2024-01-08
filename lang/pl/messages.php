@@ -1,7 +1,6 @@
 <?php
 
-return [
-    'address_owner_error' => 'Nie można edytować tego adresu.',
+return [    
     'codename' => 'Ziemniaczek',
     'codename_team' => 'Zespół Ziemniaczek',
     'comment_reviews_to_self_error' => 'Nie możesz komentować własnych recenzji.',
@@ -16,13 +15,15 @@ return [
     'email_verify_line_1' => 'Prosimy kliknąć w poniższy przycisk aby zweryfikować adres email.',
     'email_verify_line_2' => 'Jeśli nie utworzyłeś konta, nie musisz nic więcej robić.',
     'event_eventable_error' => 'Wybrane pole :attribute jest nieprawidłowe.',
+    'farm_address_owner_error' => 'Nie można edytować adresów tego gospodarstwa rolnego.',
     'farm_deactivated_error' => 'To gospodarstwo rolne jest już dezaktywowane.',
+    'farm_operating_hours_owner_error' => 'Nie można edytować godzin otwarcia tego gospodarstwa rolnego.',
     'farm_owner_error' => 'Nie można edytować tego gospodarstwa rolnego.',
+    'farm_product_owner_error' => 'Nie można edytować produktów tego gospodarstwa rolnego.',
     'hi_name' => 'Cześć :name',
     'market_deactivated_error' => 'Ten agromarket jest już dezaktywowany.',
     'match_old_user_password_error' => 'Pole :attribute nie jest takie same jak hasło użytkownika.',
-    'message_to_self_error' => 'Nie możesz wysyłać wiadomości do siebie.',
-    'operating_hours_owner_error' => 'Nie można edytować tych godzin otwarcia.',
+    'message_to_self_error' => 'Nie możesz wysyłać wiadomości do siebie.',    
     'product_availability_seasons_error' => 'Prosimy wybrać przynajmniej jeden sezon.',
     'product_unique_error' => 'Ten produkt został już dodany.',
     'review_to_self_error' => 'Nie możesz wystawić recenzji własnym gospodarstwom rolnym lub agromarketom.',

@@ -109,6 +109,44 @@ class ProductController extends Controller
 
         return response()->json(null, 204);
     }
+    
+    public function destroy(int $id, string $type, int $productableId)
+    {
+        $status = 403;
+        $productable = null;
+        
+        if ($type === Product::TYPE_PRODUCTABLE_FARM) {
+            $productable = auth()
+                ->user()
+                ->farms()
+                ->with(['products'])
+                ->find($productableId);
+        } elseif ($type === Product::TYPE_PRODUCTABLE_MARKET) {
+            $productable = auth()
+                ->user()
+                ->markets()
+                ->with(['products'])
+                ->find($productableId);
+        }
+        
+        if ($productable !== null) {
+            $product = $productable
+                ->products
+                ->filter(function($product) use ($id) {
+                    return $product->getKey() === $id;
+                })
+                ->first();
+                
+            if ($product !== null) {
+                
+                if ($product->delete()) {
+                    $status = 204;
+                }
+            }
+        }
+        
+        return response()->json(null, $status);
+    }
 
     public function growingArea(Request $request, float $latitude, float $longitude)
     {

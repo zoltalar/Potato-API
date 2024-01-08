@@ -1,7 +1,6 @@
 <?php
 
-return [
-    'address_owner_error' => 'This address cannot be edited.',
+return [    
     'codename' => 'Potato',
     'codename_team' => 'Potato Team',
     'comment_reviews_to_self_error' => 'You cannot comment your own reviews.',
@@ -16,13 +15,15 @@ return [
     'email_verify_line_1' => 'Please click the button below to verify your email address.',
     'email_verify_line_2' => 'If you did not create an account, no further action is required.',
     'event_eventable_error' => 'Selected :attribute is invalid',
+    'farm_address_owner_error' => 'This farm addresses cannot be edited.',
     'farm_deactivated_error' => 'This farm is already deactivated.',
+    'farm_operating_hours_owner_error' => 'This farm operating hours cannot be edited.',
     'farm_owner_error' => 'This farm cannot be edited.',
+    'farm_product_owner_error' => 'This farm products cannot be edited.',
     'hi_name' => 'Hi :name',
     'market_deactivated_error' => "This farmer's market is already deactivated.",
     'match_old_user_password_error' => 'The :attribute does not match user password.',
-    'message_to_self_error' => 'You cannot send messages to yourself.',
-    'operating_hours_owner_error' => 'These operating hours cannot be edited.',
+    'message_to_self_error' => 'You cannot send messages to yourself.',    
     'product_availability_seasons_error' => 'Please select at least one season.',
     'product_unique_error' => 'This product has already been added.',
     'review_to_self_error' => 'You cannot post reviews to your own farms or markets.',

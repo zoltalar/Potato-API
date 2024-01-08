@@ -7,10 +7,10 @@ namespace App\Rules;
 use App\Models\Base;
 use App\Models\Farm;
 use App\Models\Market;
-use App\Models\OperatingHour;
+use App\Models\Product;
 use Illuminate\Contracts\Validation\Rule;
 
-class OperatingHoursOwner implements Rule
+class ProductOwner implements Rule
 {
     /** @var string */
     protected $type;
@@ -19,7 +19,7 @@ class OperatingHoursOwner implements Rule
     protected $id;
     
     /** @var Base */
-    protected $operatable;
+    protected $productable;
 
     public function __construct($type, $id)
     {
@@ -34,32 +34,32 @@ class OperatingHoursOwner implements Rule
         $type = $this->type;
         $id = $this->id;
         
-        if ($type === OperatingHour::TYPE_OPERATABLE_FARM) {
-            $operatable = Farm::find($id);
-        } elseif ($type === OperatingHour::TYPE_OPERATABLE_MARKET) {
-            $operatable = Market::find($id);
+        if ($type === Product::TYPE_PRODUCTABLE_FARM) {
+            $productable = Farm::find($id);
+        } elseif ($type === Product::TYPE_PRODUCTABLE_MARKET) {
+            $productable = Market::find($id);
         }
         
-        if (isset($operatable)) {
-            $this->operatable = $operatable;
+        if (isset($productable)) {
+            $this->productable = $productable;
         }
     }
 
     public function passes($attribute, $value): bool
     {
-        $operatable = $this->operatable;
+        $productable = $this->productable;
         
-        if ($operatable !== null) {
-            return auth()->id() === $operatable->user_id;
+        if ($productable !== null) {
+            return auth()->id() === $productable->user_id;
         }
         
-        return false;
+        return true;
     }
 
     public function message(): string
     {
         $type = $this->type;
         
-        return __("messages.{$type}_operating_hours_owner_error");
+        return __("messages.{$type}_product_owner_error");
     }
 }

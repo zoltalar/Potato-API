@@ -6,6 +6,7 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Rules\ProductAvailabilitySeasons;
+use App\Rules\ProductOwner;
 use App\Rules\ProductUnique;
 
 class ProductStoreRequest extends BaseRequest
@@ -22,7 +23,12 @@ class ProductStoreRequest extends BaseRequest
         $product = $this->all();
         
         return [
-            'inventory_id' => ['required', 'exists:inventory,id', new ProductUnique($type, $id)],
+            'inventory_id' => [
+                'required', 
+                'exists:inventory,id', 
+                new ProductUnique($type, $id),
+                new ProductOwner($type, $id)
+            ],
             'seasons' => [new ProductAvailabilitySeasons($product)],
             'amount' => ['nullable', 'numeric', 'min:0', 'max:9999999'],
             'amount_unit' => ['nullable', 'required_with:amount'],
