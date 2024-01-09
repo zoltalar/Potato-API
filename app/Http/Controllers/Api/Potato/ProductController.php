@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Potato;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\ProductsRequest;
 use App\Http\Requests\Potato\ProductStoreRequest;
+use App\Http\Requests\Potato\ProductUpdateRequest;
 use App\Http\Resources\BaseResource;
 use App\Models\Address;
 use App\Models\Product;
@@ -52,6 +53,11 @@ class ProductController extends Controller
         }
         
         return new BaseResource($product);
+    }
+    
+    public function update(ProductUpdateRequest $request, int $id, string $type, int $productableId)
+    {
+        
     }
 
     public function save(ProductsRequest $request, string $type, int $id)
