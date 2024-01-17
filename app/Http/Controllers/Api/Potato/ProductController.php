@@ -57,7 +57,41 @@ class ProductController extends Controller
     
     public function update(ProductUpdateRequest $request, int $id, string $type, int $productableId)
     {
+        $product = null;
+        $productable = null;
         
+        if ($type === Product::TYPE_PRODUCTABLE_FARM) {
+            $productable = auth()
+                ->user()
+                ->farms()
+                ->with(['products'])
+                ->find($productableId);
+        } elseif ($type === Product::TYPE_PRODUCTABLE_MARKET) {
+            $productable = auth()
+                ->user()
+                ->markets()
+                ->with(['products'])
+                ->find($productableId);
+        }
+        
+        if ($productable !== null) {
+            
+            if ($productable->products->contains('id', $id)) {
+                $product = $productable
+                    ->products
+                    ->filter(function($product) use ($id) {
+                        return $product->getKey() === $id;
+                    })
+                    ->first();
+                    
+                if ($product !== null) {
+                    $product->fill($request->only($product->getFillable()));
+                    $product->update();
+                }
+            }
+        }
+        
+        return new BaseResource($product);
     }
 
     public function save(ProductsRequest $request, string $type, int $id)
