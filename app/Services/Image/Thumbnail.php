@@ -29,7 +29,7 @@ final class Thumbnail extends BaseCrop
         }
         
         $info = pathinfo($path . $file);
-        $file = $info['filename'] . '-' . $w . '-' . $h . '.' . $info['extension'];
+        $file = $info['filename'] . '-' . $dimension . '-' . $dimension . '.' . $info['extension'];
         
         $thumbnail = $image->thumbnail(new Box($w, $h), ImageInterface::THUMBNAIL_OUTBOUND);
         $thumbnail->crop($start, new Box($dimension, $dimension));
