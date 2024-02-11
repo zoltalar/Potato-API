@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Observers;
 
-use App\Models\Farm;
 use App\Models\Image;
 use App\Services\Image\CoverCrop;
 use App\Services\Image\PrimaryCrop;
+use App\Services\Image\Thumbnail;
 use Storage;
 
 class ImageObserver
@@ -32,6 +32,17 @@ class ImageObserver
 
         if ( ! empty($file)) {
             $variations['cover'] = [
+                'file' => $file,
+                'mime' => $image->mime,
+                'size' => $crop->size()
+            ];
+        }
+        
+        $crop = new Thumbnail($image);
+        $file = $crop->file();
+        
+        if ( ! empty($file)) {
+            $variations['thumbnail'] = [
                 'file' => $file,
                 'mime' => $image->mime,
                 'size' => $crop->size()
