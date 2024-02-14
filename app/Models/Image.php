@@ -58,7 +58,8 @@ final class Image extends Base
                 ->orWhere(function($query) use ($file) {
                     $query
                         ->orWhereJsonContains('variations->cover->file', $file)
-                        ->orWhereJsonContains('variations->primary->file', $file);
+                        ->orWhereJsonContains('variations->primary->file', $file)
+                        ->orWhereJsonContains('variations->thumbnail->file', $file);
                 });                
         });
     }

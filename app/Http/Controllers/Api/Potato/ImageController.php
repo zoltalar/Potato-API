@@ -248,7 +248,7 @@ class ImageController extends Controller
             $path = storage_path("app/public/markets/{$file}");
         }
 
-        if (isset($path)) {
+        if (isset($path) && is_file($path)) {
             $headers = [
                 'Cache-Control' => 'no-cache',
                 'Content-Type' => $imageable->mime,
@@ -257,6 +257,8 @@ class ImageController extends Controller
             return response()->stream(function() use ($path) {
                 echo file_get_contents($path);
             }, 200, $headers);
+        } else {
+            abort(404);
         }
     }
 }
