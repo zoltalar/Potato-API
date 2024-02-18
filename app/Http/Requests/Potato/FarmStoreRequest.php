@@ -6,8 +6,6 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\Base;
-use App\Models\Country;
-use App\Models\Language;
 
 class FarmStoreRequest extends BaseRequest
 {

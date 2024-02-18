@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
-use App\Rules\FarmDeactivated;
+use App\Rules\FarmOwner;
 
-class FarmDeactivateRequest extends BaseRequest
+class FarmPromoteUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
     {
@@ -17,12 +17,12 @@ class FarmDeactivateRequest extends BaseRequest
     public function rules(): array
     {
         $id = $this->route('id');
-
-        return ['deactivation_reason' => ['required', 'string', 'max:500', new FarmDeactivated($id)]];
+        
+        return ['promote' => ['required', new FarmOwner($id)]];
     }
 
     public function attributes(): array
     {
-        return ['deactivation_reason' => mb_strtolower(__('phrases.deactivation_reason'))];
+        return ['promote' => mb_strtolower(__('phrases.promote_this_farm'))];
     }
 }

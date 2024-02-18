@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Potato\FarmContactInformationUpdateRequest;
 use App\Http\Requests\Potato\FarmDeactivateRequest;
 use App\Http\Requests\Potato\FarmDescriptionUpdateRequest;
+use App\Http\Requests\Potato\FarmPromoteUpdateRequest;
 use App\Http\Requests\Potato\FarmSocialMediaUpdateRequest;
 use App\Http\Requests\Potato\FarmStoreRequest;
 use App\Http\Resources\Potato\FarmResource;
@@ -249,6 +250,21 @@ class FarmController extends Controller
     }
 
     public function updateSocialMedia(FarmSocialMediaUpdateRequest $request, int $id)
+    {
+        $farm = auth()
+            ->user()
+            ->farms()
+            ->find($id);
+
+        if ($farm !== null) {
+            $farm->fill($request->only($farm->getFillable()));
+            $farm->update();
+        }
+
+        return new FarmResource($farm);
+    }
+    
+    public function updatePromote(FarmPromoteUpdateRequest $request, int $id)
     {
         $farm = auth()
             ->user()

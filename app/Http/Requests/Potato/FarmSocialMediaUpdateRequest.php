@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
+use App\Rules\FarmOwner;
 
 class FarmSocialMediaUpdateRequest extends BaseRequest
 {
@@ -15,8 +16,10 @@ class FarmSocialMediaUpdateRequest extends BaseRequest
 
     public function rules(): array
     {
+        $id = $this->route('id');
+        
         return [
-            'facebook' => ['nullable', 'max:100'],
+            'facebook' => ['nullable', 'max:100', new FarmOwner($id)],
             'twitter' => ['nullable', 'max:100'],
             'pinterest' => ['nullable', 'max:100'],
             'instagram' => ['nullable', 'max:100']
