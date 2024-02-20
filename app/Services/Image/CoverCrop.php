@@ -16,12 +16,12 @@ class CoverCrop extends BaseCrop
         $width = $image->getSize()->getWidth();
         $height = $image->getSize()->getHeight();
 
-        if ($height > 330) {
+        if ($height > 340) {
             $info = pathinfo($path . $file);
-            $file = $info['filename'] . '-' . $width . '-' . 330 . '.' . $info['extension'];
+            $file = $info['filename'] . '-' . $width . '-' . 340 . '.' . $info['extension'];
 
-            $start = new Point(0, ($height - 330) / 2);
-            $size = new Box($width, 300);
+            $start = new Point(0, ($height - 340) / 2);
+            $size = new Box($width, 340);
 
             $image->crop($start, $size);
             $image->save($path . $file);
