@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('name', 40)->unique();
             $table->string('native', 50)->nullable();
             $table->char('code', 2)->unique();
+            $table->string('locale', 5)->unique();
             $table->string('date_format', 10)->nullable();
             $table->string('time_format', 10)->nullable();
             $table->boolean('system')->nullable();

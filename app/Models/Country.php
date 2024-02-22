@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 final class Country extends Base
 {
     const NAME_POLAND = 'Poland';
-
-    const CODE_PL = 'pl';
+    const CODE_PL = 'pl';    
+    const LOCALE_PL = 'pl-PL';
 
     protected $fillable = [
         'name',

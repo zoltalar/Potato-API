@@ -27,6 +27,7 @@ class CountrySeeder extends Seeder
                 'name' => Country::NAME_POLAND,
                 'native' => 'Polska',
                 'code' => Country::CODE_PL,
+                'locale' => Country::LOCALE_PL,
                 'date_format' => 'DD/MM/YYYY',
                 'time_format' => 'H:mm',
                 'system' => 1,
