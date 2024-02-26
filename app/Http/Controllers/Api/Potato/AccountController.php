@@ -65,7 +65,11 @@ class AccountController extends Controller
         $favorites = auth()
             ->user()
             ->favorites()
-            ->with(['favoriteable', 'favoriteable.images'])
+            ->with([
+                'favoriteable',
+                'favoriteable.addresses.state.country',
+                'favoriteable.images'
+            ])
             ->get();
 
         return FavoriteResource::collection($favorites);

@@ -17,6 +17,7 @@ class FavoriteResource extends JsonResource
             'favoriteable' => $this->when(
                 $this->relationLoaded('favoriteable'),
                 function() {
+                    // @todo add support for market
                     return new FarmResource($this->favoriteable);
                 }
             )
