@@ -6,8 +6,6 @@ namespace App\Http\Requests\Potato;
 
 use App\Http\Requests\BaseRequest;
 use App\Models\Base;
-use App\Models\Country;
-use App\Models\Language;
 use App\Rules\MessageToSelf;
 
 class MessageStoreRequest extends BaseRequest
@@ -26,7 +24,7 @@ class MessageStoreRequest extends BaseRequest
 
         return [
             'subject' => ['nullable', "max:{$length}"],
-            'content' => ['required', 'max:1000', new MessageToSelf($type, $id)]
+            'content' => ['required', 'max:2000', new MessageToSelf($type, $id)]
         ];
     }
 
