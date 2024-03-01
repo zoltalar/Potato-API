@@ -43,8 +43,12 @@ class FarmController extends Controller
 
         $farms = Farm::query()
             ->with([
+                'addresses.state.country',
                 'images' => function($query) {
-                    $query->primary();
+                    $query
+                        ->orderBy('primary', 'desc')
+                        ->orderBy('cover', 'desc')
+                        ->orderBy('id', 'asc');
                 }
             ])
             ->active()

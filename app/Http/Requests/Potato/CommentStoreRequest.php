@@ -20,7 +20,7 @@ class CommentStoreRequest extends BaseRequest
         $id = $this->route('id');
 
         return [
-            'content' => ['required', 'max:1000', new CommentToSelf($type, $id)]
+            'content' => ['required', 'max:2000', new CommentToSelf($type, $id)]
         ];
     }
 
