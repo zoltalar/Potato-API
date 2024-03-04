@@ -24,13 +24,13 @@ abstract class BaseSearch
     
     protected function inventoryId(): int
     {
-        $item = $this->request->item;
+        $itemName = $this->request->item_name;
         $inventoryId = $this->request->get('inventory_id', 0);
         
-        if (empty($inventoryId) && ! empty($item)) {
+        if (empty($inventoryId) && ! empty($itemName)) {
             $inventory = Inventory::query()
                 ->whereHas('translations', function($query) use ($item) {
-                    $query->search(['name'], $item);
+                    $query->search(['name'], $itemName);
                 })
                 ->first();
                 
@@ -44,14 +44,14 @@ abstract class BaseSearch
     
     protected function city(): City|null
     {
-        $location = $this->request->location;
+        $cityName = $this->request->city_name;
         $cityId = $this->request->get('city_id', 0);
         
-        if (empty($cityId) && ! empty($location)) {
+        if (empty($cityId) && ! empty($cityName)) {
             $country = (new CountryHeader())->get();
             
             $city = City::query()
-                ->search(['name', 'name_ascii'], $location)
+                ->search(['name', 'name_ascii'], $cityName)
                 ->whereHas('state.country', function($query) use ($country) {
                     $query->where('code', $country);
                 })

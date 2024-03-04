@@ -18,11 +18,6 @@ final class FarmsSearch extends BaseSearch
     {
         $inventoryId = $this->inventoryId();
         
-        // Inventory item not found so bail out
-        if (empty($inventoryId)) {
-            return collect([]);
-        }
-        
         // We have the city model
         if (($city = $this->city()) !== null) {
             return $this->haversineSearch($city, $inventoryId);
@@ -46,9 +41,7 @@ final class FarmsSearch extends BaseSearch
                     $query->where('type', Address::TYPE_LOCATION);
                 },
                 'addresses.state.country',
-                'images' => function($query) {
-                    $query->primary();
-                },
+                'images',
                 'products.inventory.translations'
             ])
             ->active()
@@ -75,7 +68,7 @@ final class FarmsSearch extends BaseSearch
     
     protected function basicSearch(int $inventoryId): LengthAwarePaginator
     {
-        $location = $this->request->location;
+        $cityName = $this->request->city_name;
         $limit = (new LimitVar())->get();
         
         return Farm::query()
@@ -84,16 +77,18 @@ final class FarmsSearch extends BaseSearch
                     $query->where('type', Address::TYPE_LOCATION);
                 },
                 'addresses.state.country',
-                'images' => function($query) {
-                    $query->primary();
-                },
+                'images',
                 'products.inventory.translations'
             ])
             ->active()
-            ->whereHas('addresses', function($query) use ($location) {
-                $query
-                    ->search(['city'], $location)
-                    ->where('type', Address::TYPE_LOCATION);
+            ->when( ! empty($cityName), function($query) use ($cityName) {
+                return $query->where(function($query) use ($cityName) {
+                    $query->whereHas('addresses', function($query) use ($cityName) {
+                        $query
+                            ->search(['city'], $cityName)
+                            ->where('type', Address::TYPE_LOCATION);
+                    });
+                });
             })
             ->when( ! empty($inventoryId), function($query) use ($inventoryId) {
                 return $query->where(function($query) use ($inventoryId) {

@@ -18,8 +18,8 @@ final class Address extends Base implements
     use Addressable,
         Coordinable;
 
-    const DEFAULT_RADIUS_KM = 60;
-    const DEFAULT_RADIUS_MI = 40;
+    const DEFAULT_RADIUS_KM = 30;
+    const DEFAULT_RADIUS_MI = 20;
 
     const TYPE_LOCATION = 1;
     const TYPE_MAILING = 2;
